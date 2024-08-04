@@ -5,20 +5,14 @@ import img from '../../Img/change.png';
 import img2 from '../../Img/main.png';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FaCheck, FaQuestion, FaTimes } from 'react-icons/fa'; 
-import { getParticipation, saveParticipation } from '../../services/supabaseService';
+import { getParticipation } from '../../services/supabaseService';
 
 const AttendanceListPage = () => {
     const navigate = useNavigate();
-    const attendanceName = JSON.parse(sessionStorage.getItem('name'));
-    const [editBtn, setEditBtn] = useState(true);
-    const [selectedName, setSelectedName] = useState('');
-    const [selectedRadios, setSelectedRadios] = useState([]);
-    const [eventData, setEventData] = useState(null);
-    const [memo, setMemo] = useState('');
+    const [eventData, setEventData] = useState([]);
     const [timeList, setTimeList] = useState([]);
-    const [title, setTitle] = useState();
-    const [detail, setDetail] = useState();
-    const eventId = localStorage.getItem('eventId');
+    const [title, setTitle] = useState('');
+    const [detail, setDetail] = useState('');
     const location = useLocation();
     const id = new URLSearchParams(location.search).get('eventId');
 
@@ -26,7 +20,7 @@ const AttendanceListPage = () => {
         const fetchData = async () => {
             try {
                 const participationList = await getParticipation(id);
-                console.log('Participation List:', participationList); // 데이터 확인 로그 추가
+                console.log('Participation List:', participationList);
 
                 if (participationList.length === 0) {
                     console.warn('No participation data found.');
@@ -35,75 +29,69 @@ const AttendanceListPage = () => {
 
                 setTitle(participationList[0]?.event_tb?.title);
                 setDetail(participationList[0]?.event_tb?.detail);
-                setEventData(participationList);
 
-                const checkedByNames = [];
-                const timeByNames = [];
+                const times = JSON.parse(participationList[0].time);
+                setTimeList(times);
 
-                const uniqueTimes = Array.from(new Set(participationList.map(item => item.time))).map(time => time.replace(/\//g, ''));
-                setTimeList(Array.from(new Set(participationList.map(item => item.time))));
-
-                participationList.forEach(item => {
-                    checkedByNames.push(item.checked);
-                    timeByNames.push(item.time);
-                });
-
-                setEventData(prevData => ({
-                    ...prevData,
-                    checkedByNames,
-                    uniqueTimes
+                const parsedParticipationData = participationList.map(item => ({
+                    name: item.name,
+                    checked: JSON.parse(item.checked)
                 }));
+                setEventData(parsedParticipationData);
+
             } catch (error) {
                 console.error('Error fetching participation data:', error);
             }
         };
         fetchData();
     }, [id]);
-    
+
     const onEditClick = () => {
-        const queryData = new URLSearchParams();
-        queryData.append('eventId', JSON.stringify(eventId));
-        navigate(`/?${queryData.toString()}`);
+        navigate(`/?eventId=${id}`);
     };
 
-    const onAttendClick = async () => {
-        const data = {
-            name: attendanceName,
-            time: timeList,
-            checked: selectedRadios,
-            memo: memo,
-            event_id: eventData.event_id // 수정된 부분
-        };
-        const response = await saveParticipation(eventData.event_id, attendanceName, selectedRadios, memo, timeList);
-        if(response.data) {
-            window.location.reload();
-        } else {
-            alert("수정에 실패하였습니다.");
-        }
+    const getRowBackgroundColor = (rows) => {
+        const rankedRows = rows.map(row => {
+            const yesCount = row.statuses.filter(status => status.includes('yes')).length;
+            const questionCount = row.statuses.filter(status => status.includes('question')).length;
+            return { ...row, yesCount, questionCount };
+        });
+
+        const sortedCounts = [...rankedRows].sort((a, b) => {
+            if (b.yesCount !== a.yesCount) {
+                return b.yesCount - a.yesCount;
+            } else {
+                return b.questionCount - a.questionCount;
+            }
+        });
+
+        const colorMapping = sortedCounts.reduce((acc, row, index) => {
+            acc[row.time] = index === 0 ? S.GreenBackground : index === 1 ? S.BlueBackground : null;
+            return acc;
+        }, {});
+
+        return rows.map(row => ({
+            ...row,
+            backgroundColor: colorMapping[row.time]
+        }));
     };
 
-    const onClickBack = () => {
-        setSelectedName('');
+    const formatDateString = (dateString) => {
+        const [datePart, timePart] = dateString.split(' / ');
+        const [month, day] = datePart.split('월 ').map(s => s.replace('일', ''));
+        const date = new Date(`2023-${month}-${day}`);  // 임의의 연도로 Date 객체 생성
+        const dayOfWeek = date.toLocaleDateString('ko-KR', { weekday: 'short' }); // 요일 추출
+        return (
+            <span>
+                <strong>{`${month}.${day}(${dayOfWeek})`}</strong> {timePart}
+            </span>
+        );
     };
 
-    const EditClick = (name) => {
-        if (name === attendanceName) {
-            setSelectedName(name);
-        } else {
-            setSelectedName('');
-        }
-        setEditBtn(false);
-    };
-
-    const onChangeRadio = (e, index) => {
-        const updatedRadios = [...selectedRadios];
-        updatedRadios[index] = e.target.id;
-        setSelectedRadios(updatedRadios);
-    };
-
-    const onMemoChange = e => {
-        setMemo(e.target.value);
-    };
+    const sortedTimeList = getRowBackgroundColor(timeList.map((time, timeIndex) => {
+        const statuses = eventData.map(participant => participant.checked[timeIndex]);
+        return { time, statuses };
+    }));
 
     return (
         <div css={S.Layout}>
@@ -133,99 +121,33 @@ const AttendanceListPage = () => {
                             <thead>
                                 <tr css={S.ThItem}>
                                     <th>일정</th>
-                                    {eventData && Object.keys(eventData).map((key, index) => {
-                                        if (key !== 'checkedByNames' && key !== 'timeByNames') {
-                                            const item = eventData[key];
-                                            return (
-                                                <th key={index}>
-                                                    <div onClick={() => EditClick(item.name)}>{item.name}</div>
-                                                </th>
-                                            );
-                                        }
-                                    })}
+                                    {eventData.map((participant, index) => (
+                                        <th key={index}>
+                                            {participant.name}
+                                        </th>
+                                    ))}
                                 </tr>
                             </thead>
                             <tbody>
-                                {eventData && eventData.uniqueTimes.map((times, index) => (
-                                    <React.Fragment key={index}>
-                                        {times.split(', ').map((timeData, idx) => {
-                                            const [date, time] = timeData.split('  ');
-                                            const allChecked = eventData.checkedByNames.every(checked => checked.split(', ')[idx].includes('yes'));
-                                            const mixedCheckQuestion = eventData.checkedByNames.some(checked => checked.split(', ')[idx].includes('yes')) && eventData.checkedByNames.some(checked => checked.split(', ')[idx].includes('question'));
+                                {sortedTimeList.map((row, rowIndex) => (
+                                    <tr key={rowIndex} css={[S.TdItem, row.backgroundColor]}>
+                                        <td>{formatDateString(row.time)}</td>
+                                        {eventData.map((participant, pIndex) => {
+                                            const status = participant.checked[rowIndex];
                                             return (
-                                                <tr key={`${index}_${idx}`} css={S.TdItem}>
-                                                    <td>{date} {time}</td>
-                                                    {eventData.checkedByNames.map((checked, nameIndex) => {
-                                                        const statusList = checked.split(', ');
-                                                        const status = statusList[idx];
-                                                        const statusIcon = status.includes('yes') ? <FaCheck /> : status.includes('question') ? <FaQuestion /> : <FaTimes />;
-                                                        const backgroundColor = mixedCheckQuestion ? S.BlueBackground : allChecked ? S.GreenBackground : null;
-                                                        return (
-                                                            <td key={nameIndex} css={backgroundColor}>
-                                                                {statusIcon}
-                                                            </td>
-                                                        );
-                                                    })}
-                                                </tr>
+                                                <td key={pIndex}>
+                                                    {status === `yes_${rowIndex}` && <FaCheck />}
+                                                    {status === `question_${rowIndex}` && <FaQuestion />}
+                                                    {status === `no_${rowIndex}` && <FaTimes />}
+                                                </td>
                                             );
                                         })}
-                                    </React.Fragment>
+                                    </tr>
                                 ))}
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </div>
-            <div css={S.Line}>
-                {selectedName === attendanceName &&
-                    <div css={S.Layout}>
-                        <div css={S.Component}>
-                            <div css={S.AttendBox}>
-                                <div css={S.InputItem}>
-                                    <h3>참석자 이름</h3>
-                                    <input type="text" placeholder="이름을 입력하세요" value={selectedName} disabled/>
-                                </div>
-                                <div css={S.TimeItem}>
-                                    <h3>나의 빈타임</h3>
-                                    <div css={S.TimeBox}>
-                                        {timeList[0]?.split(', ').map((date, index) => (
-                                            <React.Fragment key={index}>
-                                                <div key={index} css={S.Times}>
-                                                    <div css={S.Date}>
-                                                        <h4>{date.split('/')[0]}</h4>
-                                                        <span>{date.split('/')[1]}</span>
-                                                    </div>
-                                                    <div css={S.Btns}>
-                                                        <div css={S.Radio}>
-                                                            <input type="radio" id={`yes_${index}`} name={`check_${index}`} onChange={(e) => onChangeRadio(e, index)} />
-                                                            <label htmlFor={`yes_${index}`}><FaCheck /></label>
-                                                        </div>
-                                                        <div css={S.Radio}>
-                                                            <input type="radio" id={`question_${index}`} name={`check_${index}`} onChange={(e) => onChangeRadio(e, index)} />
-                                                            <label htmlFor={`question_${index}`}><FaQuestion /></label>
-                                                        </div>
-                                                        <div css={S.Radio}>
-                                                            <input type="radio" id={`no_${index}`} name={`check_${index}`} onChange={(e) => onChangeRadio(e, index)} />
-                                                            <label htmlFor={`no_${index}`}><FaTimes /></label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </React.Fragment>
-                                        ))}
-                                    </div>
-                                </div>
-                            <div css={S.InputItem}>
-                                <h3>메모</h3>
-                                <input type="text" placeholder="특이사항을 적어주세요" value={memo} onChange={onMemoChange}/>
-                            </div>
-                        </div>
-                    </div>
-                        <div css={S.BtnBox}>
-                            <button onClick={onClickBack} css={S.BtnLeft}>돌아가기</button>
-                            <button onClick={onAttendClick} css={S.BtnRight}>수정완료</button>
-                        </div>
-                    </div>
-                }
             </div>
         </div>
     );

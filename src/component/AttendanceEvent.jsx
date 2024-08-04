@@ -64,7 +64,8 @@ const AttendanceEvent = ({ children, timeList, eventData }) => {
 
                 const { data: responseData, error: responseError } = await supabase
                     .from('participation_tb')
-                    .insert([data]);
+                    .insert([data])
+                    .select();
 
                 if (responseError) {
                     throw responseError;
