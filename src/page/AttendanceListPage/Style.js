@@ -48,9 +48,68 @@ export const MainImgBox = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    & img {
-        height: 200px;
-    }
+`;
+
+export const TableContainer = css`
+  position: relative;
+  width: 720px;
+  height: 170px;
+  margin: 0 auto;
+`;
+
+export const TableImage = css`
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 2;
+`;
+
+export const FrontCharacterContainer = css`
+  position: absolute;
+  text-align: center;
+  width: 104px;
+`;
+
+export const BackCharacterContainer = css`
+  position: absolute;
+  text-align: center;
+  width: 104px;
+`;
+
+export const NameAbove = css`
+  position: absolute;
+  bottom: 100%;  /* 캐릭터 위에 배치 */
+  transform: translateY(-10px);  /* 캐릭터와의 간격 조정 */
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: #333;
+`;
+
+export const NameBelow = css`
+  position: absolute;
+  top: 100%;  /* 캐릭터 아래에 배치 */
+  transform: translateY(10px);  /* 캐릭터와의 간격 조정 */
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: #333;
+`;
+
+export const BackCharacter = css`
+    position: absolute;
+    bottom: 78px;
+    width: 104px;
+    height: 222px;
+    z-index: 1;  // 테이블 이미지 뒤에 배치
+`;
+
+export const FrontCharacter = css`
+  position: absolute;
+  bottom: -42px;
+  width: 104px;
+  height: 222px;
+  z-index: 3;
 `;
 
 export const HeaderBox = css`
@@ -276,24 +335,6 @@ export const BtnRight = css`
 export const Line = css`
     border-top: 1px solid #dbdbdb;
 `;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 export const InputItem = css`
     display: flex;

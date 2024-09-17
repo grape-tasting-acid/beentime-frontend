@@ -59,7 +59,7 @@ const AttendanceEvent = ({ children, timeList, eventData }) => {
                     time: timeList,
                     checked: selectedRadios,
                     memo: memo,
-                    event_id: eventData.event_id // 수정된 부분
+                    event_id: eventData.event_id
                 };
 
                 const { data: responseData, error: responseError } = await supabase

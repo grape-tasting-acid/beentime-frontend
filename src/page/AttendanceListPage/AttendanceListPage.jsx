@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 /** @jsxImportSource @emotion/react */
 import * as S from './Style';
 import img from '../../Img/change.png';
-import img2 from '../../Img/main.png';
+import tableImage from '../../Img/table1.png'; // 테이블 이미지
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FaCheck, FaQuestion, FaTimes } from 'react-icons/fa'; 
 import { getParticipation } from '../../services/supabaseService';
+
+const characterImages = Array.from({ length: 10 }, (_, i) => require(`../../Img/characters/character${i + 1}.png`));
 
 const AttendanceListPage = () => {
     const navigate = useNavigate();
@@ -50,6 +52,18 @@ const AttendanceListPage = () => {
         navigate(`/?eventId=${id}`);
     };
 
+    // 날짜 형식을 변환하는 함수
+    const formatDateString = (dateString) => {
+        const [datePart, timePart] = dateString.split(' / ');
+        const [month, day] = datePart.split('월 ').map(s => s.replace('일', ''));
+        return (
+            <span>
+                <strong>{`${month}.${day}`}</strong> {timePart}
+            </span>
+        );
+    };
+
+    // 각 줄의 배경색을 설정하는 함수
     const getRowBackgroundColor = (rows) => {
         const rankedRows = rows.map(row => {
             const yesCount = row.statuses.filter(status => status.includes('yes')).length;
@@ -76,22 +90,45 @@ const AttendanceListPage = () => {
         }));
     };
 
-    const formatDateString = (dateString) => {
-        const [datePart, timePart] = dateString.split(' / ');
-        const [month, day] = datePart.split('월 ').map(s => s.replace('일', ''));
-        const date = new Date(`2023-${month}-${day}`);  // 임의의 연도로 Date 객체 생성
-        const dayOfWeek = date.toLocaleDateString('ko-KR', { weekday: 'short' }); // 요일 추출
-        return (
-            <span>
-                <strong>{`${month}.${day}(${dayOfWeek})`}</strong> {timePart}
-            </span>
-        );
+    // 시간을 정렬한 리스트 생성
+    const sortedTimeList = getRowBackgroundColor(
+        timeList.map((time, timeIndex) => {
+            const statuses = eventData.map(participant => participant.checked[timeIndex]);
+            return { time, statuses };
+        })
+    );
+
+    const getRandomCharacterPlacements = () => {
+        const placements = [];
+        const usedPositions = new Set(); // 사용된 위치를 추적
+        const usedCharacters = new Set(); // 사용된 캐릭터를 추적
+
+        for (let i = 0; i < eventData.length; i++) {
+            let position;
+            do {
+                position = Math.floor(Math.random() * 5); // 0~4의 랜덤 위치를 선택
+            } while (usedPositions.has(position));
+            usedPositions.add(position);
+
+            let characterIndex;
+            do {
+                characterIndex = Math.floor(Math.random() * characterImages.length);
+            } while (usedCharacters.has(characterIndex));
+            usedCharacters.add(characterIndex);
+
+            const isFront = Math.random() < 0.5;  // 앞줄과 뒷줄에 랜덤으로 배치
+
+            placements.push({
+                position,
+                character: characterImages[characterIndex],
+                isFront
+            });
+        }
+
+        return placements;
     };
 
-    const sortedTimeList = getRowBackgroundColor(timeList.map((time, timeIndex) => {
-        const statuses = eventData.map(participant => participant.checked[timeIndex]);
-        return { time, statuses };
-    }));
+    const characterPlacements = getRandomCharacterPlacements();
 
     return (
         <div css={S.Layout}>
@@ -108,8 +145,23 @@ const AttendanceListPage = () => {
                 </div>
             </div>
             <div css={S.Component}>
-                <div css={S.MainImgBox}>
-                    <img src={img2} alt="Main" />
+                <div css={S.MainImgBox} style={{ marginTop: '294px', marginBottom: '134px' }}>
+                    <div css={S.TableContainer}>
+                        <img src={tableImage} alt="Table" css={S.TableImage} />
+                        {characterPlacements.map((placement, index) => {
+                            const leftPosition = 68 + placement.position * (104 + 16); // 첫 위치는 68px, 간격은 16px
+
+                            return (
+                                <img
+                                    key={index}
+                                    src={placement.character}
+                                    alt={`Character ${index + 1}`}
+                                    css={placement.isFront ? S.FrontCharacter : S.BackCharacter}
+                                    style={{ left: `${leftPosition}px` }}
+                                />
+                            );
+                        })}
+                    </div>
                 </div>
                 <div css={S.AttendBox}>
                     <div css={S.TimeItem}>

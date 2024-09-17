@@ -5,7 +5,16 @@ import Calendar from 'react-calendar';
 import moment from 'moment';
 import Select from 'react-select';
 import { useLocation, useNavigate } from 'react-router-dom';
-import img from '../../Img/image.png';
+import logo from '../../Img/logo/logo.png';
+
+// 선택 전후의 이미지를 import
+import table1 from '../../Img/tables/table1.png'; // 첫 번째 이미지 선택 전
+import table1Selected from '../../Img/tables/table1Selected.png'; // 첫 번째 이미지 선택 후
+import table2 from '../../Img/tables/table2.png'; // 두 번째 이미지 선택 전
+import table2Selected from '../../Img/tables/table2Selected.png'; // 두 번째 이미지 선택 후
+import table3 from '../../Img/tables/table3.png'; // 세 번째 이미지 선택 전
+import table3Selected from '../../Img/tables/table3Selected.png'; // 세 번째 이미지 선택 후
+
 import { saveEvent, editEvent, getEvent } from '../../services/supabaseService';
 import queryString from 'query-string';
 
@@ -13,6 +22,7 @@ function CreateEventPage(props) {
     const [selectedDates, setSelectedDates] = useState([]);
     const [timeSlots, setTimeSlots] = useState([]);
     const [eventData, setEventData] = useState({ title: '', detail: '' });
+    const [selectedImage, setSelectedImage] = useState(null); // 선택된 이미지를 관리하는 상태
     const navigate = useNavigate();
     const location = useLocation();
     const queryData = queryString.parse(location.search);
@@ -78,8 +88,34 @@ function CreateEventPage(props) {
     
         const eventList = selectedDates.map((date, index) => {
             const formattedDate = moment(date).format('M월 D일');
+            let dayOfWeekShort = moment(date).locale('ko').format('ddd');  // 요일 한글로 포맷
             const timeSlot = timeSlots[index];
-            return `${formattedDate} / ${timeSlot.label}`;
+            switch (dayOfWeekShort) {
+                case 'Mon':
+                    dayOfWeekShort = '월';
+                    break;
+                case 'Tue':
+                    dayOfWeekShort = '화';
+                    break;
+                case 'Wed':
+                    dayOfWeekShort = '수';
+                    break;
+                case 'Thu':
+                    dayOfWeekShort = '목';
+                    break;
+                case 'Fri':
+                    dayOfWeekShort = '금';
+                    break;
+                case 'Sat':
+                    dayOfWeekShort = '토';
+                    break;
+                case 'Sun':
+                    dayOfWeekShort = '일';
+                    break;
+                default:
+                    dayOfWeekShort = '';
+            }
+            return `${formattedDate} (${dayOfWeekShort}) / ${timeSlot.label}`;
         });
     
         try {
@@ -105,6 +141,10 @@ function CreateEventPage(props) {
         } catch (error) {
             console.error('Error creating/editing event:', error);
         }
+    };
+
+    const handleImageSelect = (imageIndex) => {
+        setSelectedImage(imageIndex);
     };
 
     const tileContent = ({ date, view }) => {
@@ -163,25 +203,25 @@ function CreateEventPage(props) {
 
         switch (formattedDayOfWeek.substring(0, 3)) {
             case 'Mon':
-                dayOfWeekShort = '일';
-                break;
-            case 'Tue':
                 dayOfWeekShort = '월';
                 break;
-            case 'Wed':
+            case 'Tue':
                 dayOfWeekShort = '화';
                 break;
-            case 'Thu':
+            case 'Wed':
                 dayOfWeekShort = '수';
                 break;
-            case 'Fri':
+            case 'Thu':
                 dayOfWeekShort = '목';
                 break;
-            case 'Sat':
+            case 'Fri':
                 dayOfWeekShort = '금';
                 break;
-            case 'Sun':
+            case 'Sat':
                 dayOfWeekShort = '토';
+                break;
+            case 'Sun':
+                dayOfWeekShort = '일';
                 break;
             default:
                 dayOfWeekShort = '';
@@ -204,13 +244,44 @@ function CreateEventPage(props) {
 
     return (
         <div css={S.Layout}>
-            <div css={S.ImgBox}>
-                <img src={img} alt='' />
-            </div>
             <div css={S.Component}>
-                <h1 css={S.Title}>이벤트를 만들어보세요</h1>
+                {/* 로고를 가운데 중앙에 배치 */}
+                <img src={logo} alt="Logo" style={{ display: 'block', margin: '80px auto' }} />
+
+                {/* 어떤 모임이야? 선택 부분 추가 */}
                 <div css={S.Top}>
-                    <h5>이벤트 제목</h5>
+                    <h5>어떤 모임이야?</h5>
+                    <div css={S.SelectImagesContainer}>
+                        <div>
+                            <img
+                                src={selectedImage === 0 ? table1Selected : table1}
+                                alt="밥모임"
+                                onClick={() => handleImageSelect(0)}
+                            />
+                            <div css={S.ImageLabel}>밥모임</div>
+                        </div>
+                        <div>
+                            <img
+                                src={selectedImage === 1 ? table2Selected : table2}
+                                alt="술모임"
+                                onClick={() => handleImageSelect(1)}
+                            />
+                            <div css={S.ImageLabel}>술모임</div>
+                        </div>
+                        <div>
+                            <img
+                                src={selectedImage === 2 ? table3Selected : table3}
+                                alt="일모임"
+                                onClick={() => handleImageSelect(2)}
+                            />
+                            <div css={S.ImageLabel}>일모임</div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* 모임 이름 입력 부분 */}
+                <div css={S.Top}>
+                    <h5>모임 이름은?</h5>
                     <input 
                         type="text" 
                         name="title"
@@ -219,19 +290,10 @@ function CreateEventPage(props) {
                         onChange={handleInputChange} 
                     />
                 </div>
-                <div css={S.Bottom}>
-                    <h5>(선택) 이벤트 세부내용</h5>
-                    <input 
-                        type="text" 
-                        name="detail"
-                        placeholder='ex. 이번 프로젝트도 화이팅입니다!' 
-                        value={eventData.detail} 
-                        onChange={handleInputChange} 
-                    />
-                </div>
+
                 <div css={S.CalendarLayout}>
                     <div css={S.CalendarBox}>
-                        <h5 css={S.H5}>가능한 빈타임</h5>
+                        <h5 css={S.H5}>후보 날짜를 정해볼까?</h5>
                         <div css={S.calendarContainer}>
                             <Calendar
                                 defaultView={'month'}

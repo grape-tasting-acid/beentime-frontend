@@ -124,7 +124,7 @@ export const CalendarLayout = css`
 export const BtnTrue = css`
     margin-top: 50px;
     width: 100%;
-    height: 40px;
+    height: 68px; /* 버튼 높이를 68px로 설정 */
     font-size: 18px;
     background-color: #000000;
     border: none;
@@ -141,7 +141,7 @@ export const BtnTrue = css`
 export const BtnFalse = css`
     margin-top: 50px;
     width: 100%;
-    height: 40px;
+    height: 68px; /* 버튼 높이를 68px로 설정 */
     font-size: 18px;
     background-color: #DFE2E6;
     border: none;
@@ -375,4 +375,36 @@ export const AddBtn = css`
     border: none;
     background-color: transparent;
     font-size: 30px;
+`;
+
+// 새로 추가된 SelectImagesContainer 스타일
+export const SelectImagesContainer = css`
+    display: flex;
+    justify-content: start; /* 왼쪽 정렬 */
+    align-items: center;
+    margin-bottom: 20px;
+
+    & > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 30px; /* 이미지 간의 간격 */
+    }
+
+    & > div:last-of-type {
+        margin-right: 0; /* 마지막 이미지 간격 제거 */
+    }
+`;
+
+export const ImageLabel = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 230px;
+    height: 18px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2E343F;
+    margin-top: 18px;
+    margin-bottom: 60px; /* "모임 이름은?"과의 간격 */
 `;
