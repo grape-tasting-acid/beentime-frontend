@@ -10,74 +10,61 @@ export const Layout = css`
     position: relative;
 `;
 
-export const ImgBox = css`
-    position: absolute;
-    top: 30px;
-    left: 30px;
-
-    @media (max-width: 800px) {
-        left: 0px;
-    }
-`;
-
 export const H1 = css`
-    font-size: 40px;
+    font-size: 20px;  /* Changed to match the size of the "모임 페이지 가기" button text */
     font-weight: 700;
     color: #0F1720;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
+    text-align: left;
+    width: 750px;
 
     @media (max-width: 800px) {
-        font-size: 26px;
+        font-size: 18px;  /* Adjust font size for smaller screens */
+        width: auto;
     }
 `;
 
 export const UrlBox = css`
-    width: 25%;
+    width: 750px;
+    height: 52px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 
     input {
         border: 1px solid #F1F2F4;
-        width: 100%;
-        height: 40px;
+        width: calc(100% - 188px); /* Adjusted width to accommodate button and spacing */
+        height: 100%;
         border-radius: 10px;
         padding-left: 10px;
         outline: none;
         color: #0F1720;
+        font-size: 16px;
     }
 
     button {
+        width: 180px;
+        height: 52px;
+        margin-left: 8px;
         border: 1px solid #0F1720;
         background-color: transparent;
-        white-space: nowrap;
-        width: 80px;
-        height: 40px;
-        margin-left: 10px;
         border-radius: 8px;
         cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        text-align: center;
 
         @media (max-width: 800px) {
-            display: flex;
-            justify-content: center;
-            align-items: center;
             width: 100%;
-            flex-direction: column;
             margin-top: 10px;
             font-size: 18px;
         }
     }
-
-    @media (max-width: 800px) {
-        width: 92%;
-        flex-direction: column;
-    }
 `;
 
 export const Btn = css`
-    width: 25%;
-    height: 40px;
+    width: 750px;
+    height: 68px;
     border: none;
     background-color: #000000;
     color: #FFFFFF;

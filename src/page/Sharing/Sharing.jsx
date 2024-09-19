@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 /** @jsxImportSource @emotion/react */
 import * as S from './Style';
-import img from '../../Img/image.png';
+import logo from '../../Img/logo/logo.png';  // Added logo import
 import { useNavigate } from 'react-router-dom';
 
 function Sharing(props) {
@@ -44,20 +44,18 @@ function Sharing(props) {
 
     return (
         <div css={S.Layout}>
-            <div css={S.ImgBox}>
-                <img src={img} alt="" />
-            </div>
-            <h1 css={S.H1}>이벤트 페이지가 완성됐어요!</h1>
+            <img src={logo} alt="Logo" style={{ display: 'block', paddingTop: '20px', margin: '0 auto 100px auto' }} />  {/* Added logo */}
+            <h1 css={S.H1}>이제 이 링크를 공유해보자!</h1>
             <div css={S.UrlBox}>
                 <input 
                     type="text" 
                     value={`${window.location.origin}/attend?eventId=${encodeURIComponent(sessionStorage.getItem('eventId'))}`} 
-                    onChange={() => {}}
+                    onChange={() => {}} 
                     readOnly
                 />
                 <button onClick={handleClick}>{buttonLabel}</button>
             </div>
-            <button css={S.Btn} onClick={handleOnClick}>이벤트 페이지 가기</button>
+            <button css={S.Btn} onClick={handleOnClick}>모임 페이지 가기</button>
         </div>
     );
 }

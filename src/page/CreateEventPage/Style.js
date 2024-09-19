@@ -7,6 +7,7 @@ export const Layout = css`
     align-items: center;
     width: 100vw;
     height: 100vh;
+    padding-top: 100px;
 
     @media (max-width: 800px) {
         height: auto;

@@ -88,11 +88,11 @@ const AttendanceEvent = ({ children, timeList, eventData }) => {
             <div css={S.Component}>
                 <div css={S.AttendBox}>
                     <div css={S.InputItem}>
-                        <h3>참석자 이름</h3>
+                        <h3>이름을 알려줘!</h3>
                         <input type="text" placeholder="이름을 입력하세요" value={attendeeName} onChange={onNameChange} />
                     </div>
                     <div css={S.TimeItem}>
-                        <h3>나의 빈타임</h3>
+                        <h3>나의 빈타임은?</h3>
                         <div css={S.TimeBox}>
                             {timeList?.map((date, index) => (
                                 <div key={index} css={S.Times}>

@@ -1,20 +1,23 @@
 import { css } from '@emotion/react';
 
+// Layout 설정
 export const Layout = css`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     padding-top: 80px;
 
     @media (max-width: 800px) {
         height: auto;
         padding-top: 0px;
+        margin-top: 20px;
     }
 `;
 
+// Header 스타일
 export const Header = css`
     display: flex;
     flex-direction: column;
@@ -24,20 +27,22 @@ export const Header = css`
     background-color: #F9FAFA;
 `;
 
+// ImgBox 스타일
 export const ImgBox = css`
-    width: 100%;
-    margin: 30px 0px 0px 50px;
-
+    width: auto; /* 너비를 자동으로 설정 */
+    margin-right: 20px; /* 제목과 간격을 맞추기 위해 오른쪽 마진 추가 */
     @media (max-width: 800px) {
-        margin: 0px 0px 30px 0px;
+        margin-right: 10px; /* 모바일에서 간격을 조금 줄임 */
     }
 `;
 
+// HeaderBox 스타일
 export const HeaderBox = css`
     display: flex;
     flex-direction: column;
     width: 50vw;
     margin-bottom: 40px;
+
     & h3 {
         margin-top: 20px;
         font-size: 20px;
@@ -49,6 +54,7 @@ export const HeaderBox = css`
         margin-left: 20px;
         margin-bottom: 20px;
         width: 100%;
+        
         & h3 {
             margin-top: 6px;
             font-size: 14px;
@@ -56,16 +62,19 @@ export const HeaderBox = css`
     }
 `;
 
+// HeaderItem 스타일
 export const HeaderItem = css`
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 50px;
+
     & h1 {
         font-size: 40px;
         font-weight: 900;
         color: #0F1720;
     }
+
     & button {
         height: 75%;
         width: 10%;
@@ -81,9 +90,11 @@ export const HeaderItem = css`
         justify-content: start;
         gap: 10px;
         height: 30px;
+
         & h1 {
             font-size: 24px;
         }
+
         & button {
             height: 75%;
             width: 10%;
@@ -98,6 +109,385 @@ export const HeaderItem = css`
     }
 `;
 
-export const BtnBox = css`
+// Component 스타일 (리스트 및 참여 신청 컴포넌트)
+export const Component = css`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     width: 40vw;
+    margin-bottom: 100px;
+
+    @media (max-width: 800px) {
+        width: 90%;
+        height: auto;
+    }
+`;
+
+// 메인 이미지 박스 (테이블과 캐릭터 배치)
+export const MainImgBox = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+// 테이블 컨테이너 스타일
+export const TableContainer = css`
+    position: relative;
+    width: 720px;
+    height: 170px;
+    margin: 0 auto;
+`;
+
+// 테이블 이미지 스타일
+export const TableImage = css`
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+`;
+
+// 캐릭터 위치 스타일
+export const FrontCharacterContainer = css`
+    position: absolute;
+    text-align: center;
+    width: 104px;
+`;
+
+export const BackCharacterContainer = css`
+    position: absolute;
+    text-align: center;
+    width: 104px;
+`;
+
+export const NameAbove = css`
+    position: absolute;
+    bottom: 100%;  /* 캐릭터 위에 배치 */
+    transform: translateY(-10px);  /* 캐릭터와의 간격 조정 */
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+`;
+
+export const NameBelow = css`
+    position: absolute;
+    top: 100%;  /* 캐릭터 아래에 배치 */
+    transform: translateY(10px);  /* 캐릭터와의 간격 조정 */
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+`;
+
+export const BackCharacter = css`
+    position: absolute;
+    bottom: 78px;
+    width: 104px;
+    height: 222px;
+    z-index: 1;  // 테이블 이미지 뒤에 배치
+`;
+
+export const FrontCharacter = css`
+    position: absolute;
+    bottom: -42px;
+    width: 104px;
+    height: 222px;
+    z-index: 3;
+`;
+
+// 참석자 리스트 박스
+export const AttendBox = css`
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    gap: 45px;
+    margin-top: 30px;
+`;
+
+// 시간 아이템 (모두의 빈타임)
+export const TimeItem = css`
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    & h3 {
+        font-size: 24px;
+        font-weight: 900;
+        color: #0F1720;
+    }
+
+    & span {
+        font-size: 18px;
+        font-weight: 700;
+        color: #0F1720;
+    }
+
+    @media (max-width: 800px) {
+        & h3 {
+            font-size: 20px;
+            font-weight: 900;
+            color: #0F1720;
+        }
+
+        & span {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0F1720;
+        }
+    }
+`;
+
+// 테이블 박스 (참석자 상태)
+export const TableBox = css`
+    text-align: center;
+    overflow-x: auto;
+    height: 30vh;
+`;
+
+export const Table = css`
+    margin: 0 auto; 
+    width: 100%;
+    border-radius: 8px; 
+    overflow: hidden;
+`;
+
+export const ThItem = css`
+    & > th {
+        height: 50px;
+        background-color: #F9FAFA;
+        border: 1px solid #DFE2E6;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    @media (max-width: 800px) {
+        & > th {
+            height: 40px;
+        }
+    }
+`;
+
+export const TdItem = css`
+    & > td {
+        height: 50px;
+        text-align: center;
+        vertical-align: middle;
+        border: 1px solid #DFE2E6;
+    }
+
+    & > td:first-of-type {
+        background-color: #F9FAFA;
+        width: 25%;
+    }
+
+    & td > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    @media (max-width: 800px) {
+        & > td {
+            height: 40px;
+            font-size: 12px;
+        }
+
+        & td > div {
+            display: block;
+        }
+    }
+`;
+
+// 버튼 박스
+export const BtnBox = css`
+    display: flex;
+    justify-content: center;
+    width: 40vw;
+    margin-bottom: 100px;
+`;
+
+// 참석자 페이지 내 버튼 스타일
+export const BtnLeft = css`
+    width: 100%;
+    height: 40px;
+    font-size: 18px;
+    background-color: transparent;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: 10px;
+
+    @media (max-width: 800px) {
+        margin-bottom: 20px;
+        width: 400px;
+        font-size: 12px;
+    }
+`;
+
+export const BtnRight = css`
+    width: 100%;
+    height: 40px;
+    font-size: 18px;
+    background-color: #000000;
+    border: none;
+    border-radius: 5px;
+    color: #FFFF;
+    font-weight: 600;
+    cursor: pointer;
+
+    @media (max-width: 800px) {
+        margin-bottom: 20px;
+        width: 400px;
+        font-size: 12px;
+    }
+`;
+
+// 빈타임 라인
+export const Line = css`
+    border-top: 1px solid #dbdbdb;
+`;
+
+// 입력 아이템 스타일
+export const InputItem = css`
+    display: flex;
+    flex-direction: column;
+
+    & h3 {
+        font-size: 24px;
+        font-weight: 900;
+        color: #0F1720;
+    }
+
+    & input {
+        margin-top: 15px;
+        padding: 10px 18px;
+        border-radius: 5px;
+        border: 2px solid #F1F2F4;
+        font-size: 18px;
+        align-items: center;
+
+        &::placeholder {
+            color: #A9AFB6;
+        }
+    }
+
+    @media (max-width: 800px) {
+        & h3 {
+            font-size: 18px;
+        }
+
+        & input {
+            font-size: 14px;
+        }
+    }
+`;
+
+// 시간 박스
+export const TimeBox = css`
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-x: auto;
+    height: 30vh;
+`;
+
+// 시간 리스트
+export const Times = css`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+// 날짜 스타일
+export const Date = css`
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+    align-items: center;
+
+    & h4 {
+        font-size: 18px;
+        font-weight: 900;
+        color: #0F1720;
+    }
+
+    & span {
+        font-size: 18px;
+        font-weight: 500;
+        color: #0F1720;
+    }
+
+    @media (max-width: 800px) {
+        & h4 {
+            font-size: 16px;
+        }
+
+        & span {
+            font-size: 16px;
+        }
+    }
+`;
+
+// 라디오 버튼 스타일
+export const Radio = css`
+    & input[type="radio"] {
+        display: none;
+    }
+
+    & label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border-radius: 8px;
+        height: 45px;
+        width: 45px;
+        font-size: larger;
+        background-color: #F1F2F4;
+        color: #2E343F;
+    }
+
+    & input[type="radio"]:checked + label {
+        background-color: #32E3AE;
+        color: #2E343F;
+    }
+
+    & input[type="radio"] + label {
+        background-color: #F1F2F4;
+        color: #2E343F;
+    }
+
+    @media (max-width: 800px) {
+        & label {
+            height: 35px;
+            width: 35px;
+            font-size: medium;
+        }
+    }
+`;
+
+// 버튼들 그룹 스타일
+export const Btns = css`
+    display: flex;
+    gap: 10px;
+    margin-right: 10px;
+`;
+
+// 백그라운드 색상 설정
+export const GreenBackground = css`
+    background-color: #9BFBD9;
+`;
+
+export const BlueBackground = css`
+    background-color: #DDFFEF;
+`;
+
+export const EventEdit = css`
+    background-color: transparent;
+`;
+
+export const gray = css`
+    color: #dbdbdb;
 `;

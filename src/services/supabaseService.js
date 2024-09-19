@@ -1,10 +1,10 @@
 import supabase from '../api/instance';
 
 // 이벤트 생성
-export const saveEvent = async (title, detail, time) => {
+export const saveEvent = async (title, time) => {
     const { data, error } = await supabase
         .from('event_tb')
-        .insert([{ title, detail, time }])
+        .insert([{ title, time }])
         .select();
 
     if (error) {
@@ -16,10 +16,10 @@ export const saveEvent = async (title, detail, time) => {
 };
 
 // 이벤트 수정
-export const editEvent = async (eventId, title, detail, time) => {
+export const editEvent = async (eventId, title, time) => {
     const { data, error } = await supabase
         .from('event_tb')
-        .update({ title, detail, time })
+        .update({ title, time })
         .eq('event_id', eventId)
         .select();
 
@@ -82,8 +82,7 @@ export const getParticipation = async (eventId) => {
         .select(`
             *,
             event_tb (
-                title,
-                detail
+                title
             )
         `)
         .eq('event_id', eventId);

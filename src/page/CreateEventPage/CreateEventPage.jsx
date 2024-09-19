@@ -7,13 +7,12 @@ import Select from 'react-select';
 import { useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../Img/logo/logo.png';
 
-// 선택 전후의 이미지를 import
-import table1 from '../../Img/tables/table1.png'; // 첫 번째 이미지 선택 전
-import table1Selected from '../../Img/tables/table1Selected.png'; // 첫 번째 이미지 선택 후
-import table2 from '../../Img/tables/table2.png'; // 두 번째 이미지 선택 전
-import table2Selected from '../../Img/tables/table2Selected.png'; // 두 번째 이미지 선택 후
-import table3 from '../../Img/tables/table3.png'; // 세 번째 이미지 선택 전
-import table3Selected from '../../Img/tables/table3Selected.png'; // 세 번째 이미지 선택 후
+import table1 from '../../Img/tables/table1.png';
+import table1Selected from '../../Img/tables/table1Selected.png';
+import table2 from '../../Img/tables/table2.png';
+import table2Selected from '../../Img/tables/table2Selected.png';
+import table3 from '../../Img/tables/table3.png';
+import table3Selected from '../../Img/tables/table3Selected.png';
 
 import { saveEvent, editEvent, getEvent } from '../../services/supabaseService';
 import queryString from 'query-string';
@@ -21,15 +20,14 @@ import queryString from 'query-string';
 function CreateEventPage(props) {
     const [selectedDates, setSelectedDates] = useState([]);
     const [timeSlots, setTimeSlots] = useState([]);
-    const [eventData, setEventData] = useState({ title: '', detail: '' });
-    const [selectedImage, setSelectedImage] = useState(null); // 선택된 이미지를 관리하는 상태
+    const [eventData, setEventData] = useState({ title: ''});
+    const [selectedImage, setSelectedImage] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
     const queryData = queryString.parse(location.search);
     const eventId = queryData.eventId ? JSON.parse(queryData.eventId) : null;
 
     useEffect(() => {
-        console.log('Event ID:', eventId);
         if (eventId) {
             fetchEventData(eventId);
         }
@@ -39,7 +37,6 @@ function CreateEventPage(props) {
         try {
             const response = await getEvent(eventId);
             setEventData(response);
-            console.log('Fetched Event Data:', response);
             if (response.time) {
                 const timeList = response.time.split(', ');
                 setSelectedDates(timeList.map(time => {
@@ -70,25 +67,24 @@ function CreateEventPage(props) {
         }));
     };
 
-    const handleEventCreate = async () => {    
-        console.log('handleEventCreate called');
+    const handleEventCreate = async () => {
         const title = document.querySelector('input[placeholder="ex. 개발팀 회식, 동아리 친목회"]').value;
-        const detail = document.querySelector('input[placeholder="ex. 이번 프로젝트도 화이팅입니다!"]').value;
-    
+        //const detail = document.querySelector('input[placeholder="ex. 이번 프로젝트도 화이팅입니다!"]').value;
+
         if (!title.trim()) {
             alert('이벤트 제목을 입력해주세요.');
             return;
         }
         const isValidTimeSlot = timeSlots.every(slot => slot.hour !== null && slot.minute !== null);
-    
+
         if (!isValidTimeSlot) {
             alert('시간을 선택해주세요.');
             return;
         }
-    
+
         const eventList = selectedDates.map((date, index) => {
             const formattedDate = moment(date).format('M월 D일');
-            let dayOfWeekShort = moment(date).locale('ko').format('ddd');  // 요일 한글로 포맷
+            let dayOfWeekShort = moment(date).locale('ko').format('ddd');
             const timeSlot = timeSlots[index];
             switch (dayOfWeekShort) {
                 case 'Mon':
@@ -117,22 +113,18 @@ function CreateEventPage(props) {
             }
             return `${formattedDate} (${dayOfWeekShort}) / ${timeSlot.label}`;
         });
-    
+
         try {
             if (!eventId) {
-                const response = await saveEvent(title, detail, eventList);
-                console.log('Event response:', response);
+                const response = await saveEvent(title, eventList);
                 if (response) {
-                    console.log('Event created:', response);
                     sessionStorage.setItem('eventId', response[0].event_id);
                     alert("이벤트가 생성되었습니다.");
                     navigate('/sharing');
                 }
             } else {
-                const response = await editEvent(eventId, title, detail, eventList);
-                console.log('Event response:', response);
+                const response = await editEvent(eventId, title, eventList);
                 if (response) {
-                    console.log('Event updated:', response);
                     sessionStorage.setItem('eventId', response[0].event_id);
                     alert("이벤트가 수정되었습니다.");
                     navigate('/sharing');
@@ -243,10 +235,10 @@ function CreateEventPage(props) {
     };
 
     return (
-        <div css={S.Layout}>
+        <div css={S.Layout} style={{ paddingTop: '100px' }}>
             <div css={S.Component}>
                 {/* 로고를 가운데 중앙에 배치 */}
-                <img src={logo} alt="Logo" style={{ display: 'block', margin: '80px auto' }} />
+                <img src={logo} alt="Logo" style={{ display: 'block', paddingTop: '100px', margin: '0 auto 80px auto' }} />
 
                 {/* 어떤 모임이야? 선택 부분 추가 */}
                 <div css={S.Top}>
