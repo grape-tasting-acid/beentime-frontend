@@ -9,7 +9,6 @@ const AttendanceEvent = ({ children, timeList, eventData }) => {
     const navigate = useNavigate();
     const [selectedRadios, setSelectedRadios] = useState([]);
     const [attendeeName, setAttendeeName] = useState('');
-    const [memo, setMemo] = useState('');
     const location = useLocation();
     const id = new URLSearchParams(location.search).get('eventId');
 
@@ -32,55 +31,52 @@ const AttendanceEvent = ({ children, timeList, eventData }) => {
         setAttendeeName(e.target.value);
     };
 
-    const onMemoChange = e => {
-        setMemo(e.target.value);
-    };
-
     const onAttendClick = async () => {
         try {
             const { data: participationList = [], error: participationError } = await supabase
                 .from('participation_tb')
                 .select('*')
                 .eq('event_id', id);
-
+    
             if (participationError) {
                 throw participationError;
             }
-
+    
             const isAlreadyAttended = participationList.some(participation => participation.name === attendeeName);
-
+    
             if (isAlreadyAttended) {
                 sessionStorage.setItem('name', JSON.stringify(attendeeName));
-                alert('이미 참여 완료한 이벤트입니다.');
-                window.location.href = `${window.location.origin}/list?eventId=${encodeURIComponent(id)}`;
+                alert('이미 참여 완료한 모임입니다.');
+                // 페이지 새로 고침
+                window.location.reload();
             } else {
                 const data = {
                     name: attendeeName,
                     time: timeList,
                     checked: selectedRadios,
-                    memo: memo,
                     event_id: eventData.event_id
                 };
-
+    
                 const { data: responseData, error: responseError } = await supabase
                     .from('participation_tb')
                     .insert([data])
                     .select();
-
+    
                 if (responseError) {
                     throw responseError;
                 }
-
+    
                 if (responseData) {
                     sessionStorage.setItem('name', JSON.stringify(attendeeName));
                     alert('참여 완료 하였습니다.');
-                    window.location.href = `${window.location.origin}/list?eventId=${encodeURIComponent(id)}`;
+                    // 페이지 새로 고침
+                    window.location.reload();
                 }
             }
         } catch (error) {
             console.error('Error during participation:', error);
         }
-    };
+    };    
 
     return (
         <div css={S.Layout}>
@@ -116,11 +112,7 @@ const AttendanceEvent = ({ children, timeList, eventData }) => {
                             ))}
                         </div>
                     </div>
-                    <div css={S.InputItem}>
-                        <h3>메모</h3>
-                        <input type="text" placeholder="특이사항을 적어주세요" value={memo} onChange={onMemoChange}/>
-                    </div>
-                    <button css={S.BtnTrue} onClick={onAttendClick}>이벤트 참석하기</button>
+                    <button css={S.BtnTrue} onClick={onAttendClick}>모임 참석하기</button>
                 </div>
             </div>
         </div>

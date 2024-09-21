@@ -72,7 +72,7 @@ function CreateEventPage(props) {
         //const detail = document.querySelector('input[placeholder="ex. 이번 프로젝트도 화이팅입니다!"]').value;
 
         if (!title.trim()) {
-            alert('이벤트 제목을 입력해주세요.');
+            alert('모임 제목을 입력해주세요.');
             return;
         }
         const isValidTimeSlot = timeSlots.every(slot => slot.hour !== null && slot.minute !== null);
@@ -119,14 +119,14 @@ function CreateEventPage(props) {
                 const response = await saveEvent(title, eventList);
                 if (response) {
                     sessionStorage.setItem('eventId', response[0].event_id);
-                    alert("이벤트가 생성되었습니다.");
+                    alert("모임이 생성되었습니다.");
                     navigate('/sharing');
                 }
             } else {
                 const response = await editEvent(eventId, title, eventList);
                 if (response) {
                     sessionStorage.setItem('eventId', response[0].event_id);
-                    alert("이벤트가 수정되었습니다.");
+                    alert("모임이 수정되었습니다.");
                     navigate('/sharing');
                 }
             }
@@ -333,7 +333,7 @@ function CreateEventPage(props) {
                     </div>
                 </div>
                 <button onClick={handleEventCreate} css={selectedDates.length ? S.BtnTrue : S.BtnFalse}>
-                    {eventId ? "이벤트 수정하기" : "이벤트 만들기"}
+                    {eventId ? "모임 수정하기" : "모임 만들기"}
                 </button>
             </div>
         </div>
