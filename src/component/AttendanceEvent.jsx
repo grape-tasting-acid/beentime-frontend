@@ -18,9 +18,6 @@ const AttendanceEvent = ({ children, timeList, eventData }) => {
         }
     }, [timeList]);
 
-    console.log('Event ID:', id);
-    console.log('Time List:', timeList);
-
     const onChangeRadio = (e, index) => {
         const updatedRadios = [...selectedRadios];
         updatedRadios[index] = e.target.id;

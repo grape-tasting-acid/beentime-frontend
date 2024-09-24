@@ -1,3 +1,9 @@
+/* 노토 산스 폰트 적용 */
+body {
+  margin: 0;
+  font-family: 'Noto Sans', sans-serif;
+}
+
 .App {
   text-align: center;
 }
