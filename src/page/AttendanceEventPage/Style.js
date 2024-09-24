@@ -24,7 +24,7 @@ export const Header = css`
     justify-content: center;
     align-items: center;
     width: 100vw;
-    background-color: #F9FAFA;
+    //background-color: #F9FAFA;
 `;
 
 // ImgBox 스타일
@@ -68,6 +68,7 @@ export const HeaderItem = css`
     justify-content: space-between;
     align-items: center;
     height: 50px;
+    margin-top: 14px;
 
     & h1 {
         font-size: 40px;
@@ -76,14 +77,17 @@ export const HeaderItem = css`
     }
 
     & button {
-        height: 75%;
-        width: 10%;
+        height: 42px; // 버튼 높이 설정
+        width: 150px; // 버튼 너비 고정
         border: 1px solid;
         border-radius: 8px;
         font-size: 12px;
         font-weight: 900;
         color: #0F1720;
         cursor: pointer;
+        display: flex; // 아이콘과 텍스트 수평 정렬
+        align-items: center; // 수직 정렬
+        justify-content: center; // 텍스트 중앙 정렬
     }
 
     @media (max-width: 800px) {
@@ -96,15 +100,15 @@ export const HeaderItem = css`
         }
 
         & button {
-            height: 75%;
-            width: 10%;
+            height: 30px; // 모바일 버튼 높이 조정
+            width: auto; // 내용에 맞게 너비 조정
             border: 1px solid;
             border-radius: 8px;
             font-size: 12px;
             font-weight: 900;
             color: #0F1720;
             cursor: pointer;
-            display: none;
+            display: none; // 모바일에서 숨김
         }
     }
 `;
@@ -177,6 +181,7 @@ export const NameBelow = css`
     text-align: center;
     font-size: 14px;
     color: #333;
+    margin-top: 10px;
 `;
 
 export const BackCharacter = css`
@@ -242,6 +247,7 @@ export const TableBox = css`
     text-align: center;
     overflow-x: auto;
     height: 30vh;
+    width: 100%; // 테이블 박스 너비 100%로 설정
 `;
 
 export const Table = css`
@@ -251,7 +257,8 @@ export const Table = css`
     overflow: hidden;
 `;
 
-export const ThItem = css`
+// 참석자 수에 따른 동적 스타일 적용
+export const ThItem = (participantColumnWidth) => css`
     & > th {
         height: 50px;
         background-color: #F9FAFA;
@@ -260,14 +267,23 @@ export const ThItem = css`
         vertical-align: middle;
     }
 
+    & > th:first-of-type {
+        width: 220px; // 일정 열 고정 너비
+    }
+
+    & > th:not(:first-of-type) {
+        width: ${participantColumnWidth}px;
+    }
+
     @media (max-width: 800px) {
         & > th {
             height: 40px;
+            width: 70px; // 모바일에서는 70px 고정
         }
     }
 `;
 
-export const TdItem = css`
+export const TdItem = (participantColumnWidth) => css`
     & > td {
         height: 50px;
         text-align: center;
@@ -277,7 +293,11 @@ export const TdItem = css`
 
     & > td:first-of-type {
         background-color: #F9FAFA;
-        width: 25%;
+        width: 220px; // 일정 열 고정 너비
+    }
+
+    & > td:not(:first-of-type) {
+        width: ${participantColumnWidth}px;
     }
 
     & td > div {
@@ -291,6 +311,7 @@ export const TdItem = css`
         & > td {
             height: 40px;
             font-size: 12px;
+            width: 70px; // 모바일에서는 70px 고정
         }
 
         & td > div {

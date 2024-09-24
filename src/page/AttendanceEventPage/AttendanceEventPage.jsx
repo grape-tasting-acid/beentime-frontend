@@ -3,12 +3,13 @@ import React, { useState, useEffect } from 'react';
 import * as S from '../AttendanceEventPage/Style';
 import mainLogo from '../../Img/main_logo.png';
 import tableImage from '../../Img/table1.png'; // 테이블 이미지
+import editLogo from '../../Img/edit_logo.png';
 import { useNavigate, useLocation } from 'react-router-dom';
 import AttendanceEvent from '../../component/AttendanceEvent';
 import { getEvent, getParticipation, getParticipationName } from '../../services/supabaseService';
 import { FaCheck, FaQuestion, FaTimes } from 'react-icons/fa';
 
-const characterImages = Array.from({ length: 10 }, (_, i) => require(`../../Img/characters/character${i + 1}.png`));
+const characterImages = Array.from({ length: 10 }, (_, i) => require(`../../Img/characters/character${i + 1}.svg`));
 
 const AttendanceEventListPage = () => {
     const navigate = useNavigate();
@@ -47,7 +48,7 @@ const AttendanceEventListPage = () => {
                     setTimeList(times);
                 }
 
-                // 만약 사용자가 이미 참여했다면 리스트 페이지로 이동
+                // 이미 참여한 경우 리스트 페이지로 이동
                 const participationResponse = await getParticipationName(id, name);
                 if (participationResponse.data > 0) {
                     window.location.href = `${window.location.origin}/list?eventId=${encodeURIComponent(id)}`;
@@ -129,7 +130,8 @@ const AttendanceEventListPage = () => {
             placements.push({
                 position,
                 character: characterImages[characterIndex],
-                isFront
+                isFront,
+                name: participants[i].name // 참석자 이름 추가
             });
         }
 
@@ -137,6 +139,22 @@ const AttendanceEventListPage = () => {
     };
 
     const characterPlacements = getRandomCharacterPlacements();
+
+    // 참석자 수에 따른 열 너비 결정
+    const participantCount = participants.length;
+    let participantColumnWidth;
+
+    if (participantCount === 1) {
+        participantColumnWidth = 380;
+    } else if (participantCount === 2) {
+        participantColumnWidth = 190;
+    } else if (participantCount === 3) {
+        participantColumnWidth = 126;
+    } else if (participantCount >= 4) {
+        participantColumnWidth = 95;
+    } else {
+        participantColumnWidth = 95; // 기본값
+    }
 
     return (
         <div css={S.Layout}>
@@ -147,7 +165,14 @@ const AttendanceEventListPage = () => {
                     </div>
                     <div css={S.HeaderItem}>
                         <h1>{eventData?.title}</h1>
-                        <button onClick={onEditClick}>모임 수정하기</button>
+                        <button onClick={onEditClick} style={{ display: 'flex', alignItems: 'center' }}>
+                            <img 
+                                src={editLogo}
+                                alt="모임 수정하기"
+                                style={{ width: '20px', height: '20px', marginRight: '5px' }} // 아이콘 크기 및 간격
+                            />
+                            모임 수정하기
+                        </button>
                     </div>
                     <h3>{eventData?.detail}</h3>
                 </div>
@@ -161,15 +186,28 @@ const AttendanceEventListPage = () => {
                             <img src={tableImage} alt="Table" css={S.TableImage} />
                             {characterPlacements.map((placement, index) => {
                                 const leftPosition = 68 + placement.position * (104 + 16); // 첫 위치는 68px, 간격은 16px
+                                const captionStyle = {
+                                    position: 'absolute',
+                                    left: `${leftPosition + 25}px`,
+                                    width: 'auto',
+                                    textAlign: 'left',
+                                    marginTop: placement.isFront ? '60px' : '-330px', // 뒷줄은 위로, 앞줄은 아래로 배치
+                                    fontSize: '16px', // 폰트 크기 조정
+                                    fontWeight: 'bold', // 굵게 설정
+                                };
 
                                 return (
-                                    <img
-                                        key={index}
-                                        src={placement.character}
-                                        alt={`Character ${index + 1}`}
-                                        css={placement.isFront ? S.FrontCharacter : S.BackCharacter}
-                                        style={{ left: `${leftPosition}px` }}
-                                    />
+                                    <div key={index} style={{ position: 'relative' }}>
+                                        <img
+                                            src={placement.character}
+                                            alt={`Character ${index + 1}`}
+                                            css={placement.isFront ? S.FrontCharacter : S.BackCharacter}
+                                            style={{ left: `${leftPosition}px`, position: 'absolute' }} // 캐릭터 위치
+                                        />
+                                        <div style={captionStyle}>
+                                            {placement.name} {/* 참석자 이름 표시 */}
+                                        </div>
+                                    </div>
                                 );
                             })}
                         </div>
@@ -182,7 +220,7 @@ const AttendanceEventListPage = () => {
                         <div css={S.TableBox}>
                             <table css={S.Table}>
                                 <thead>
-                                    <tr css={S.ThItem}>
+                                    <tr css={S.ThItem(participantColumnWidth)}>
                                         <th>일정</th>
                                         {participants.map((participant, index) => (
                                             <th key={index}>
@@ -193,7 +231,7 @@ const AttendanceEventListPage = () => {
                                 </thead>
                                 <tbody>
                                     {sortedTimeList.map((row, rowIndex) => (
-                                        <tr key={rowIndex} css={[S.TdItem, row.backgroundColor]}>
+                                        <tr key={rowIndex} css={[S.TdItem(participantColumnWidth), row.backgroundColor]}>
                                             <td>{formatDateString(row.time)}</td>
                                             {participants.map((participant, pIndex) => {
                                                 const status = participant.checked[rowIndex];

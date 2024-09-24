@@ -244,8 +244,8 @@ export const Radio = css`
 `;
 
 export const BtnTrue = css`
-    width: 100%;
-    height: 40px;
+    width: 600px;
+    height: 68px;
     font-size: 18px;
     background-color: #000000;
     border: none;
@@ -253,8 +253,12 @@ export const BtnTrue = css`
     color: #FFFF;
     font-weight: 600;
     cursor: pointer;
+    display: flex; // 아이콘 및 텍스트 수평 정렬
+    align-items: center; // 수직 정렬
+    justify-content: center; // 텍스트 중앙 정렬
 
     @media (max-width: 800px) {
+        width: 100%; // 모바일에서 너비를 100%로 설정
         margin-bottom: 20px;
     }
 `;

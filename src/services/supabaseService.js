@@ -47,10 +47,10 @@ export const getEvent = async (eventId) => {
 };
 
 // 참여 생성
-export const saveParticipation = async (eventId, name, checked, memo, time) => {
+export const saveParticipation = async (eventId, name, checked, time) => {
     const { data, error } = await supabase
         .from('participation_tb')
-        .insert([{ event_id: eventId, name, checked, memo, time }])
+        .insert([{ event_id: eventId, name, checked, time }])
         .select();
 
     if (error) {
@@ -61,10 +61,10 @@ export const saveParticipation = async (eventId, name, checked, memo, time) => {
 };
 
 // 참여 업데이트
-export const updateParticipation = async (name, checked, time, memo) => {
+export const updateParticipation = async (name, checked, time) => {
     const { data, error } = await supabase
         .from('participation_tb')
-        .update({ checked, time, memo })
+        .update({ checked, time })
         .eq('name', name)
         .select();
 
