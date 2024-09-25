@@ -79,7 +79,7 @@ export const HeaderItem = css`
     & button {
         height: 42px; // 버튼 높이 설정
         width: 150px; // 버튼 너비 고정
-        border: 1px solid;
+        border: none;
         border-radius: 8px;
         font-size: 12px;
         font-weight: 900;
@@ -451,6 +451,31 @@ export const Date = css`
     }
 `;
 
+export const AttendButton = css`
+    width: 100%; // 부모 컨테이너의 너비에 맞춤
+    height: 68px;
+    font-size: 18px;
+    background-color: #000000;
+    border: none;
+    border-radius: 5px;
+    color: #FFFF;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex; // 아이콘 및 텍스트 수평 정렬
+    align-items: center; // 수직 정렬
+    justify-content: center; // 텍스트 중앙 정렬
+    box-sizing: border-box; // 패딩과 보더를 포함하여 너비를 계산
+    margin-bottom: 100px;
+
+    @media (max-width: 800px) {
+        width: 100%; // 모바일에서도 너비를 100%로 설정
+        height: 50px;
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+`;
+
+
 // 라디오 버튼 스타일
 export const Radio = css`
     & input[type="radio"] {
@@ -511,4 +536,42 @@ export const EventEdit = css`
 
 export const gray = css`
     color: #dbdbdb;
+`;
+
+export const TooltipContainer = css`
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+`;
+
+export const Tooltip = css`
+    position: relative;
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    max-width: 80%;
+    text-align: center;
+
+    &:after {
+        content: '';
+        position: absolute;
+        bottom: -10px; /* 말풍선 아래쪽 화살표 */
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: 10px 10px 0;
+        border-style: solid;
+        border-color: black transparent transparent transparent;
+    }
+`;
+
+export const HighlightedDate = css`
+    color: #00C851; /* 테이블 연두색과 동일한 색상 */
+    font-weight: bold;
+`;
+
+export const ParticipantName = css`
+    text-decoration: underline;
+    cursor: pointer;
+    color: inherit; /* 기존 글자 색상 유지 */
 `;

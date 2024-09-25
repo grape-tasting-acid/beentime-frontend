@@ -9,6 +9,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<CreateEventPage />} />
+        <Route path="/edit" element={<CreateEventPage />} />
         <Route path="/sharing" element={<Sharing />} />
         <Route path="/attend" element={<AttendanceEventPage />} />
         <Route path="/list" element={<AttendanceListPage />} />

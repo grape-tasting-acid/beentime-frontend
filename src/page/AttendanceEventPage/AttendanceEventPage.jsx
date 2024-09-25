@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 /** @jsxImportSource @emotion/react */
 import * as S from '../AttendanceEventPage/Style';
-import mainLogo from '../../Img/main_logo.png';
-import tableImage from '../../Img/table1.png'; // 테이블 이미지
-import editLogo from '../../Img/edit_logo.png';
+import mainLogo from '../../Img/main_logo.svg';
+import tableImage from '../../Img/table1.svg'; // 테이블 이미지
+import editLogo from '../../Img/edit_logo.svg';
 import { useNavigate, useLocation } from 'react-router-dom';
 import AttendanceEvent from '../../component/AttendanceEvent';
 import { getEvent, getParticipation, getParticipationName } from '../../services/supabaseService';
@@ -16,6 +16,8 @@ const AttendanceEventListPage = () => {
     const [eventData, setEventData] = useState(null);
     const [timeList, setTimeList] = useState([]);
     const [participants, setParticipants] = useState([]);
+    const [showAttendanceForm, setShowAttendanceForm] = useState(false);
+    const [editingParticipant, setEditingParticipant] = useState(null); // 추가된 상태 변수
     const name = JSON.parse(sessionStorage.getItem('name'));
     const location = useLocation();
     const id = new URLSearchParams(location.search).get('eventId');
@@ -40,7 +42,8 @@ const AttendanceEventListPage = () => {
                 if (participationList.length > 0) {
                     const parsedParticipationData = participationList.map(item => ({
                         name: item.name,
-                        checked: JSON.parse(item.checked)
+                        checked: JSON.parse(item.checked),
+                        id: item.id, // participation_tb의 primary key
                     }));
                     setParticipants(parsedParticipationData);
 
@@ -61,18 +64,22 @@ const AttendanceEventListPage = () => {
     }, [id, name]);
 
     const onEditClick = () => {
-        navigate('/');
+        navigate(`/edit?eventId=${encodeURIComponent(id)}`);
     };
 
     const formatDateString = (dateString) => {
         const [datePart, timePart] = dateString.split(' / ');
-        const [month, day] = datePart.split('월 ').map(s => s.replace('일', ''));
+        const [month, dayWithWeekday] = datePart.split('월 ');
+        const day = dayWithWeekday.replace('일', '');
         return (
             <span>
                 <strong>{`${month}.${day}`}</strong> {timePart}
             </span>
         );
     };
+
+    // 가장 가능성 높은 날짜를 저장할 변수
+    let topDates = [];
 
     const getRowBackgroundColor = (rows) => {
         const rankedRows = rows.map(row => {
@@ -89,10 +96,17 @@ const AttendanceEventListPage = () => {
             }
         });
 
-        const colorMapping = sortedCounts.reduce((acc, row, index) => {
-            acc[row.time] = index === 0 ? S.GreenBackground : index === 1 ? S.BlueBackground : null;
-            return acc;
-        }, {});
+        const colorMapping = {};
+        sortedCounts.forEach((row, index) => {
+            if (index === 0) {
+                colorMapping[row.time] = S.GreenBackground;
+                topDates.push(row.time); // 가장 가능성 높은 날짜 추가
+            } else if (index === 1) {
+                colorMapping[row.time] = S.BlueBackground;
+            } else {
+                colorMapping[row.time] = null;
+            }
+        });
 
         return rows.map(row => ({
             ...row,
@@ -106,6 +120,35 @@ const AttendanceEventListPage = () => {
             return { time, statuses };
         })
     );
+
+    // 참석자 수에 따른 툴팁 메시지 생성
+    const participantCount = participants.length;
+    let tooltipMessage = null;
+
+    if (participantCount === 1) {
+        tooltipMessage = <span>아직은 나 혼자뿐인가...</span>;
+    } else if (participantCount === 2) {
+        tooltipMessage = <span>오 친구가 생겼군!</span>;
+    } else if (participantCount >= 3) {
+        // 가장 가능성 높은 날짜 포맷팅
+        const formattedDates = topDates.map(dateString => {
+            const datePart = dateString.split(' / ')[0]; // 예: '5월 20일 (금)'
+            const formattedDate = datePart.replace('월 ', '.').replace('일', '');
+            return formattedDate;
+        });
+
+        tooltipMessage = (
+            <span>
+                가장 가능성 높은 날은{' '}
+                {formattedDates.map((date, index) => (
+                    <React.Fragment key={index}>
+                        <span css={S.HighlightedDate}>{date}</span>
+                        {index < formattedDates.length - 1 && ', '}
+                    </React.Fragment>
+                ))}이구만~!!!
+            </span>
+        );
+    }
 
     const getRandomCharacterPlacements = () => {
         const placements = [];
@@ -141,7 +184,6 @@ const AttendanceEventListPage = () => {
     const characterPlacements = getRandomCharacterPlacements();
 
     // 참석자 수에 따른 열 너비 결정
-    const participantCount = participants.length;
     let participantColumnWidth;
 
     if (participantCount === 1) {
@@ -156,6 +198,12 @@ const AttendanceEventListPage = () => {
         participantColumnWidth = 95; // 기본값
     }
 
+    // 이름 클릭 시 호출되는 함수
+    const handleParticipantNameClick = (participant) => {
+        setEditingParticipant(participant);
+        setShowAttendanceForm(true);
+    };
+
     return (
         <div css={S.Layout}>
             <div css={S.Header}>
@@ -166,7 +214,7 @@ const AttendanceEventListPage = () => {
                     <div css={S.HeaderItem}>
                         <h1>{eventData?.title}</h1>
                         <button onClick={onEditClick} style={{ display: 'flex', alignItems: 'center' }}>
-                            <img 
+                            <img
                                 src={editLogo}
                                 alt="모임 수정하기"
                                 style={{ width: '20px', height: '20px', marginRight: '5px' }} // 아이콘 크기 및 간격
@@ -181,6 +229,13 @@ const AttendanceEventListPage = () => {
             {/* 참여자가 있을 때 리스트 컴포넌트 표시 */}
             {participants.length > 0 && (
                 <div css={S.Component}>
+                    {/* 툴팁 추가 */}
+                    <div css={S.TooltipContainer}>
+                        <div css={S.Tooltip}>
+                            {tooltipMessage}
+                        </div>
+                    </div>
+
                     <div css={S.MainImgBox} style={{ marginTop: '294px', marginBottom: '134px' }}>
                         <div css={S.TableContainer}>
                             <img src={tableImage} alt="Table" css={S.TableImage} />
@@ -224,38 +279,60 @@ const AttendanceEventListPage = () => {
                                         <th>일정</th>
                                         {participants.map((participant, index) => (
                                             <th key={index}>
-                                                {participant.name}
+                                                <span
+                                                    css={S.ParticipantName}
+                                                    onClick={() => handleParticipantNameClick(participant)}
+                                                >
+                                                    {participant.name}
+                                                </span>
                                             </th>
                                         ))}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {sortedTimeList.map((row, rowIndex) => (
-                                        <tr key={rowIndex} css={[S.TdItem(participantColumnWidth), row.backgroundColor]}>
-                                            <td>{formatDateString(row.time)}</td>
-                                            {participants.map((participant, pIndex) => {
-                                                const status = participant.checked[rowIndex];
-                                                return (
-                                                    <td key={pIndex}>
-                                                        {status === `yes_${rowIndex}` && <FaCheck />}
-                                                        {status === `question_${rowIndex}` && <FaQuestion />}
-                                                        {status === `no_${rowIndex}` && <FaTimes />}
-                                                    </td>
-                                                );
-                                            })}
-                                        </tr>
-                                    ))}
+                                {sortedTimeList.map((row, index) => (
+                                    <tr key={index} css={[S.TdItem(participantColumnWidth), row.backgroundColor]}>
+                                        <td>{formatDateString(row.time)}</td>
+                                        {participants.map((participant, pIndex) => {
+                                            const status = participant.checked[index];
+                                            return (
+                                                <td key={pIndex}>
+                                                    {status === `yes_${index}` && <FaCheck />}
+                                                    {status === `question_${index}` && <FaQuestion />}
+                                                    {status === `no_${index}` && <FaTimes />}
+                                                </td>
+                                            );
+                                        })}
+                                    </tr>
+                                ))}
                                 </tbody>
                             </table>
                         </div>
                     </div>
+                    {/* 모임 참석하기 버튼은 showAttendanceForm이 false이고 editingParticipant가 null일 때만 표시 */}
+                    {!showAttendanceForm && !editingParticipant && (
+                        <button css={S.AttendButton} onClick={() => setShowAttendanceForm(true)}>
+                            모임 참석하기
+                        </button>
+                    )}
                 </div>
             )}
 
-            {/* 참여 신청 컴포넌트는 항상 표시 */}
-            <AttendanceEvent eventData={eventData} timeList={timeList} />
+            {/* AttendanceEvent 컴포넌트는 showAttendanceForm이 true일 때만 표시 */}
+            {showAttendanceForm && (
+                <AttendanceEvent
+                    eventData={eventData}
+                    timeList={timeList}
+                    existingParticipation={editingParticipant}
+                    onClose={() => {
+                        setShowAttendanceForm(false);
+                        setEditingParticipant(null);
+                    }}
+                />
+            )}
         </div>
     );
+
 };
 
 export default AttendanceEventListPage;

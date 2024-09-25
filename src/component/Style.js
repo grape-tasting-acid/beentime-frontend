@@ -164,6 +164,7 @@ export const BtnTrue = css`
     align-items: center; // 수직 정렬
     justify-content: center; // 텍스트 중앙 정렬
     box-sizing: border-box; // 패딩과 보더를 포함하여 너비를 계산
+    margin-bottom: 100px;
 
     @media (max-width: 800px) {
         width: 100%; // 모바일에서도 너비를 100%로 설정
@@ -171,4 +172,19 @@ export const BtnTrue = css`
         font-size: 16px;
         margin-bottom: 20px;
     }
+`;
+
+export const CancelButton = css`
+    height: 42px;
+    width: 150px;
+    border: none;
+    border-radius: 8px;
+    background-color: #CCCCCC; /* 취소 버튼 배경색 */
+    color: #FFFFFF; /* 버튼 텍스트 색상 */
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 10px auto; /* 버튼을 중앙에 배치 */
+    display: block;
+    text-align: center;
 `;

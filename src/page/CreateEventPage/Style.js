@@ -133,6 +133,7 @@ export const BtnTrue = css`
   color: #ffff;
   font-weight: 600;
   cursor: pointer;
+  margin-bottom: 100px;
 
   @media (max-width: 800px) {
     margin-bottom: 20px;
@@ -150,11 +151,17 @@ export const BtnFalse = css`
   border-radius: 5px;
   color: #ffff;
   font-weight: 600;
+  margin-bottom: 100px;
 
   @media (max-width: 800px) {
     margin-bottom: 20px;
     /* 높이를 변경하지 않음 */
   }
+`;
+
+export const LogoImage = css`
+  display: block;
+  margin: 300px auto 0 auto;
 `;
 
 export const CalendarBox = css`
@@ -379,7 +386,6 @@ export const AddBtn = css`
   font-size: 30px;
 `;
 
-// 새로 추가된 SelectImagesContainer 스타일
 export const SelectImagesContainer = css`
   display: flex;
   justify-content: start; /* 왼쪽 정렬 */
@@ -396,6 +402,30 @@ export const SelectImagesContainer = css`
   & > div:last-of-type {
     margin-right: 0; /* 마지막 이미지 간격 제거 */
   }
+`;
+
+export const ImageContainer = (isSelected) => css`
+    position: relative;
+    display: inline-block;
+    border: 1.5px solid ${isSelected ? 'black' : '#ccc'};
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0 10px;
+    cursor: pointer;
+`;
+
+export const CheckboxIcon = css`
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black; /* 원의 배경색을 검은색으로 설정 */
+    border-radius: 50%;
+    cursor: pointer;
 `;
 
 export const ImageLabel = css`

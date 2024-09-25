@@ -5,14 +5,11 @@ import Calendar from 'react-calendar';
 import moment from 'moment';
 import Select from 'react-select';
 import { useLocation, useNavigate } from 'react-router-dom';
-import logo from '../../Img/logo/logo.png';
+import logo from '../../Img/logo/Logo.svg';
 
-import table1 from '../../Img/tables/table1.png';
-import table1Selected from '../../Img/tables/table1Selected.png';
-import table2 from '../../Img/tables/table2.png';
-import table2Selected from '../../Img/tables/table2Selected.png';
-import table3 from '../../Img/tables/table3.png';
-import table3Selected from '../../Img/tables/table3Selected.png';
+import table1 from '../../Img/tables/table1.svg';
+import table2 from '../../Img/tables/table2.svg';
+import table3 from '../../Img/tables/table3.svg';
 
 import { saveEvent, editEvent, getEvent } from '../../services/supabaseService';
 import queryString from 'query-string';
@@ -36,18 +33,23 @@ function CreateEventPage(props) {
     const fetchEventData = async (eventId) => {
         try {
             const response = await getEvent(eventId);
-            setEventData(response);
-            if (response.time) {
-                const timeList = response.time.split(', ');
-                setSelectedDates(timeList.map(time => {
-                    const date = time.split(' / ')[0];
-                    return moment(date, 'M월 D일').toDate();
-                }));
-                setTimeSlots(timeList.map(time => {
-                    const hourMinute = time.split(' / ')[1];
-                    const [hour, minute] = hourMinute.split(':');
-                    return { value: `${hour}:${minute}`, label: `${hour}:${minute}` };
-                }));
+            if (response && response.length > 0) {
+                const event = response[0];
+                setEventData(event);
+                setSelectedImage(event.imageIndex); // 선택된 이미지 인덱스 설정 (추가 필요 시)
+
+                if (event.time) {
+                    const timeList = event.time.split(', ');
+                    setSelectedDates(timeList.map(time => {
+                        const date = time.split(' / ')[0];
+                        return moment(date, 'M월 D일').toDate();
+                    }));
+                    setTimeSlots(timeList.map(time => {
+                        const hourMinute = time.split(' / ')[1];
+                        const [hour, minute] = hourMinute.split(':');
+                        return { value: `${hour}:${minute}`, label: `${hour}:${minute}` };
+                    }));
+                }
             }
         } catch (error) {
             console.error('Error fetching event data:', error);
@@ -55,8 +57,17 @@ function CreateEventPage(props) {
     };
 
     const handleDateClick = (date) => {
-        setSelectedDates([...selectedDates, date]);
-        setTimeSlots([...timeSlots, { hour: null, minute: null, period: 'PM' }]);
+        const newSelectedDates = [...selectedDates, date];
+        const newTimeSlots = [...timeSlots, { value: '7:00', label: '7:00 PM' }];
+    
+        // 날짜와 시간 슬롯을 함께 정렬
+        const sortedData = newSelectedDates.map((date, index) => ({
+            date,
+            timeSlot: newTimeSlots[index],
+        })).sort((a, b) => new Date(a.date) - new Date(b.date));
+    
+        setSelectedDates(sortedData.map(item => item.date));
+        setTimeSlots(sortedData.map(item => item.timeSlot));
     };
 
     const handleInputChange = (e) => {
@@ -69,13 +80,12 @@ function CreateEventPage(props) {
 
     const handleEventCreate = async () => {
         const title = document.querySelector('input[placeholder="ex. 개발팀 회식, 동아리 친목회"]').value;
-        //const detail = document.querySelector('input[placeholder="ex. 이번 프로젝트도 화이팅입니다!"]').value;
 
         if (!title.trim()) {
             alert('모임 제목을 입력해주세요.');
             return;
         }
-        const isValidTimeSlot = timeSlots.every(slot => slot.hour !== null && slot.minute !== null);
+        const isValidTimeSlot = timeSlots.every(slot => slot.value !== '');
 
         if (!isValidTimeSlot) {
             alert('시간을 선택해주세요.');
@@ -158,8 +168,15 @@ function CreateEventPage(props) {
             const newTimeSlots = [...timeSlots];
             newSelectedDates.splice(index, 1);
             newTimeSlots.splice(index, 1);
-            setSelectedDates(newSelectedDates);
-            setTimeSlots(newTimeSlots);
+        
+            // 날짜와 시간 슬롯을 함께 정렬
+            const sortedData = newSelectedDates.map((date, index) => ({
+                date,
+                timeSlot: newTimeSlots[index],
+            })).sort((a, b) => new Date(a.date) - new Date(b.date));
+        
+            setSelectedDates(sortedData.map(item => item.date));
+            setTimeSlots(sortedData.map(item => item.timeSlot));
         };
 
         const timeOptions = [];
@@ -238,34 +255,90 @@ function CreateEventPage(props) {
         <div css={S.Layout} style={{ paddingTop: '100px' }}>
             <div css={S.Component}>
                 {/* 로고를 가운데 중앙에 배치 */}
-                <img src={logo} alt="Logo" style={{ display: 'block', paddingTop: '100px', margin: '0 auto 80px auto' }} />
+                <img src={logo} alt="Logo" css={S.LogoImage} />
 
                 {/* 어떤 모임이야? 선택 부분 추가 */}
                 <div css={S.Top}>
                     <h5>어떤 모임이야?</h5>
                     <div css={S.SelectImagesContainer}>
+                        {/* 밥모임 이미지 */}
                         <div>
-                            <img
-                                src={selectedImage === 0 ? table1Selected : table1}
-                                alt="밥모임"
-                                onClick={() => handleImageSelect(0)}
-                            />
+                            <div css={S.ImageContainer(selectedImage === 0)}>
+                                <img
+                                    src={table1}
+                                    alt="밥모임"
+                                    onClick={() => handleImageSelect(0)}
+                                    style={{ width: '100%', height: '100%', cursor: 'pointer' }}
+                                />
+                                {selectedImage === 0 && (
+                                    <div css={S.CheckboxIcon} aria-label="선택됨">
+                                        <svg viewBox="0 0 24 24" width="16" height="16">
+                                            <path 
+                                                d="M4 12l6 6L18 6" 
+                                                stroke="white" 
+                                                strokeWidth="4" 
+                                                fill="none" 
+                                                strokeLinecap="round" 
+                                                strokeLinejoin="round" 
+                                            />
+                                        </svg>
+                                    </div>
+                                )}
+                            </div>
                             <div css={S.ImageLabel}>밥모임</div>
                         </div>
+
+                        {/* 술모임 이미지 */}
                         <div>
-                            <img
-                                src={selectedImage === 1 ? table2Selected : table2}
-                                alt="술모임"
-                                onClick={() => handleImageSelect(1)}
-                            />
+                            <div css={S.ImageContainer(selectedImage === 1)}>
+                                <img
+                                    src={table2}
+                                    alt="술모임"
+                                    onClick={() => handleImageSelect(1)}
+                                    style={{ width: '100%', height: '100%', cursor: 'pointer' }}
+                                />
+                                {selectedImage === 1 && (
+                                    <div css={S.CheckboxIcon} aria-label="선택됨">
+                                        <svg viewBox="0 0 24 24" width="16" height="16">
+                                            <path 
+                                                d="M4 12l6 6L18 6" 
+                                                stroke="white" 
+                                                strokeWidth="4" 
+                                                fill="none" 
+                                                strokeLinecap="round" 
+                                                strokeLinejoin="round" 
+                                            />
+                                        </svg>
+                                    </div>
+                                )}
+                            </div>
                             <div css={S.ImageLabel}>술모임</div>
                         </div>
+
+                        {/* 일모임 이미지 */}
                         <div>
-                            <img
-                                src={selectedImage === 2 ? table3Selected : table3}
-                                alt="일모임"
-                                onClick={() => handleImageSelect(2)}
-                            />
+                            <div css={S.ImageContainer(selectedImage === 2)}>
+                                <img
+                                    src={table3}
+                                    alt="일모임"
+                                    onClick={() => handleImageSelect(2)}
+                                    style={{ width: '100%', height: '100%', cursor: 'pointer' }}
+                                />
+                                {selectedImage === 2 && (
+                                    <div css={S.CheckboxIcon} aria-label="선택됨">
+                                        <svg viewBox="0 0 24 24" width="16" height="16">
+                                            <path 
+                                                d="M4 12l6 6L18 6" 
+                                                stroke="white" 
+                                                strokeWidth="4" 
+                                                fill="none" 
+                                                strokeLinecap="round" 
+                                                strokeLinejoin="round" 
+                                            />
+                                        </svg>
+                                    </div>
+                                )}
+                            </div>
                             <div css={S.ImageLabel}>일모임</div>
                         </div>
                     </div>
@@ -289,8 +362,8 @@ function CreateEventPage(props) {
                         <div css={S.calendarContainer}>
                             <Calendar
                                 defaultView={'month'}
-                                formatMonthYear={(locale, date) => moment(date).local('ko').format('YYYY년 MM월')}
-                                formatDay={(local, date) => moment(date).local('ko').format('DD')}
+                                formatMonthYear={(locale, date) => moment(date).locale('ko').format('YYYY년 MM월')}
+                                formatDay={(local, date) => moment(date).locale('ko').format('DD')}
                                 formatShortWeekday={(locale, date) => {
                                     const englishDay = moment(date).locale('en').format('dd');
                                     const koreanDays = {
@@ -319,16 +392,16 @@ function CreateEventPage(props) {
                     </div>
                     <div css={S.TimeBox}>
                         <div css={S.TimeBoxContainer}>
-                            {selectedDates.length > 0 ? (
-                                selectedDates.map((date, index) => (
-                                    <SelectedDateBox key={index} date={date} index={index} />
-                                ))
-                            ) : (
-                                <div css={S.PlaceHolder}>
-                                    <div>선택된 날짜가 없어요.</div>
-                                    <div>캘린더에서 날짜를 선택해주세요.</div>
-                                </div>
-                            )}
+                        {selectedDates.length > 0 ? (
+                            selectedDates.map((date, index) => (
+                                <SelectedDateBox key={index} date={date} index={index} />
+                            ))
+                        ) : (
+                            <div css={S.PlaceHolder}>
+                                <div>선택된 날짜가 없어요.</div>
+                                <div>캘린더에서 날짜를 선택해주세요.</div>
+                            </div>
+                        )}
                         </div>
                     </div>
                 </div>
