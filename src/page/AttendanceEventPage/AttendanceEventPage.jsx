@@ -30,13 +30,13 @@ const AttendanceEventListPage = () => {
                 if (eventResponse && eventResponse.length > 0) {
                     const event = eventResponse[0];
                     setEventData(event);
-
+    
                     if (event.time) {
                         const parsedTime = JSON.parse(event.time);
                         setTimeList(parsedTime);
                     }
                 }
-
+    
                 // 참여자 목록을 가져오기
                 const participationList = await getParticipation(id);
                 if (participationList.length > 0) {
@@ -46,22 +46,27 @@ const AttendanceEventListPage = () => {
                         id: item.id, // participation_tb의 primary key
                     }));
                     setParticipants(parsedParticipationData);
-
+    
                     const times = JSON.parse(participationList[0].time);
                     setTimeList(times);
                 }
-
+    
                 // 이미 참여한 경우 리스트 페이지로 이동
                 const participationResponse = await getParticipationName(id, name);
                 if (participationResponse.data > 0) {
                     window.location.href = `${window.location.origin}/list?eventId=${encodeURIComponent(id)}`;
+                }
+    
+                // 참가자가 0명인 경우 AttendanceEvent를 바로 띄우기
+                if (participationList.length === 0) {
+                    setShowAttendanceForm(true);
                 }
             } catch (error) {
                 console.error('Error fetching event data:', error);
             }
         };
         fetchData();
-    }, [id, name]);
+    }, [id, name]);    
 
     const onEditClick = () => {
         navigate(`/edit?eventId=${encodeURIComponent(id)}`);

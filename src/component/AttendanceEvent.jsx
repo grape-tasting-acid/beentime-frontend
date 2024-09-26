@@ -170,14 +170,16 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose }
                             ))}
                         </div>
                     </div>
-                    <button css={S.BtnTrue} onClick={onAttendClick}>
-                        {existingParticipation ? '참여 정보 수정하기' : '모임 참석하기'}
-                    </button>
-                    <button css={S.CancelButton} onClick={onClose}>취소</button>
+                    <div css={S.ButtonContainer}>
+                        <button css={S.CancelButton} onClick={onClose}>돌아가기</button>
+                        <button css={S.BtnTrue} onClick={onAttendClick}>
+                            {existingParticipation ? '수정 완료' : '모임 참석하기'}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    );
+    );    
 };
 
 export default AttendanceEvent;
