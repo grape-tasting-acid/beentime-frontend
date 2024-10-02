@@ -4,7 +4,7 @@ import * as S from './Style';
 import Calendar from 'react-calendar';
 import moment from 'moment';
 import Select from 'react-select';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import logo from '../../Img/logo/Logo.svg';
 
 import table1 from '../../Img/tables/table1.svg';
@@ -254,8 +254,10 @@ function CreateEventPage(props) {
     return (
         <div css={S.Layout} style={{ paddingTop: '100px' }}>
             <div css={S.Component}>
-                {/* 로고를 가운데 중앙에 배치 */}
-                <img src={logo} alt="Logo" css={S.LogoImage} />
+                {/* 로고를 가운데 중앙에 배치 - Link로 감싸기 */}
+                <a href="/" aria-label="홈페이지로 이동">
+                    <img src={logo} alt="Logo" css={S.LogoImage} />
+                </a>
 
                 {/* 어떤 모임이야? 선택 부분 추가 */}
                 <div css={S.Top}>

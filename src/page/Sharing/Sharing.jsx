@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 /** @jsxImportSource @emotion/react */
 import * as S from './Style';
-import logo from '../../Img/logo/logo.png';  // Added logo import
+import logo from '../../Img/logo/Logo.svg';
 import { useNavigate } from 'react-router-dom';
 
 function Sharing(props) {
@@ -44,7 +44,9 @@ function Sharing(props) {
 
     return (
         <div css={S.Layout}>
-            <img src={logo} alt="Logo" style={{ display: 'block', paddingTop: '20px', margin: '0 auto 100px auto' }} />  {/* Added logo */}
+            <a href="/" aria-label="홈페이지로 이동">
+                <img src={logo} alt="Logo" style={{ display: 'block', paddingTop: '20px', margin: '0 auto 100px auto' }} />
+            </a>
             <h1 css={S.H1}>이제 이 링크를 공유해보자!</h1>
             <div css={S.UrlBox}>
                 <input 

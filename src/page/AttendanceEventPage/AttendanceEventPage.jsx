@@ -4,7 +4,7 @@ import * as S from '../AttendanceEventPage/Style';
 import mainLogo from '../../Img/main_logo.svg';
 import tableImage from '../../Img/table1.svg'; // 테이블 이미지
 import editLogo from '../../Img/edit_logo.svg';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import AttendanceEvent from '../../component/AttendanceEvent';
 import { getEvent, getParticipation, getParticipationName } from '../../services/supabaseService';
 import { FaCheck, FaQuestion, FaTimes } from 'react-icons/fa';
@@ -17,7 +17,7 @@ const AttendanceEventListPage = () => {
     const [timeList, setTimeList] = useState([]);
     const [participants, setParticipants] = useState([]);
     const [showAttendanceForm, setShowAttendanceForm] = useState(false);
-    const [editingParticipant, setEditingParticipant] = useState(null); // 추가된 상태 변수
+    const [editingParticipant, setEditingParticipant] = useState(null);
     const name = JSON.parse(sessionStorage.getItem('name'));
     const location = useLocation();
     const id = new URLSearchParams(location.search).get('eventId');
@@ -30,13 +30,13 @@ const AttendanceEventListPage = () => {
                 if (eventResponse && eventResponse.length > 0) {
                     const event = eventResponse[0];
                     setEventData(event);
-    
+
                     if (event.time) {
                         const parsedTime = JSON.parse(event.time);
                         setTimeList(parsedTime);
                     }
                 }
-    
+
                 // 참여자 목록을 가져오기
                 const participationList = await getParticipation(id);
                 if (participationList.length > 0) {
@@ -46,17 +46,17 @@ const AttendanceEventListPage = () => {
                         id: item.id, // participation_tb의 primary key
                     }));
                     setParticipants(parsedParticipationData);
-    
+
                     const times = JSON.parse(participationList[0].time);
                     setTimeList(times);
                 }
-    
+
                 // 이미 참여한 경우 리스트 페이지로 이동
                 const participationResponse = await getParticipationName(id, name);
                 if (participationResponse.data > 0) {
                     window.location.href = `${window.location.origin}/list?eventId=${encodeURIComponent(id)}`;
                 }
-    
+
                 // 참가자가 0명인 경우 AttendanceEvent를 바로 띄우기
                 if (participationList.length === 0) {
                     setShowAttendanceForm(true);
@@ -155,38 +155,49 @@ const AttendanceEventListPage = () => {
         );
     }
 
-    const getRandomCharacterPlacements = () => {
+    // **캐릭터 배치 함수 수정**
+    const getFixedCharacterPlacements = () => {
         const placements = [];
-        const usedPositions = new Set(); // 사용된 위치를 추적
-        const usedCharacters = new Set(); // 사용된 캐릭터를 추적
+        const usedCharacters = new Set(); // 캐릭터 중복 사용 방지
+        const maxPerRow = 5; // 각 줄 당 최대 캐릭터 수
+        const totalRows = Math.ceil(participants.length / maxPerRow);
 
+        // 테이블의 중앙을 기준으로 각 행의 캐릭터 위치를 고정
         for (let i = 0; i < participants.length; i++) {
-            let position;
-            do {
-                position = Math.floor(Math.random() * 5); // 0~4의 랜덤 위치를 선택
-            } while (usedPositions.has(position));
-            usedPositions.add(position);
+            const row = i % 2 === 0 ? 'top' : 'bottom'; // 윗줄, 아랫줄 번갈아 배치
+            const indexInRow = Math.floor(i / 2) % maxPerRow;
 
+            // 좌우 중앙 정렬을 위해 위치 계산
+            const totalCharactersInRow = Math.min(maxPerRow, Math.ceil(participants.length / 2));
+            const spacing = 104 + 16; // 캐릭터 너비 + 간격
+            const tableWidth = 720; // 테이블 이미지 너비
+            const totalRowWidth = totalCharactersInRow * spacing - 16; // 총 캐릭터 배치 너비
+            const startX = (tableWidth - totalRowWidth) / 2; // 시작 X 위치
+
+            const leftPosition = startX + indexInRow * spacing;
+
+            // 중복되지 않도록 캐릭터 선택
             let characterIndex;
             do {
                 characterIndex = Math.floor(Math.random() * characterImages.length);
-            } while (usedCharacters.has(characterIndex));
-            usedCharacters.add(characterIndex);
+            } while (usedCharacters.has(characterIndex) && usedCharacters.size < characterImages.length);
 
-            const isFront = Math.random() < 0.5;  // 앞줄과 뒷줄에 랜덤으로 배치
+            if (usedCharacters.size < characterImages.length) {
+                usedCharacters.add(characterIndex);
+            }
 
             placements.push({
-                position,
+                row,
+                position: leftPosition,
                 character: characterImages[characterIndex],
-                isFront,
-                name: participants[i].name // 참석자 이름 추가
+                name: participants[i].name
             });
         }
 
         return placements;
     };
 
-    const characterPlacements = getRandomCharacterPlacements();
+    const characterPlacements = getFixedCharacterPlacements();
 
     // 참석자 수에 따른 열 너비 결정
     let participantColumnWidth;
@@ -214,7 +225,9 @@ const AttendanceEventListPage = () => {
             <div css={S.Header}>
                 <div css={S.HeaderBox}>
                     <div css={S.ImgBox}>
-                        <img src={mainLogo} alt="Main Logo" />
+                        <Link to="/" style={{ display: 'inline-block' }}>
+                            <img src={mainLogo} alt="Main Logo" style={{ cursor: 'pointer' }} />
+                        </Link>
                     </div>
                     <div css={S.HeaderItem}>
                         <h1>{eventData?.title}</h1>
@@ -245,27 +258,27 @@ const AttendanceEventListPage = () => {
                         <div css={S.TableContainer}>
                             <img src={tableImage} alt="Table" css={S.TableImage} />
                             {characterPlacements.map((placement, index) => {
-                                const leftPosition = 68 + placement.position * (104 + 16); // 첫 위치는 68px, 간격은 16px
                                 const captionStyle = {
                                     position: 'absolute',
-                                    left: `${leftPosition + 25}px`,
+                                    left: `${placement.position}px`,
                                     width: 'auto',
-                                    textAlign: 'left',
-                                    marginTop: placement.isFront ? '60px' : '-330px', // 뒷줄은 위로, 앞줄은 아래로 배치
-                                    fontSize: '16px', // 폰트 크기 조정
-                                    fontWeight: 'bold', // 굵게 설정
+                                    textAlign: 'center',
+                                    marginTop: placement.row === 'top' ? '-60px' : '60px', // Position above or below the table
+                                    fontSize: '16px',
+                                    fontWeight: 'bold',
+                                    transform: 'translateX(-50%)' // 중앙 정렬
                                 };
 
                                 return (
-                                    <div key={index} style={{ position: 'relative' }}>
+                                    <div key={index} style={{ position: 'absolute', left: `${placement.position}px`, top: placement.row === 'top' ? '0' : 'auto', bottom: placement.row === 'bottom' ? '0' : 'auto' }}>
                                         <img
                                             src={placement.character}
                                             alt={`Character ${index + 1}`}
-                                            css={placement.isFront ? S.FrontCharacter : S.BackCharacter}
-                                            style={{ left: `${leftPosition}px`, position: 'absolute' }} // 캐릭터 위치
+                                            css={placement.row === 'top' ? S.BackCharacter : S.FrontCharacter}
+                                            style={{ position: 'relative', transform: 'translateX(-50%)' }} // 중앙 정렬
                                         />
                                         <div style={captionStyle}>
-                                            {placement.name} {/* 참석자 이름 표시 */}
+                                            {placement.name}
                                         </div>
                                     </div>
                                 );
