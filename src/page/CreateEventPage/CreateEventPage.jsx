@@ -274,16 +274,22 @@ function CreateEventPage(props) {
                                 />
                                 {selectedImage === 0 && (
                                     <div css={S.CheckboxIcon} aria-label="선택됨">
-                                        <svg viewBox="0 0 24 24" width="16" height="16">
-                                            <path 
-                                                d="M4 12l6 6L18 6" 
-                                                stroke="white" 
-                                                strokeWidth="4" 
-                                                fill="none" 
-                                                strokeLinecap="round" 
-                                                strokeLinejoin="round" 
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="22"
+                                            height="22"
+                                            viewBox="0 0 22 22"
+                                            fill="none"
+                                            >
+                                            <circle cx="11" cy="11" r="11" fill="black" />
+                                            <path
+                                                d="M6.59961 10.8032L10.6513 14.6666L16.1329 8.06665"
+                                                stroke="white"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
                                             />
-                                        </svg>
+                                            </svg>
                                     </div>
                                 )}
                             </div>
@@ -301,16 +307,22 @@ function CreateEventPage(props) {
                                 />
                                 {selectedImage === 1 && (
                                     <div css={S.CheckboxIcon} aria-label="선택됨">
-                                        <svg viewBox="0 0 24 24" width="16" height="16">
-                                            <path 
-                                                d="M4 12l6 6L18 6" 
-                                                stroke="white" 
-                                                strokeWidth="4" 
-                                                fill="none" 
-                                                strokeLinecap="round" 
-                                                strokeLinejoin="round" 
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="22"
+                                            height="22"
+                                            viewBox="0 0 22 22"
+                                            fill="none"
+                                            >
+                                            <circle cx="11" cy="11" r="11" fill="black" />
+                                            <path
+                                                d="M6.59961 10.8032L10.6513 14.6666L16.1329 8.06665"
+                                                stroke="white"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
                                             />
-                                        </svg>
+                                            </svg>
                                     </div>
                                 )}
                             </div>
@@ -328,16 +340,22 @@ function CreateEventPage(props) {
                                 />
                                 {selectedImage === 2 && (
                                     <div css={S.CheckboxIcon} aria-label="선택됨">
-                                        <svg viewBox="0 0 24 24" width="16" height="16">
-                                            <path 
-                                                d="M4 12l6 6L18 6" 
-                                                stroke="white" 
-                                                strokeWidth="4" 
-                                                fill="none" 
-                                                strokeLinecap="round" 
-                                                strokeLinejoin="round" 
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="22"
+                                            height="22"
+                                            viewBox="0 0 22 22"
+                                            fill="none"
+                                            >
+                                            <circle cx="11" cy="11" r="11" fill="black" />
+                                            <path
+                                                d="M6.59961 10.8032L10.6513 14.6666L16.1329 8.06665"
+                                                stroke="white"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
                                             />
-                                        </svg>
+                                            </svg>
                                     </div>
                                 )}
                             </div>
@@ -352,7 +370,7 @@ function CreateEventPage(props) {
                     <input 
                         type="text" 
                         name="title"
-                        placeholder='ex. 개발팀 회식, 동아리 친목회' 
+                        placeholder='개발팀 회식, 동아리 친목회' 
                         value={eventData.title} 
                         onChange={handleInputChange} 
                     />
@@ -362,36 +380,70 @@ function CreateEventPage(props) {
                     <div css={S.CalendarBox}>
                         <h5 css={S.H5}>후보 날짜를 정해볼까?</h5>
                         <div css={S.calendarContainer}>
-                            <Calendar
-                                defaultView={'month'}
-                                formatMonthYear={(locale, date) => moment(date).locale('ko').format('YYYY년 MM월')}
-                                formatDay={(local, date) => moment(date).locale('ko').format('DD')}
-                                formatShortWeekday={(locale, date) => {
-                                    const englishDay = moment(date).locale('en').format('dd');
-                                    const koreanDays = {
-                                        Su: '일',
-                                        Mo: '월',
-                                        Tu: '화',
-                                        We: '수',
-                                        Th: '목',
-                                        Fr: '금',
-                                        Sa: '토',
-                                    };
-                                    return koreanDays[englishDay];
-                                }}
-                                showNeighboringMonth={false}
-                                onClickDay={(value) => handleDateClick(value)}
-                                tileDisabled={({ date }) => moment(date).isBefore(moment().startOf('day'), 'day')}
-                                tileClassName={({ date }) => {
-                                    const formattedDate = moment(date).startOf('day').format('YYYY-MM-DD');
-                                    const today = moment().startOf('day').format('YYYY-MM-DD');
-                                    return formattedDate === today ? ' today' : '';
-                                }}
-                                tileContent={tileContent}
-                                locale="en-US"
-                            />
+                        <Calendar
+                            defaultView={'month'}
+                            formatMonthYear={(locale, date) => moment(date).locale('ko').format('YYYY.M')}
+                            formatDay={(local, date) => moment(date).locale('ko').format('DD')}
+                            formatShortWeekday={(locale, date) => {
+                            const englishDay = moment(date).locale('en').format('dd');
+                            const koreanDays = {
+                                Su: '일',
+                                Mo: '월',
+                                Tu: '화',
+                                We: '수',
+                                Th: '목',
+                                Fr: '금',
+                                Sa: '토',
+                            };
+                            return koreanDays[englishDay];
+                            }}
+                            showNeighboringMonth={false}
+                            onClickDay={(value) => handleDateClick(value)}
+                            tileDisabled={({ date }) => moment(date).isBefore(moment().startOf('day'), 'day')}
+                            tileClassName={({ date }) => {
+                            const formattedDate = moment(date).startOf('day').format('YYYY-MM-DD');
+                            const today = moment().startOf('day').format('YYYY-MM-DD');
+                            return formattedDate === today ? ' today' : '';
+                            }}
+                            tileContent={tileContent}
+                            locale="en-US"
+                            prevLabel={
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="6"
+                                height="14"
+                                viewBox="0 0 9 16"
+                                fill="none"
+                            >
+                                <path
+                                d="M8 1L2 8L8 15"
+                                stroke="var(--G10, #000)"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                />
+                            </svg>
+                            }
+                            nextLabel={
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="6"
+                                height="14"
+                                viewBox="0 0 9 16"
+                                fill="none"
+                            >
+                                <path
+                                d="M1 1L7 8L1 15"
+                                stroke="var(--G10, #000)"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                />
+                            </svg>
+                            }
+                        />
                         </div>
                     </div>
+
+
                     <div css={S.TimeBox}>
                         <div css={S.TimeBoxContainer}>
                         {selectedDates.length > 0 ? (
