@@ -79,7 +79,7 @@ function CreateEventPage(props) {
     };
 
     const handleEventCreate = async () => {
-        const title = document.querySelector('input[placeholder="ex. 개발팀 회식, 동아리 친목회"]').value;
+        const title = document.querySelector('input[placeholder="개발팀 회식, 동아리 친목회"]').value;
 
         if (!title.trim()) {
             alert('모임 제목을 입력해주세요.');

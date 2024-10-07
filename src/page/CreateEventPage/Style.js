@@ -123,9 +123,9 @@ export const Bottom = css`
 
 export const BtnTrue = css`
   margin-top: 60px;
-  width: 100%;
-  height: 68px; /* 버튼 높이를 68픽셀로 고정 */
-  font-size: 18px;
+  width: 750px;
+  height: 68px; 
+  font-size: 22px;
   background-color: #000000;
   border: none;
   border-radius: 5px;
@@ -142,10 +142,10 @@ export const BtnTrue = css`
 
 export const BtnFalse = css`
   margin-top: 60px;
-  width: 100%;
-  height: 68px; /* 버튼 높이를 68픽셀로 고정 */
-  font-size: 18px;
-  background-color: #dfe2e6;
+  width: 750px;
+  height: 68px; 
+  font-size: 22px;
+  background: var(--G4, #DFE2E6);
   border: none;
   border-radius: 5px;
   color: #ffff;
@@ -338,6 +338,8 @@ export const TimeBoxContainer = css`
   align-items: center;
   overflow-x: auto;
   margin-top: 10px;
+  margin-top: 30px; /* 추가됨 */
+  margin-left: 30px; /* 추가됨 */
 
   @media (max-width: 800px) {
     flex-direction: column;
@@ -374,15 +376,40 @@ export const Box = css`
 `;
 
 export const SelectedDateBox = css`
-  width: 90%;
-  display: flex;
+  width: 216px; /* 수정됨: 고정 너비 */
+  height: 34px; /* 수정됨: 고정 높이 */
   justify-content: start;
   align-items: center;
   color: #2e343f;
   font-size: 16px;
   font-weight: 700;
-  margin-bottom: 10px;
-  margin-left: 10px;
+  margin-bottom: 17px;
+  gap: 13px;
+
+  /* 날짜 부분 스타일 */
+  .date {
+    width: 90px;
+    color: var(--G10, #000);
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120%; /* 19.2px */
+    letter-spacing: -0.16px;
+  }
+
+  /* 시간 부분 스타일 */
+  .time {
+    width: 41px;
+    flex-shrink: 0;
+    color: var(--G10, #000);
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 19px; /* 118.75% */
+    letter-spacing: -0.16px;
+  }
 
   div {
     margin-right: 10px;
