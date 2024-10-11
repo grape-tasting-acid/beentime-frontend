@@ -20,34 +20,35 @@ export const Layout = css`
 // Header 스타일
 export const Header = css`
     display: flex;
+    width: 1020px;
+    gap: 14px;
+    padding: 100px 0px 60px 0px;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    width: 100vw;
-    //background-color: #F9FAFA;
 `;
 
 // ImgBox 스타일
 export const ImgBox = css`
-    width: auto; /* 너비를 자동으로 설정 */
-    margin-right: 20px; /* 제목과 간격을 맞추기 위해 오른쪽 마진 추가 */
-    @media (max-width: 800px) {
-        margin-right: 10px; /* 모바일에서 간격을 조금 줄임 */
-    }
+    width: 148px;
+    height: 21px;
 `;
 
 // HeaderBox 스타일
 export const HeaderBox = css`
     display: flex;
+    width: 850px;
+    height: 42px;
     flex-direction: column;
-    width: 50vw;
-    margin-bottom: 40px;
+    justify-content: center;
 
     & h3 {
-        margin-top: 20px;
-        font-size: 20px;
-        font-weight: 900;
-        color: #0F1720;
+        color: var(--G10, #000);
+        font-family: "Noto Sans";
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 30px; /* 100% */
+        letter-spacing: -0.3px;
     }
 
     @media (max-width: 800px) {
@@ -71,19 +72,27 @@ export const HeaderItem = css`
     margin-top: 14px;
 
     & h1 {
-        font-size: 40px;
-        font-weight: 900;
-        color: #0F1720;
+        color: var(--G10, #000);
+        font-family: "Noto Sans";
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 30px; /* 100% */
+        letter-spacing: -0.3px;
     }
 
     & button {
         height: 42px; // 버튼 높이 설정
         width: 150px; // 버튼 너비 고정
+        padding: 4px 14px;  
         border: none;
         border-radius: 8px;
-        font-size: 12px;
-        font-weight: 900;
-        color: #0F1720;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 26px; /* 162.5% */
+        letter-spacing: -0.16px;
+        background: var(--G3, #F1F2F4);
         cursor: pointer;
         display: flex; // 아이콘과 텍스트 수평 정렬
         align-items: center; // 수직 정렬

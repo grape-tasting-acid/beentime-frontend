@@ -235,7 +235,7 @@ const AttendanceEventListPage = () => {
                             <img
                                 src={editLogo}
                                 alt="모임 수정하기"
-                                style={{ width: '20px', height: '20px', marginRight: '5px' }} // 아이콘 크기 및 간격
+                                style={{ width: '26px', height: '26px', marginRight: '4px' }} // 아이콘 크기 및 간격
                             />
                             모임 수정하기
                         </button>
@@ -346,6 +346,7 @@ const AttendanceEventListPage = () => {
                         setShowAttendanceForm(false);
                         setEditingParticipant(null);
                     }}
+                    hideBackButton={participants.length === 0 && !editingParticipant}
                 />
             )}
         </div>

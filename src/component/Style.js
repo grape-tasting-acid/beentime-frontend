@@ -4,7 +4,7 @@ export const Layout = css`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100vw;
+    width: 600px;
 
     @media (max-width: 800px) {
         height: auto;
@@ -16,7 +16,7 @@ export const Component = css`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 40vw; // 이전의 테이블 너비와 동일하게 설정
+    width: 600px;
 
     @media (max-width: 800px) {
         width: 90%;
@@ -44,23 +44,31 @@ export const InputItem = css`
     box-sizing: border-box; // 패딩과 보더를 포함하여 너비를 계산
 
     & h3 {
-        font-size: 24px;
-        font-weight: 900;
-        color: #0F1720;
-        margin: 0; // 불필요한 마진 제거
+        color: var(--G10, #000);
+        font-family: "Noto Sans";
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 26px; /* 118.182% */
+        letter-spacing: -0.22px;
     }
 
     & input {
-        margin-top: 15px;
-        padding: 10px 16px; // 패딩을 약간 줄임
-        border-radius: 5px;
-        border: 2px solid #F1F2F4;
+        margin-top: 20px;
+        padding: 15px 18px;
+        border-radius: 8px;
+        border: 1.5px solid var(--G3, #F1F2F4);
+        background: var(--G1, #FFF);
         font-size: 18px;
-        width: 100%; // 입력창의 너비를 부모에 맞춤
-        box-sizing: border-box; // 패딩과 보더를 포함하여 너비를 계산
+        width: 600px;
 
         &::placeholder {
-            color: #A9AFB6;
+            color: var(--G6, #A9AFB6);
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 22px; /* 122.222% */
+            letter-spacing: -0.18px;
         }
     }
 
@@ -79,13 +87,17 @@ export const InputItem = css`
 export const TimeItem = css`
     display: flex;
     flex-direction: column;
-    width: 100%; /* 부모 컨테이너의 너비에 맞춤 */
+    width: 600px;
 
     & h3 {
-        font-size: 24px;
-        font-weight: 900;
-        color: #0F1720;
-        margin: 0; /* 불필요한 마진 제거 */
+        color: var(--G10, #000);
+        font-family: "Noto Sans";
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 26px; /* 118.182% */
+        letter-spacing: -0.22px;
+        margin-bottom: 20px;
     }
 
     @media (max-width: 800px) {
@@ -97,30 +109,39 @@ export const TimeItem = css`
 
 export const TimeBox = css`
     display: flex;
+    justify-content: space-between;
     flex-direction: column;
-    gap: 15px;
-    overflow-x: auto;
-    height: 30vh;
-    width: 100%; /* 부모 컨테이너의 너비에 맞춤 */
-    box-sizing: border-box; /* 패딩과 보더를 포함하여 너비를 계산 */
+    align-items: center;
+    align-items: flex-start;
+    width: 100%;
+    gap: 14px;
 `;
 
 export const Times = css`
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* space-between 대신 flex-start로 변경 */
-    gap: 10px; /* 요소 간 간격 조절 */
+    justify-content: flex-start; 
+    width: 100%;
 
     & h4 {
-        margin: 0; /* 기본 마진 제거 */
-        font-size: 18px;
-        color: #0F1720;
+        color: var(--G10, #000);
+        font-family: "Noto Sans";
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 26px; /* 118.182% */
+        letter-spacing: -0.22px;
+        margin-right: 15px;
     }
 
     & span {
-        margin: 0; /* 기본 마진 제거 */
-        font-size: 16px;
-        color: #4B5563;
+        color: var(--G10, #000);
+        font-family: "Noto Sans";
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 26px; /* 118.182% */
+        letter-spacing: -0.22px;
     }
 
     @media (max-width: 800px) {
@@ -136,9 +157,9 @@ export const Times = css`
 
 export const Btns = css`
     display: flex;
+    align-items: flex-start;
     gap: 10px;
-    margin-left: auto; /* 버튼들을 오른쪽으로 정렬 */
-    margin-right: 10px;
+    margin-left: auto; /* Btns 컨테이너를 오른쪽으로 밀기 */
 
     @media (max-width: 800px) {
         margin-right: 5px;
@@ -147,6 +168,8 @@ export const Btns = css`
 
 export const Radio = css`
     & input[type="radio"] {
+        width: 54px;
+        height: 54px;
         display: none;
     }
 
@@ -165,7 +188,7 @@ export const Radio = css`
     }
 
     & input[type="radio"]:checked + label {
-        background-color: #32E3AE;
+        background: var(--M3, #31EDB5);
         color: #2E343F;
     }
 
@@ -193,7 +216,7 @@ export const ButtonContainer = css`
 export const BtnTrue = css`
     width: 293px; // 버튼 너비 설정
     height: 68px;
-    font-size: 18px;
+    font-size: 22px;
     background-color: #000000;
     border: none;
     border-radius: 5px;
@@ -215,7 +238,7 @@ export const BtnTrue = css`
 export const CancelButton = css`
     width: 293px; // 버튼 너비 설정
     height: 68px;
-    font-size: 18px;
+    font-size: 22px;
     background-color: #FFFFFF; /* 흰색 배경 */
     color: #000000; /* 검은색 글씨 */
     border: 1px solid #000000; /* 테두리 추가 */
@@ -232,4 +255,20 @@ export const CancelButton = css`
         height: 50px;
         font-size: 16px;
     }
+`;
+
+export const LargeAttendButton = css`
+    width: 600px;
+    height: 68px;
+    font-size: 22px;
+    background-color: #000000;
+    border: none;
+    border-radius: 5px;
+    color: #FFFF;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
 `;

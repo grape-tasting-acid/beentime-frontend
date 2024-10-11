@@ -5,7 +5,7 @@ import { FaCheck, FaQuestion, FaTimes } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
 import supabase from '../api/instance';
 
-const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose }) => {
+const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose, hideBackButton }) => {
     const [selectedRadios, setSelectedRadios] = useState([]);
     const [attendeeName, setAttendeeName] = useState('');
     const location = useLocation();
@@ -18,8 +18,9 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose }
                 setSelectedRadios(existingParticipation.checked);
                 setAttendeeName(existingParticipation.name);
             } else {
-                // 새로운 참여인 경우 초기화
-                setSelectedRadios(new Array(timeList.length).fill(null));
+                // 새로운 참여인 경우 기본으로 "no" 선택
+                const defaultRadios = timeList.map((_, index) => `no_${index}`);
+                setSelectedRadios(defaultRadios);
             }
         }
     }, [timeList, existingParticipation]);
@@ -63,7 +64,6 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose }
                     sessionStorage.setItem('name', JSON.stringify(attendeeName));
                     alert('참여 정보가 수정되었습니다.');
                     if (onClose) onClose();
-                    // 페이지 새로 고침 없이 상태 업데이트
                 }
             } else {
                 // 새로운 참여 추가
@@ -81,7 +81,6 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose }
                 if (isAlreadyAttended) {
                     sessionStorage.setItem('name', JSON.stringify(attendeeName));
                     alert('이미 참여 완료한 모임입니다.');
-                    // 페이지 새로 고침
                     window.location.reload();
                 } else {
                     const data = {
@@ -104,7 +103,6 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose }
                         sessionStorage.setItem('name', JSON.stringify(attendeeName));
                         alert('참여 완료 하였습니다.');
                         if (onClose) onClose();
-                        // 페이지 새로 고침 없이 상태 업데이트
                     }
                 }
             }
@@ -121,7 +119,7 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose }
                         <h3>이름을 알려줘!</h3>
                         <input
                             type="text"
-                            placeholder="이름을 입력하세요"
+                            placeholder="홍길동"
                             value={attendeeName}
                             onChange={onNameChange}
                             disabled={!!existingParticipation} // 기존 참여자 이름은 수정 불가
@@ -171,8 +169,15 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose }
                         </div>
                     </div>
                     <div css={S.ButtonContainer}>
-                        <button css={S.CancelButton} onClick={onClose}>돌아가기</button>
-                        <button css={S.BtnTrue} onClick={onAttendClick}>
+                        {/* hideBackButton이 false일 때만 돌아가기 버튼 표시 */}
+                        {!hideBackButton && (
+                            <button css={S.CancelButton} onClick={onClose}>돌아가기</button>
+                        )}
+                        {/* hideBackButton이 true이면 버튼 크기 조절 */}
+                        <button
+                            css={hideBackButton ? S.LargeAttendButton : S.BtnTrue}
+                            onClick={onAttendClick}
+                        >
                             {existingParticipation ? '수정 완료' : '모임 참석하기'}
                         </button>
                     </div>
