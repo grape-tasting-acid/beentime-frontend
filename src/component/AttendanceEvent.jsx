@@ -161,7 +161,7 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose, 
                                                 onChange={(e) => onChangeRadio(e, index)}
                                                 checked={selectedRadios[index] === `no_${index}`}
                                             />
-                                            <label htmlFor={`no_${index}`}><FaTimes /></label>
+                                            <label htmlFor={`no_${index}`}><FaTimes size={23} style={{ strokeWidth: 1 }} /></label>
                                         </div>
                                     </div>
                                 </div>
