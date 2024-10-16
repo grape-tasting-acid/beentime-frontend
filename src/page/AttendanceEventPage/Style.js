@@ -255,7 +255,7 @@ export const TimeItem = css`
 export const TableBox = css`
     text-align: center;
     overflow-x: auto;
-    height: 30vh;
+    margin-bottom: 60px;
     width: 100%; // 테이블 박스 너비 100%로 설정
 `;
 
