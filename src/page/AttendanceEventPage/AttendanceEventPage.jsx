@@ -77,9 +77,10 @@ const AttendanceEventListPage = () => {
         const [month, dayWithWeekday] = datePart.split('월 ');
         const day = dayWithWeekday.replace('일', '');
         return (
-            <span>
-                <strong>{`${month}.${day}`}</strong> {timePart}
-            </span>
+            <div css={S.DateTimeContainer}>
+                <span css={S.DatePart}>{`${month}.${day}`}</span>
+                <span css={S.TimePart}>{`${timePart}`}</span>
+            </div>
         );
     };
 
@@ -155,47 +156,76 @@ const AttendanceEventListPage = () => {
         );
     }
 
+    // 중복되지 않는 캐릭터를 가져오는 함수
+    const getUniqueCharacter = (usedCharacters) => {
+        let characterIndex;
+        do {
+            characterIndex = Math.floor(Math.random() * characterImages.length);
+        } while (usedCharacters.has(characterIndex) && usedCharacters.size < characterImages.length);
+    
+        usedCharacters.add(characterIndex);
+        return characterImages[characterIndex];
+    };
+    
     // **캐릭터 배치 함수 수정**
     const getFixedCharacterPlacements = () => {
         const placements = [];
-        const usedCharacters = new Set(); // 캐릭터 중복 사용 방지
-        const maxPerRow = 5; // 각 줄 당 최대 캐릭터 수
-        const totalRows = Math.ceil(participants.length / maxPerRow);
-
-        // 테이블의 중앙을 기준으로 각 행의 캐릭터 위치를 고정
-        for (let i = 0; i < participants.length; i++) {
-            const row = i % 2 === 0 ? 'top' : 'bottom'; // 윗줄, 아랫줄 번갈아 배치
-            const indexInRow = Math.floor(i / 2) % maxPerRow;
-
-            // 좌우 중앙 정렬을 위해 위치 계산
-            const totalCharactersInRow = Math.min(maxPerRow, Math.ceil(participants.length / 2));
-            const spacing = 104 + 16; // 캐릭터 너비 + 간격
-            const tableWidth = 720; // 테이블 이미지 너비
-            const totalRowWidth = totalCharactersInRow * spacing - 16; // 총 캐릭터 배치 너비
-            const startX = (tableWidth - totalRowWidth) / 2; // 시작 X 위치
-
-            const leftPosition = startX + indexInRow * spacing;
-
-            // 중복되지 않도록 캐릭터 선택
-            let characterIndex;
-            do {
-                characterIndex = Math.floor(Math.random() * characterImages.length);
-            } while (usedCharacters.has(characterIndex) && usedCharacters.size < characterImages.length);
-
-            if (usedCharacters.size < characterImages.length) {
-                usedCharacters.add(characterIndex);
+        const usedCharacters = new Set();
+    
+        const totalParticipants = participants.length;
+        const tableWidth = 720;
+        const characterWidth = 104;
+        const characterSpacing = 16;
+    
+        const topParticipants = [];
+        const bottomParticipants = [];
+    
+        // 첫 번째 참가자를 윗줄에 배치하기 위해 인덱스 조정
+        participants.forEach((participant, index) => {
+            if (index % 2 === 0) {
+                topParticipants.push(participant);
+            } else {
+                bottomParticipants.push(participant);
             }
-
+        });
+    
+        // 윗줄 캐릭터 배치
+        const topRowCount = topParticipants.length;
+        const totalTopRowWidth = topRowCount * characterWidth + (topRowCount - 1) * characterSpacing;
+        const startXTop = (tableWidth - totalTopRowWidth) / 2;
+    
+        topParticipants.forEach((participant, i) => {
+            const leftPosition = startXTop + i * (characterWidth + characterSpacing) + characterWidth / 2;
+            const character = getUniqueCharacter(usedCharacters);
+    
             placements.push({
-                row,
+                row: 'top',
                 position: leftPosition,
-                character: characterImages[characterIndex],
-                name: participants[i].name
+                character,
+                name: participant.name,
             });
-        }
-
+        });
+    
+        // 아랫줄 캐릭터 배치
+        const bottomRowCount = bottomParticipants.length;
+        const totalBottomRowWidth = bottomRowCount * characterWidth + (bottomRowCount - 1) * characterSpacing;
+        const startXBottom = (tableWidth - totalBottomRowWidth) / 2;
+    
+        bottomParticipants.forEach((participant, i) => {
+            const leftPosition = startXBottom + i * (characterWidth + characterSpacing) + characterWidth / 2;
+            const character = getUniqueCharacter(usedCharacters);
+    
+            placements.push({
+                row: 'bottom',
+                position: leftPosition,
+                character,
+                name: participant.name,
+            });
+        });
+    
         return placements;
     };
+
 
     const characterPlacements = getFixedCharacterPlacements();
 
@@ -247,42 +277,47 @@ const AttendanceEventListPage = () => {
             {/* 참여자가 있을 때 리스트 컴포넌트 표시 */}
             {participants.length > 0 && (
                 <div css={S.Component}>
-                    {/* 툴팁 추가 */}
-                    <div css={S.TooltipContainer}>
-                        <div css={S.Tooltip}>
-                            {tooltipMessage}
+                    {/* 메인 컨테이너 */}
+                    <div css={S.EventContainer}>
+                        {/* 툴팁 */}
+                        <div css={S.TooltipContainer}>
+                            <div css={S.Tooltip}>
+                                {tooltipMessage}
+                            </div>
                         </div>
-                    </div>
 
-                    <div css={S.MainImgBox} style={{ marginTop: '294px', marginBottom: '134px' }}>
-                        <div css={S.TableContainer}>
+                        {/* 캐릭터+캡션+테이블 이미지 컨테이너 (A) */}
+                        <div css={S.CharacterAndTableContainer}>
+                            {/* 테이블 이미지 */}
                             <img src={tableImage} alt="Table" css={S.TableImage} />
-                            {characterPlacements.map((placement, index) => {
-                                const captionStyle = {
-                                    position: 'absolute',
-                                    left: `${placement.position}px`,
-                                    width: 'auto',
-                                    textAlign: 'center',
-                                    marginTop: placement.row === 'top' ? '-60px' : '60px', // Position above or below the table
-                                    fontSize: '16px',
-                                    fontWeight: 'bold',
-                                    transform: 'translateX(-50%)' // 중앙 정렬
-                                };
 
-                                return (
-                                    <div key={index} style={{ position: 'absolute', left: `${placement.position}px`, top: placement.row === 'top' ? '0' : 'auto', bottom: placement.row === 'bottom' ? '0' : 'auto' }}>
-                                        <img
-                                            src={placement.character}
-                                            alt={`Character ${index + 1}`}
-                                            css={placement.row === 'top' ? S.BackCharacter : S.FrontCharacter}
-                                            style={{ position: 'relative', transform: 'translateX(-50%)' }} // 중앙 정렬
-                                        />
-                                        <div style={captionStyle}>
-                                            {placement.name}
-                                        </div>
-                                    </div>
-                                );
-                            })}
+                            {/* 캐릭터 배치 */}
+                            {characterPlacements.map((placement, index) => (
+                                <div
+                                    key={index}
+                                    css={S.CharacterContainer(placement.position, placement.row)}
+                                >
+                                    {placement.row === 'top' ? (
+                                        <>
+                                            <div css={S.CharacterName(placement.row)}>{placement.name}</div>
+                                            <img
+                                                src={placement.character}
+                                                alt={`Character ${index + 1}`}
+                                                css={S.CharacterImage}
+                                            />
+                                        </>
+                                    ) : (
+                                        <>
+                                            <img
+                                                src={placement.character}
+                                                alt={`Character ${index + 1}`}
+                                                css={S.CharacterImage}
+                                            />
+                                            <div css={S.CharacterName(placement.row)}>{placement.name}</div>
+                                        </>
+                                    )}
+                                </div>
+                            ))}
                         </div>
                     </div>
                     <div css={S.AttendBox}>
@@ -300,6 +335,7 @@ const AttendanceEventListPage = () => {
                                                 <span
                                                     css={S.ParticipantName}
                                                     onClick={() => handleParticipantNameClick(participant)}
+                                                    title={participant.name} // 툴팁으로 전체 이름 표시
                                                 >
                                                     {participant.name}
                                                 </span>
@@ -315,9 +351,9 @@ const AttendanceEventListPage = () => {
                                             const status = participant.checked[index];
                                             return (
                                                 <td key={pIndex}>
-                                                    {status === `yes_${index}` && <FaCheck />}
-                                                    {status === `question_${index}` && <FaQuestion />}
-                                                    {status === `no_${index}` && <FaTimes />}
+                                                    {status === `yes_${index}` && <FaCheck  size={23} color="#000000"/>}
+                                                    {status === `question_${index}` && <FaQuestion size={23} color="#DFE2E6"/>}
+                                                    {status === `no_${index}` && <FaTimes size={28} color="#DFE2E6"/>}
                                                 </td>
                                             );
                                         })}

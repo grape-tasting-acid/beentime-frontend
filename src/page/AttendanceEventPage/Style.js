@@ -136,6 +136,66 @@ export const Component = css`
     }
 `;
 
+export const EventContainer = css`
+    width: 720px;
+    height: 478px;
+    position: relative;
+    margin: 0 auto;
+`;
+
+export const TooltipContainer = css`
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+`;
+
+export const Tooltip = css`
+    position: relative;
+    background-color: black;
+    padding: 10px 20px;
+    border-radius: 20px;
+    max-width: 80%;
+    text-align: center;
+
+    height: 52px;
+    padding: 15px 20px;
+    gap: 10px;
+    max-width: 80%;
+    border-radius: 8px;
+    background: var(--G10, #000);
+    text-align: center;
+
+    color: var(--G1, #FFF);
+    font-family: "Noto Sans";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: -0.18px;
+
+    &:after {
+        content: '';
+        position: absolute;
+        bottom: -10px; /* 말풍선 아래쪽 화살표 */
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: 10px 10px 0;
+        border-style: solid;
+        border-color: black transparent transparent transparent;
+    }
+`;
+
+// 캐릭터+캡션+테이블 이미지 컨테이너 (A) (720x396px)
+export const CharacterAndTableContainer = css`
+    position: absolute;
+    margin-top: 20px;
+    top: 62px; /* 툴팁 높이 + 20px 간격 */
+    width: 100%;
+    height: 396px;
+`;
+
 // 메인 이미지 박스 (테이블과 캐릭터 배치)
 export const MainImgBox = css`
     display: flex;
@@ -153,23 +213,52 @@ export const TableContainer = css`
 
 // 테이블 이미지 스타일
 export const TableImage = css`
-    width: 100%;
-    height: 100%;
-    position: relative;
+    position: absolute;
+    bottom: 74px; /* A 컨테이너의 하단에서 위로 74px */
+    left: 50%;
+    transform: translateX(-50%);
+    width: /* 테이블 이미지의 너비 */;
+    height: /* 테이블 이미지의 높이 */;
     z-index: 2;
 `;
 
-// 캐릭터 위치 스타일
-export const FrontCharacterContainer = css`
+// 캐릭터 컨테이너 스타일
+export const CharacterContainer = (leftPosition, row) => css`
     position: absolute;
-    text-align: center;
+    left: ${leftPosition}px;
+    ${row === 'top' ? 'top: 0;' : 'bottom: 0;'}
+    transform: translateX(-50%);
     width: 104px;
+    height: ${row === 'top' ? '244px' : '254px'};
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: ${row === 'top' ? 1 : 3};
+    `;
+
+// 캐릭터 이미지 스타일
+export const CharacterImage = (row) => css`
+    width: 104px;
+    height: 222px;
 `;
 
-export const BackCharacterContainer = css`
-    position: absolute;
-    text-align: center;
+// 이름 스타일
+export const CharacterName = (row) => css`
+    color: var(--G10, #000);
+    -webkit-text-stroke-width: 1.5;
+    -webkit-text-stroke-color: var(--G1, #FFF);
+    font-family: "Noto Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.16px;
     width: 104px;
+    text-align: center;
+    //overflow: hidden; /* 넘치는 텍스트 숨김 */
+    text-overflow: ellipsis; /* 말줄임표 표시 */
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    ${row === 'bottom' ? 'margin-top: 0px;' : 'margin-bottom: 10px;'}
 `;
 
 export const NameAbove = css`
@@ -264,16 +353,23 @@ export const Table = css`
     width: 100%;
     border-radius: 8px; 
     overflow: hidden;
+    border-collapse: collapse; /* 셀 간격 제거 */
+    border-spacing: 0; /* 셀 간격 제거 */
 `;
 
 // 참석자 수에 따른 동적 스타일 적용
 export const ThItem = (participantColumnWidth) => css`
     & > th {
-        height: 50px;
+        height: 64px;
+        font-size: 18px;
         background-color: #F9FAFA;
         border: 1px solid #DFE2E6;
         text-align: center;
         vertical-align: middle;
+        width: ${participantColumnWidth}px; /* 고정 너비 설정 */
+        overflow: hidden; /* 넘치는 텍스트 숨김 */
+        text-overflow: ellipsis; /* 말줄임표 표시 */
+        white-space: nowrap; /* 텍스트 줄바꿈 방지 */
     }
 
     & > th:first-of-type {
@@ -301,8 +397,15 @@ export const TdItem = (participantColumnWidth) => css`
     }
 
     & > td:first-of-type {
+        font-size: 20px;
         background-color: #F9FAFA;
         width: 220px; // 일정 열 고정 너비
+        height: 64px;
+        padding: 10px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
     }
 
     & > td:not(:first-of-type) {
@@ -547,40 +650,51 @@ export const gray = css`
     color: #dbdbdb;
 `;
 
-export const TooltipContainer = css`
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-`;
-
-export const Tooltip = css`
-    position: relative;
-    background-color: black;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 20px;
-    max-width: 80%;
-    text-align: center;
-
-    &:after {
-        content: '';
-        position: absolute;
-        bottom: -10px; /* 말풍선 아래쪽 화살표 */
-        left: 50%;
-        transform: translateX(-50%);
-        border-width: 10px 10px 0;
-        border-style: solid;
-        border-color: black transparent transparent transparent;
-    }
-`;
-
 export const HighlightedDate = css`
-    color: #00C851; /* 테이블 연두색과 동일한 색상 */
-    font-weight: bold;
+    color: var(--M3, #31EDB5);
+    font-family: "Noto Sans";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: -0.18px;
 `;
 
 export const ParticipantName = css`
     text-decoration: underline;
     cursor: pointer;
     color: inherit; /* 기존 글자 색상 유지 */
+    display: block; /* 블록 요소로 설정 */
+    overflow: hidden; /* 넘치는 텍스트 숨김 */
+    text-overflow: ellipsis; /* 말줄임표 표시 */
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    max-width: 100%; /* 부모 요소의 너비를 넘지 않도록 설정 */
+`;
+
+export const DateTimeContainer = css`
+    display: flex;
+    height: 30px;
+    align-items: flex-start;
+    gap: 10px;
+    flex-shrink: 0;
+`;
+
+export const DatePart = css`
+    color: var(--G10, #000);
+    font-family: "Noto Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 30px; /* 150% */
+    letter-spacing: -0.2px;
+`;
+
+export const TimePart = css`
+    color: var(--G10, #000);
+    font-family: "Noto Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px; /* 150% */
+    letter-spacing: -0.2px;
 `;
