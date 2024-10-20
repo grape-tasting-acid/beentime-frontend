@@ -6,14 +6,18 @@ export const Layout = css`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh;
-  padding-top: 100px;
 
   @media (max-width: 430px) {
     height: auto;
     margin-top: 20px;
   }
 `;
+
+export const LogoImage = css`
+  display: block;
+  margin: 0 auto;
+`;
+
 
 export const Component = css`
   display: flex;
@@ -157,12 +161,6 @@ export const BtnFalse = css`
     /* 높이를 변경하지 않음 */
   }
 `;
-
-export const LogoImage = css`
-  display: block;
-  margin: 300px auto 0 auto;
-`;
-
 
 export const DateSelectionContainer = css`
   width: 750px;
