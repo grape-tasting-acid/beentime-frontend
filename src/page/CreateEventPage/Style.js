@@ -50,7 +50,7 @@ export const H5 = css`
   line-height: 26px;
   letter-spacing: -0.01em;
   margin-bottom: 20px;
-  color: #2e343f;
+  color: var(--G10, #000);
 
   @media (max-width: 800px) {
     font-size: 18px;
@@ -100,7 +100,7 @@ export const Bottom = css`
     font-size: 25px;
     font-weight: 700;
     margin-bottom: 10px;
-    color: #2e343f;
+    color: var(--G10, #000);
 
     @media (max-width: 800px) {
       font-size: 18px;
