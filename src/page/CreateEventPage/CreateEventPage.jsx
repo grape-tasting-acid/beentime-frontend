@@ -23,6 +23,7 @@ function CreateEventPage(props) {
     const location = useLocation();
     const queryData = queryString.parse(location.search);
     const eventId = queryData.eventId ? JSON.parse(queryData.eventId) : null;
+    const [activeStartDate, setActiveStartDate] = useState(new Date());
 
     useEffect(() => {
         if (eventId) {
@@ -67,6 +68,12 @@ function CreateEventPage(props) {
     
         setSelectedDates(sortedData.map(item => item.date));
         setTimeSlots(sortedData.map(item => item.timeSlot));
+    };
+
+    const handleTodayClick = () => {
+        const today = new Date();
+        const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+        setActiveStartDate(startOfMonth);
     };
 
     const handleInputChange = (e) => {
@@ -150,10 +157,17 @@ function CreateEventPage(props) {
 
     const tileContent = ({ date, view }) => {
         if (view === 'month') {
-            const isToday = moment(date).isSame(moment(), 'day');
-            return isToday ? <div css={S.TodayText}>오늘</div> : null;
+          const isToday = moment(date).isSame(moment(), 'day');
+          if (isToday) {
+            return (
+              <div css={S.TodayText}>
+                오늘
+              </div>
+            );
+          }
         }
-    };
+        return null;
+      };
 
     const SelectedDateBox = ({ date, index }) => {
         const handleTimeChange = (e) => {
@@ -380,7 +394,12 @@ function CreateEventPage(props) {
                     <div css={S.CalendarLayout}>
                         <div css={S.CalendarBox}>
                             <div css={S.calendarContainer}>
+                                <button css={S.TodayButton} onClick={handleTodayClick}>
+                                    오늘
+                                </button>
                                 <Calendar
+                                activeStartDate={activeStartDate}
+                                onActiveStartDateChange={({ activeStartDate }) => setActiveStartDate(activeStartDate)}
                                 defaultView={'month'}
                                 formatMonthYear={(locale, date) => moment(date).locale('ko').format('YYYY.M')}
                                 formatDay={(local, date) => moment(date).locale('ko').format('DD')}
@@ -400,13 +419,34 @@ function CreateEventPage(props) {
                                 showNeighboringMonth={false}
                                 onClickDay={(value) => handleDateClick(value)}
                                 tileDisabled={({ date }) => moment(date).isBefore(moment().startOf('day'), 'day')}
-                                tileClassName={({ date }) => {
-                                    if (moment(date).isBefore(moment().startOf('day'), 'day')) {
-                                        return 'past-day';
+                                tileClassName={({ date, view }) => {
+                                    if (view === 'month') {
+                                      const classes = [];
+                                      
+                                      // 과거 날짜
+                                      if (moment(date).isBefore(moment().startOf('day'), 'day')) {
+                                        classes.push('past-day');
+                                      }
+                          
+                                      // 오늘 날짜
+                                      const formattedDate = moment(date).startOf('day').format('YYYY-MM-DD');
+                                      const today = moment().startOf('day').format('YYYY-MM-DD');
+                                      if (formattedDate === today) {
+                                        classes.push('today');
+                                      }
+                          
+                                      // 요일 클래스 추가 (0: 일요일, 6: 토요일)
+                                      const dayOfWeek = moment(date).day(); // 0 (일요일)부터 6 (토요일)까지
+                                      classes.push(`weekday-${dayOfWeek}`);
+
+                                      // 첫 번째 날짜 클래스 추가
+                                      if (moment(date).date() === 1) {
+                                            classes.push('first-day');
+                                      }
+                          
+                                      return classes.join(' ');
                                     }
-                                    const formattedDate = moment(date).startOf('day').format('YYYY-MM-DD');
-                                    const today = moment().startOf('day').format('YYYY-MM-DD');
-                                    return formattedDate === today ? ' today' : '';
+                                    return '';
                                 }}
                                 tileContent={tileContent}
                                 locale="en-US"

@@ -6,6 +6,7 @@ export const Layout = css`
   justify-content: center;
   align-items: center;
   width: 100%;
+  padding-top: 0 !important; 
 
   @media (max-width: 430px) {
   }
@@ -187,7 +188,7 @@ export const CalendarBox = css`
 
 export const calendarContainer = css`
   width: 386px !important;
-  height: 366px !important;
+  //height: 366px !important;
   position: relative;
 
   .react-calendar {
@@ -271,18 +272,18 @@ export const calendarContainer = css`
   }
 
   .react-calendar__month-view__days {
-    width: 100%;
-    height: auto;
+    display: grid !important;
+    grid-template-columns: repeat(7, 50px);
+    grid-gap: 8px 6px;
+    width: 386px;
+    justify-content: center;
+    padding: 0 !important; /* 불필요한 패딩 제거 */
+    margin: 0 !important; /* 불필요한 마진 제거 */
 
     .react-calendar__month-view__days__day {
-      display: flex;
-      flex-direction: column;
-      justify-content: start;
-      align-items: center;
-      border: none;
-      background-color: transparent;
-      display: flex;
-      justify-content: center;
+      display: block !important; /* 기본 display를 block으로 설정 */
+      margin: 0 !important; /* 불필요한 마진 제거 */
+      padding: 0 !important; /* 불필요한 패딩 제거 */
     }
   }
 
@@ -291,9 +292,17 @@ export const calendarContainer = css`
     color: var(--G4, #DFE2E6);
   }
 
+  .react-calendar__tile.today {
+    color: var(--T1, #2376E5) !important; 
+    font-weight: 400;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
   .calendarContainer .react-calendar__month-view__days {
     display: grid !important;
-    grid-template-columns: repeat(7, 50px);
+    grid-template-columns: repeat(7, 50px) !important;
     grid-gap: 8px 6px;
     justify-content: center;
   }
@@ -302,8 +311,9 @@ export const calendarContainer = css`
     box-sizing: border-box;
     width: 50px !important;
     height: 50px !important;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
+    position: relative;
+    
 
     text-align: center;
     font-feature-settings: 'liga' off, 'clig' off;
@@ -317,16 +327,42 @@ export const calendarContainer = css`
     background-color: transparent;
   }
 
+  .react-calendar__tile.today {
+    display: flex !important;
+    flex-direction: column !important; /* 필요 시 사용 */
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .react-calendar__month-view__days .react-calendar__tile {
+    margin: 0; /* 마진 제거 */
+  }
+  
+  .weekday-0.first-day { /* 일요일 */
+    grid-column-start: 1;
+  }
+  .weekday-1.first-day { /* 월요일 */
+    grid-column-start: 2;
+  }
+  .weekday-2.first-day { /* 화요일 */
+    grid-column-start: 3;
+  }
+  .weekday-3.first-day { /* 수요일 */
+    grid-column-start: 4;
+  }
+  .weekday-4.first-day { /* 목요일 */
+    grid-column-start: 5;
+  }
+  .weekday-5.first-day { /* 금요일 */
+    grid-column-start: 6;
+  }
+  .weekday-6.first-day { /* 토요일 */
+    grid-column-start: 7;
+  }
+
   .react-calendar__tile:not(.past-day):hover {
     background-color: var(--G3, #F1F2F4);
     border-radius: 50%;
-  }
-
-  .today {
-    abbr {
-      color: color: var(--T1, #2376E5);
-      font-weight: 600;
-    }
   }
 
   .other-month {
@@ -336,12 +372,53 @@ export const calendarContainer = css`
   }
 `;
 
-
 export const TodayText = css`
+  position: absolute; /* 절대 위치로 배치 */
+  margin-bottom: -35px;
+  left: 50%; /* 수평 중앙을 기준으로 */
+  transform: translateX(-50%); /* 수평 중앙 정렬 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 12px;
   font-size: 10px;
   color: var(--T1, #2376E5);
-  font-weight: 600;
+  font-weight: 500;
 `;
+
+export const TodayButton = css`
+  display: flex;
+  width: 44px;
+  height: 28px;
+  padding: 4px 10px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background: var(--G3, #F1F2F4);
+  border: none;
+  gap: 10px;
+  flex-shrink: 0;
+  cursor: pointer;
+  
+  /* 버튼을 캘린더 우측 상단에 위치시키기 위해 절대 위치 설정 */
+  position: absolute;
+  right: 0px; /* 필요에 따라 조정 */
+  
+  /* 폰트 스타일 */
+  color: var(--G10, #000);
+  font-family: "Noto Sans";
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 153.846% */
+  letter-spacing: -0.13px;
+  
+  &:hover {
+    background: var(--G4, #DFE2E6);
+  }
+`;
+
 
 export const TimeBox = css`
   width: 330px;
