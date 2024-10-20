@@ -342,17 +342,19 @@ export const TimeBox = css`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
 `;
 
 export const TimeBoxContainer = css`
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  width: calc(100% - 60px);
+  height: 360px;
   overflow-y: auto;
   flex-direction: column;
   align-items: center;
   overflow-x: auto;
-  margin-top: 30px;
-  margin-left: 30px; 
 
   @media (max-width: 800px) {
     flex-direction: column;
