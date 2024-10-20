@@ -8,14 +8,13 @@ export const Layout = css`
   width: 100%;
 
   @media (max-width: 430px) {
-    height: auto;
-    margin-top: 20px;
   }
 `;
 
 export const LogoImage = css`
   display: block;
-  margin: 0 auto;
+  margin-top: 80px;
+  margin-bottom: 80px;
 `;
 
 
@@ -64,15 +63,16 @@ export const Top = css`
 
   & input {
     width: 750px;
-    height: 50px;
-    gap: 10px;
-    padding: 15px 18px;
+    height: 52px;
+    padding: 13.5px 18px;
     border-radius: 8px;
     border: 1.5px solid var(--G3, #F1F2F4);
     background: var(--G1, #FFF);
     outline: none;
     font-size: 18px;
+    line-height: 22px;
     margin-bottom: 60px;
+    box-sizing: border-box;
 
     &::placeholder {
       font-family: 'Noto Sans'
@@ -88,7 +88,7 @@ export const Top = css`
 
       &::placeholder {
         font-size: 16px;
-        line-height: 20px;
+        line-height: 22px;
       }
     }
   }
@@ -461,7 +461,6 @@ export const SelectImagesContainer = css`
   display: flex;
   justify-content: start;
   align-items: center;
-  margin-bottom: 20px;
 
   & > div {
     display: flex;
@@ -494,7 +493,6 @@ export const ImageContainer = (isSelected) => css`
       `
     : css`
         &:hover {
-          box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
         }
       `}
 `;

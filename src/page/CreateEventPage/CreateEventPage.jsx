@@ -5,7 +5,7 @@ import Calendar from 'react-calendar';
 import moment from 'moment';
 import Select from 'react-select';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import logo from '../../Img/logo/Logo.svg';
+import logo from '../../Img/logo/shortLogo.svg';
 
 import table1 from '../../Img/tables/table1.svg';
 import table2 from '../../Img/tables/table2.svg';
