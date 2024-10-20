@@ -284,10 +284,11 @@ export const calendarContainer = css`
       display: flex;
       justify-content: center;
     }
+  }
 
-    .past-day {
-      color: #dfe2e6;
-    }
+  .react-calendar__tile.past-day,
+  .react-calendar__tile.past-day abbr {
+    color: var(--G4, #DFE2E6);
   }
 
   .calendarContainer .react-calendar__month-view__days {
@@ -314,11 +315,11 @@ export const calendarContainer = css`
 
     border: none;
     background-color: transparent;
+  }
 
-    &:hover {
-      background-color: var(--G3, #F1F2F4);
-      border-radius: 50%;
-    }
+  .react-calendar__tile:not(.past-day):hover {
+    background-color: var(--G3, #F1F2F4);
+    border-radius: 50%;
   }
 
   .today {

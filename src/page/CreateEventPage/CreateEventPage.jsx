@@ -401,6 +401,9 @@ function CreateEventPage(props) {
                                 onClickDay={(value) => handleDateClick(value)}
                                 tileDisabled={({ date }) => moment(date).isBefore(moment().startOf('day'), 'day')}
                                 tileClassName={({ date }) => {
+                                    if (moment(date).isBefore(moment().startOf('day'), 'day')) {
+                                        return 'past-day';
+                                    }
                                     const formattedDate = moment(date).startOf('day').format('YYYY-MM-DD');
                                     const today = moment().startOf('day').format('YYYY-MM-DD');
                                     return formattedDate === today ? ' today' : '';
