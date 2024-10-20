@@ -44,8 +44,12 @@ function Sharing(props) {
 
     return (
         <div css={S.Layout}>
-            <a href="/" aria-label="홈페이지로 이동">
-                <img src={logo} alt="Logo" style={{ display: 'block', paddingTop: '20px', margin: '0 auto 100px auto' }} />
+            <a href="/" aria-label="홈페이지로 이동" css={S.LogoContainer}>
+                <img 
+                    src={logo} 
+                    alt="Logo" 
+                    css={S.LogoImage}
+                />
             </a>
             <h1 css={S.H1}>이제 이 링크를 공유해보자!</h1>
             <div css={S.UrlBox}>

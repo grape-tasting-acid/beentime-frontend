@@ -164,27 +164,38 @@ export const LogoImage = css`
 `;
 
 
+export const DateSelectionContainer = css`
+  width: 750px;
+  height: 446px;
+  display: flex;
+  flex-direction: column;
+`;
+
+
 export const CalendarLayout = css`
   display: flex;
-  justify-content: space-between;
-  width: 100%;
-
-  @media (max-width: 800px) {
-    flex-direction: column;
-  }
+  flex-direction: row;
+  gap: 34px; /* 두 부분의 간격 */
+  height: 400px; /* 남은 높이 */
 `;
 
 export const CalendarBox = css`
-  @media (max-width: 800px) {
-    width: 100%;
-    height: 40vh;
-    margin-bottom: 20px;
-  }
+  width: 386px;
+  height: 366px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const calendarContainer = css`
-  width: 386px;
-  height: 366px;
+  width: 386px important!;
+  height: 366px important!;
+  position: relative;
+
+  .react-calendar {
+    width: 100%;
+    height: 100%;
+  }
 
   .react-calendar__navigation {
     display: flex;
@@ -270,11 +281,17 @@ export const calendarContainer = css`
     }
   }
 
+  .calendarContainer .react-calendar__month-view__days {
+    display: grid !important;
+    grid-template-columns: repeat(7, 50px);
+    grid-gap: 8px 6px;
+    justify-content: center;
+  }
+
   .react-calendar__tile {
-    display: flex;
+    box-sizing: border-box;
     width: 50px !important;
     height: 50px !important;
-    padding: 12px 14px 0px 14px;
     justify-content: center;
     align-items: center;
 
@@ -282,12 +299,17 @@ export const calendarContainer = css`
     font-feature-settings: 'liga' off, 'clig' off;
     font-size: 20px !important;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 400 !important;
     line-height: 25px; /* 125% */
     letter-spacing: -0.4px;
 
     border: none;
     background-color: transparent;
+
+    &:hover {
+      background-color: var(--G3, #F1F2F4);
+      border-radius: 50%;
+    }
   }
 
   .today {
@@ -316,30 +338,21 @@ export const TimeBox = css`
   height: 400px;
   border: 1px solid #f1f2f4;
   border-radius: 5px;
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  @media (max-width: 800px) {
-    border: none;
-    margin-top: 10px;
-    height: 200px;
-    width: 100%;
-  }
 `;
 
 export const TimeBoxContainer = css`
-  width: 330px;
-  height: 400px;
-  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
   flex-direction: column;
   align-items: center;
   overflow-x: auto;
-  margin-top: 10px;
-  margin-top: 30px; /* 추가됨 */
-  margin-left: 30px; /* 추가됨 */
+  margin-top: 30px;
+  margin-left: 30px; 
 
   @media (max-width: 800px) {
     flex-direction: column;
@@ -376,59 +389,48 @@ export const Box = css`
 `;
 
 export const SelectedDateBox = css`
-  width: 216px; /* 수정됨: 고정 너비 */
-  height: 34px; /* 수정됨: 고정 높이 */
-  justify-content: start;
+  width: 216px;
+  height: 34px;
+  display: flex;
   align-items: center;
-  color: #2e343f;
+  margin-bottom: 17px;
+`;
+
+export const DateText = css`
+  font-family: 'Noto Sans', sans-serif;
   font-size: 16px;
   font-weight: 700;
-  margin-bottom: 17px;
-  gap: 13px;
+  margin-right: 13px;
+`;
 
-  /* 날짜 부분 스타일 */
-  .date {
-    width: 90px;
-    color: var(--G10, #000);
-    font-family: 'Noto Sans', sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 120%; /* 19.2px */
-    letter-spacing: -0.16px;
-  }
+export const TimeInput = css`
+  display: flex;
+  width: 70px;
+  height: 34px;
+  padding: 8px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 
-  /* 시간 부분 스타일 */
-  .time {
-    width: 41px;
-    flex-shrink: 0;
-    color: var(--G10, #000);
-    font-family: 'Noto Sans', sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 19px; /* 118.75% */
-    letter-spacing: -0.16px;
-  }
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 19px; /* 118.75% */
+  letter-spacing: -0.16px;
 
-  div {
-    margin-right: 10px;
-  }
+  border-radius: 4px;
+  border: 0.718px solid var(--G4, #DFE2E6);
+  background: var(--G1, #FFF);
 
-  input {
-    width: 110px;
-  }
+`;
 
-  button {
-    background-color: transparent;
-    border: none;
-    color: #91979e;
-  }
-
-  @media (max-width: 1710px) {
-    font-size: 12px;
-    white-space: nowrap;
-  }
+export const DeleteButton = css`
+  width: 30px;
+  height: 34px;
+  background-color: transparent;
+  border: none;
+  color: #91979e;
+  cursor: pointer;
 `;
 
 export const DateBox = css`
@@ -486,10 +488,16 @@ export const ImageContainer = (isSelected) => css`
   cursor: pointer;
   border: 1.5px solid ${isSelected ? 'black' : 'var(--G4, #ccc)'};
 
-  ${isSelected &&
-    css`
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
-    `}
+  ${isSelected
+    ? css`
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+      `
+    : css`
+        &:hover {
+          border: 1.5px solid black;
+          box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+        }
+      `}
 `;
 
 export const CheckboxIcon = css`

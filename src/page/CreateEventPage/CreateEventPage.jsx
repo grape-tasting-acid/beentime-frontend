@@ -45,9 +45,8 @@ function CreateEventPage(props) {
                         return moment(date, 'M월 D일').toDate();
                     }));
                     setTimeSlots(timeList.map(time => {
-                        const hourMinute = time.split(' / ')[1];
-                        const [hour, minute] = hourMinute.split(':');
-                        return { value: `${hour}:${minute}`, label: `${hour}:${minute}` };
+                        const timePart = time.split(' / ')[1];
+                        return timePart;
                     }));
                 }
             }
@@ -58,7 +57,7 @@ function CreateEventPage(props) {
 
     const handleDateClick = (date) => {
         const newSelectedDates = [...selectedDates, date];
-        const newTimeSlots = [...timeSlots, { value: '7:00', label: '7:00 PM' }];
+        const newTimeSlots = [...timeSlots, '19:00'];
     
         // 날짜와 시간 슬롯을 함께 정렬
         const sortedData = newSelectedDates.map((date, index) => ({
@@ -85,7 +84,7 @@ function CreateEventPage(props) {
             alert('모임 제목을 입력해주세요.');
             return;
         }
-        const isValidTimeSlot = timeSlots.every(slot => slot.value !== '');
+        const isValidTimeSlot = timeSlots.every(slot => slot !== '');
 
         if (!isValidTimeSlot) {
             alert('시간을 선택해주세요.');
@@ -121,7 +120,7 @@ function CreateEventPage(props) {
                 default:
                     dayOfWeekShort = '';
             }
-            return `${formattedDate} (${dayOfWeekShort}) / ${timeSlot.label}`;
+            return `${formattedDate} (${dayOfWeekShort}) / ${timeSlot}`;
         });
 
         try {
@@ -157,9 +156,9 @@ function CreateEventPage(props) {
     };
 
     const SelectedDateBox = ({ date, index }) => {
-        const handleTimeChange = (selectedOption) => {
+        const handleTimeChange = (e) => {
             const newTimeSlots = [...timeSlots];
-            newTimeSlots[index] = selectedOption;
+            newTimeSlots[index] = e.target.value;
             setTimeSlots(newTimeSlots);
         };
 
@@ -207,7 +206,7 @@ function CreateEventPage(props) {
 
         const formattedDate = moment(date);
         const formattedDateString = formattedDate.format('M월 D일');
-        const formattedDayOfWeek = moment(date).locale('ko').format('dddd일');
+        const formattedDayOfWeek = moment(date).locale('ko').format('ddd');
         let dayOfWeekShort;
 
         switch (formattedDayOfWeek.substring(0, 3)) {
@@ -238,15 +237,15 @@ function CreateEventPage(props) {
 
         return (
             <div css={S.SelectedDateBox}>
-                <div css={S.DateBox}>{formattedDateString} ({dayOfWeekShort})</div>
-                <div css={S.Box}>
-                    <Select
-                        options={timeOptions}
-                        onChange={handleTimeChange}
-                        value={timeSlots[index]}
-                    />
-                </div>
-                <button onClick={handleDeleteDate}>X</button>
+                <div css={S.DateText}>{formattedDateString} ({dayOfWeekShort})</div>
+                <input
+                css={S.TimeInput}
+                type="text"
+                value={timeSlots[index]}
+                onChange={handleTimeChange}
+                placeholder="시간 입력"
+                />
+                <button css={S.DeleteButton} onClick={handleDeleteDate}>X</button>
             </div>
         );
     };
@@ -376,89 +375,91 @@ function CreateEventPage(props) {
                     />
                 </div>
 
-                <div css={S.CalendarLayout}>
-                    <div css={S.CalendarBox}>
-                        <h5 css={S.H5}>후보 날짜를 정해볼까?</h5>
-                        <div css={S.calendarContainer}>
-                        <Calendar
-                            defaultView={'month'}
-                            formatMonthYear={(locale, date) => moment(date).locale('ko').format('YYYY.M')}
-                            formatDay={(local, date) => moment(date).locale('ko').format('DD')}
-                            formatShortWeekday={(locale, date) => {
-                            const englishDay = moment(date).locale('en').format('dd');
-                            const koreanDays = {
-                                Su: '일',
-                                Mo: '월',
-                                Tu: '화',
-                                We: '수',
-                                Th: '목',
-                                Fr: '금',
-                                Sa: '토',
-                            };
-                            return koreanDays[englishDay];
-                            }}
-                            showNeighboringMonth={false}
-                            onClickDay={(value) => handleDateClick(value)}
-                            tileDisabled={({ date }) => moment(date).isBefore(moment().startOf('day'), 'day')}
-                            tileClassName={({ date }) => {
-                            const formattedDate = moment(date).startOf('day').format('YYYY-MM-DD');
-                            const today = moment().startOf('day').format('YYYY-MM-DD');
-                            return formattedDate === today ? ' today' : '';
-                            }}
-                            tileContent={tileContent}
-                            locale="en-US"
-                            prevLabel={
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="6"
-                                height="14"
-                                viewBox="0 0 9 16"
-                                fill="none"
-                            >
-                                <path
-                                d="M8 1L2 8L8 15"
-                                stroke="var(--G10, #000)"
-                                strokeWidth="2"
-                                strokeLinecap="round"
+                <div css={S.DateSelectionContainer}>
+                    <h5 css={S.H5}>후보 날짜를 정해볼까?</h5>
+                    <div css={S.CalendarLayout}>
+                        <div css={S.CalendarBox}>
+                            <div css={S.calendarContainer}>
+                                <Calendar
+                                defaultView={'month'}
+                                formatMonthYear={(locale, date) => moment(date).locale('ko').format('YYYY.M')}
+                                formatDay={(local, date) => moment(date).locale('ko').format('DD')}
+                                formatShortWeekday={(locale, date) => {
+                                    const englishDay = moment(date).locale('en').format('dd');
+                                    const koreanDays = {
+                                    Su: '일',
+                                    Mo: '월',
+                                    Tu: '화',
+                                    We: '수',
+                                    Th: '목',
+                                    Fr: '금',
+                                    Sa: '토',
+                                    };
+                                    return koreanDays[englishDay];
+                                }}
+                                showNeighboringMonth={false}
+                                onClickDay={(value) => handleDateClick(value)}
+                                tileDisabled={({ date }) => moment(date).isBefore(moment().startOf('day'), 'day')}
+                                tileClassName={({ date }) => {
+                                    const formattedDate = moment(date).startOf('day').format('YYYY-MM-DD');
+                                    const today = moment().startOf('day').format('YYYY-MM-DD');
+                                    return formattedDate === today ? ' today' : '';
+                                }}
+                                tileContent={tileContent}
+                                locale="en-US"
+                                prevLabel={
+                                    <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="6"
+                                    height="14"
+                                    viewBox="0 0 9 16"
+                                    fill="none"
+                                    >
+                                    <path
+                                        d="M8 1L2 8L8 15"
+                                        stroke="var(--G10, #000)"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                    />
+                                    </svg>
+                                }
+                                nextLabel={
+                                    <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="6"
+                                    height="14"
+                                    viewBox="0 0 9 16"
+                                    fill="none"
+                                    >
+                                    <path
+                                        d="M1 1L7 8L1 15"
+                                        stroke="var(--G10, #000)"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                    />
+                                    </svg>
+                                }
                                 />
-                            </svg>
-                            }
-                            nextLabel={
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="6"
-                                height="14"
-                                viewBox="0 0 9 16"
-                                fill="none"
-                            >
-                                <path
-                                d="M1 1L7 8L1 15"
-                                stroke="var(--G10, #000)"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                />
-                            </svg>
-                            }
-                        />
-                        </div>
-                    </div>
-
-
-                    <div css={S.TimeBox}>
-                        <div css={S.TimeBoxContainer}>
-                        {selectedDates.length > 0 ? (
-                            selectedDates.map((date, index) => (
-                                <SelectedDateBox key={index} date={date} index={index} />
-                            ))
-                        ) : (
-                            <div css={S.PlaceHolder}>
-                                <div>선택된 날짜가 없어요.</div>
-                                <div>캘린더에서 날짜를 선택해주세요.</div>
                             </div>
-                        )}
+                        </div>
+
+                        <div css={S.TimeBox}>
+                            <div css={S.TimeBoxContainer}>
+                                {selectedDates.length > 0 ? (
+                                selectedDates.map((date, index) => (
+                                    <SelectedDateBox key={index} date={date} index={index} />
+                                ))
+                                ) : (
+                                <div css={S.PlaceHolder}>
+                                    <div>선택된 날짜가 없어요.</div>
+                                    <div>캘린더에서 날짜를 선택해주세요.</div>
+                                </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
+
                 <button onClick={handleEventCreate} css={selectedDates.length ? S.BtnTrue : S.BtnFalse}>
                     {eventId ? "모임 수정하기" : "모임 만들기"}
                 </button>
