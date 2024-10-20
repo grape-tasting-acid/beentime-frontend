@@ -72,7 +72,7 @@ export const Top = css`
     font-size: 18px;
     line-height: 22px;
     margin-bottom: 60px;
-    box-sizing: border-box;
+    box-sizing: border-box !important;
 
     &::placeholder {
       font-family: 'Noto Sans'
@@ -175,24 +175,25 @@ export const CalendarLayout = css`
   flex-direction: row;
   gap: 34px; /* 두 부분의 간격 */
   height: 400px; /* 남은 높이 */
+  align-items: flex-start;
 `;
 
 export const CalendarBox = css`
   width: 386px;
   height: 366px;
-  display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 export const calendarContainer = css`
-  width: 386px important!;
-  height: 366px important!;
+  width: 386px !important;
+  height: 366px !important;
   position: relative;
 
   .react-calendar {
     width: 100%;
     height: 100%;
+    margin-top: 0 !important;
   }
 
   .react-calendar__navigation {
@@ -200,6 +201,7 @@ export const calendarContainer = css`
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 20px;
+    margin-top: 0px;
 
     .react-calendar__navigation__label {
       display: flex;
@@ -222,8 +224,8 @@ export const calendarContainer = css`
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 6px;
-      height: 14px;
+      width: 10px;
+      height: 18px;
       padding: 0;
       margin: 0;
       background: none;
@@ -237,6 +239,15 @@ export const calendarContainer = css`
   
     .react-calendar__navigation__next-button {
       margin-left: 8px;
+    }
+
+    .react-calendar__navigation__prev-button svg,
+    .react-calendar__navigation__next-button svg {
+      width: 9px;
+      height: 16px;
+      stroke: var(--G10, #000);
+      stroke-width: 2;
+      stroke-linecap: round;
     }
 
     .react-calendar__navigation__next2-button {

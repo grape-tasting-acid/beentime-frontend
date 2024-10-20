@@ -410,15 +410,15 @@ function CreateEventPage(props) {
                                 prevLabel={
                                     <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    width="6"
-                                    height="14"
+                                    width="9"
+                                    height="16"
                                     viewBox="0 0 9 16"
                                     fill="none"
                                     >
                                     <path
                                         d="M8 1L2 8L8 15"
                                         stroke="var(--G10, #000)"
-                                        strokeWidth="2"
+                                        strokeWidth=""
                                         strokeLinecap="round"
                                     />
                                     </svg>
@@ -426,8 +426,8 @@ function CreateEventPage(props) {
                                 nextLabel={
                                     <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    width="6"
-                                    height="14"
+                                    width="9"
+                                    height="16"
                                     viewBox="0 0 9 16"
                                     fill="none"
                                     >
