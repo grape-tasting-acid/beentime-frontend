@@ -10,9 +10,9 @@ import { useLocation, useNavigate, Link } from 'react-router-dom';
 import logo from '../../Img/logo/shortLogo.svg';
 import Footer from '../../component/footer/Footer';
 
-import table1 from '../../Img/tables/table1.svg';
-import table2 from '../../Img/tables/table2.svg';
-import table3 from '../../Img/tables/table3.svg';
+import table1 from '../../Img/tables/shortTable1.svg';
+import table2 from '../../Img/tables/shortTable2.svg';
+import table3 from '../../Img/tables/shortTable3.svg';
 
 import { saveEvent, editEvent, getEvent } from '../../services/supabaseService';
 import queryString from 'query-string';
@@ -141,14 +141,14 @@ function CreateEventPage(props) {
 
         try {
             if (!eventId) {
-                const response = await saveEvent(title, eventList);
+                const response = await saveEvent(title, eventList, selectedImage);
                 if (response) {
                     sessionStorage.setItem('eventId', response[0].event_id);
                     alert('모임이 생성되었습니다.');
                     navigate('/sharing');
                 }
             } else {
-                const response = await editEvent(eventId, title, eventList);
+                const response = await editEvent(eventId, title, eventList, selectedImage);
                 if (response) {
                     sessionStorage.setItem('eventId', response[0].event_id);
                     alert('모임이 수정되었습니다.');

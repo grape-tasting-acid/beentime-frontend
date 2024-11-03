@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 /** @jsxImportSource @emotion/react */
 import * as S from '../AttendanceEventPage/Style';
 import mainLogo from '../../Img/main_logo.svg';
-import tableImage from '../../Img/table1.svg'; // 테이블 이미지
+import tableImage1 from '../../Img/tables/table1.svg';
+import tableImage2 from '../../Img/tables/table2.svg';
+import tableImage3 from '../../Img/tables/table3.svg';
 import editLogo from '../../Img/edit_logo.svg';
 import Footer from '../../component/footer/Footer';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
@@ -22,6 +24,7 @@ const AttendanceEventListPage = () => {
     const name = JSON.parse(sessionStorage.getItem('name'));
     const location = useLocation();
     const id = new URLSearchParams(location.search).get('eventId');
+    const [tableImage, setTableImage] = useState(tableImage1);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -31,6 +34,20 @@ const AttendanceEventListPage = () => {
                 if (eventResponse && eventResponse.length > 0) {
                     const event = eventResponse[0];
                     setEventData(event);
+
+                    switch (event.imageIndex) {
+                        case 0:
+                          setTableImage(tableImage1);
+                          break;
+                        case 1:
+                          setTableImage(tableImage2);
+                          break;
+                        case 2:
+                          setTableImage(tableImage3);
+                          break;
+                        default:
+                          setTableImage(tableImage1); // 기본값
+                    }
 
                     if (event.time) {
                         const parsedTime = JSON.parse(event.time);
@@ -157,79 +174,6 @@ const AttendanceEventListPage = () => {
         );
     }
 
-    // 중복되지 않는 캐릭터를 가져오는 함수
-    const getUniqueCharacter = (usedCharacters) => {
-        let characterIndex;
-        do {
-            characterIndex = Math.floor(Math.random() * characterImages.length);
-        } while (usedCharacters.has(characterIndex) && usedCharacters.size < characterImages.length);
-    
-        usedCharacters.add(characterIndex);
-        return characterImages[characterIndex];
-    };
-    
-    // **캐릭터 배치 함수 수정**
-    const getFixedCharacterPlacements = () => {
-        const placements = [];
-        const usedCharacters = new Set();
-    
-        const totalParticipants = participants.length;
-        const tableWidth = 720;
-        const characterWidth = 104;
-        const characterSpacing = 16;
-    
-        const topParticipants = [];
-        const bottomParticipants = [];
-    
-        // 첫 번째 참가자를 윗줄에 배치하기 위해 인덱스 조정
-        participants.forEach((participant, index) => {
-            if (index % 2 === 0) {
-                topParticipants.push(participant);
-            } else {
-                bottomParticipants.push(participant);
-            }
-        });
-    
-        // 윗줄 캐릭터 배치
-        const topRowCount = topParticipants.length;
-        const totalTopRowWidth = topRowCount * characterWidth + (topRowCount - 1) * characterSpacing;
-        const startXTop = (tableWidth - totalTopRowWidth) / 2;
-    
-        topParticipants.forEach((participant, i) => {
-            const leftPosition = startXTop + i * (characterWidth + characterSpacing) + characterWidth / 2;
-            const character = getUniqueCharacter(usedCharacters);
-    
-            placements.push({
-                row: 'top',
-                position: leftPosition,
-                character,
-                name: participant.name,
-            });
-        });
-    
-        // 아랫줄 캐릭터 배치
-        const bottomRowCount = bottomParticipants.length;
-        const totalBottomRowWidth = bottomRowCount * characterWidth + (bottomRowCount - 1) * characterSpacing;
-        const startXBottom = (tableWidth - totalBottomRowWidth) / 2;
-    
-        bottomParticipants.forEach((participant, i) => {
-            const leftPosition = startXBottom + i * (characterWidth + characterSpacing) + characterWidth / 2;
-            const character = getUniqueCharacter(usedCharacters);
-    
-            placements.push({
-                row: 'bottom',
-                position: leftPosition,
-                character,
-                name: participant.name,
-            });
-        });
-    
-        return placements;
-    };
-
-
-    const characterPlacements = getFixedCharacterPlacements();
-
     // 참석자 수에 따른 열 너비 결정
     let participantColumnWidth;
 
@@ -250,6 +194,99 @@ const AttendanceEventListPage = () => {
         setEditingParticipant(participant);
         setShowAttendanceForm(true);
     };
+
+    // 테이블 및 참석자 배치 계산
+    const participantsPerTable = 10;
+    const maxTables = 2;
+    const numTables = Math.ceil(participants.length / participantsPerTable);
+    const actualTables = Math.min(numTables, maxTables);
+
+    // 중복되지 않는 캐릭터를 가져오는 함수
+    const getUniqueCharacter = (usedCharacters) => {
+        let characterIndex;
+        do {
+            characterIndex = Math.floor(Math.random() * characterImages.length);
+        } while (usedCharacters.has(characterIndex) && usedCharacters.size < characterImages.length);
+    
+        usedCharacters.add(characterIndex);
+        return characterImages[characterIndex];
+    };
+
+    // **캐릭터 배치 함수 수정**
+    const getFixedCharacterPlacements = () => {
+        const placements = [];
+        const usedCharacters = new Set();
+
+        // 테이블 설정
+        const tableWidth = 720; // 각 테이블의 너비
+        const tableGap = 50; // 테이블 간 간격
+        const totalTableWidth = actualTables * tableWidth + (actualTables - 1) * tableGap;
+
+        // 첫 번째 테이블의 시작 X 위치
+        const startX = -(totalTableWidth / 2) + tableWidth / 2;
+
+        for (let t = 0; t < actualTables; t++) {
+            // 각 테이블에 대한 처리
+            const tableParticipants = participants.slice(t * participantsPerTable, (t + 1) * participantsPerTable);
+            const tablePositionX = startX + t * (tableWidth + tableGap);
+
+            const topParticipants = [];
+            const bottomParticipants = [];
+
+            // 참가자를 윗줄과 아랫줄로 분리
+            tableParticipants.forEach((participant, index) => {
+                if (index % 2 === 0) {
+                    topParticipants.push(participant);
+                } else {
+                    bottomParticipants.push(participant);
+                }
+            });
+
+            // 캐릭터 배치 설정
+            const characterWidth = 104;
+            const characterSpacing = 16;
+
+            // 윗줄 캐릭터 배치
+            const topRowCount = topParticipants.length;
+            const totalTopRowWidth = topRowCount * characterWidth + (topRowCount - 1) * characterSpacing;
+            const startXTop = tablePositionX - totalTopRowWidth / 2 + characterWidth / 2 + tableWidth / 2;
+
+            topParticipants.forEach((participant, i) => {
+                const leftPosition = startXTop + i * (characterWidth + characterSpacing);
+                const character = getUniqueCharacter(usedCharacters);
+
+                placements.push({
+                    tableIndex: t,
+                    row: 'top',
+                    position: leftPosition - startX, // 컨테이너에 상대적인 위치 조정
+                    character,
+                    name: participant.name,
+                });
+            });
+
+            // 아랫줄 캐릭터 배치
+            const bottomRowCount = bottomParticipants.length;
+            const totalBottomRowWidth = bottomRowCount * characterWidth + (bottomRowCount - 1) * characterSpacing;
+            const startXBottom = tablePositionX - totalBottomRowWidth / 2 + characterWidth / 2 + tableWidth / 2;
+
+            bottomParticipants.forEach((participant, i) => {
+                const leftPosition = startXBottom + i * (characterWidth + characterSpacing);
+                const character = getUniqueCharacter(usedCharacters);
+
+                placements.push({
+                    tableIndex: t,
+                    row: 'bottom',
+                    position: leftPosition - startX, // 컨테이너에 상대적인 위치 조정
+                    character,
+                    name: participant.name,
+                });
+            });
+        }
+
+        return placements;
+    };
+
+    const characterPlacements = getFixedCharacterPlacements();
 
     return (
         <div css={S.Layout}>
@@ -287,36 +324,40 @@ const AttendanceEventListPage = () => {
                             </div>
                         </div>
 
-                        {/* 캐릭터+캡션+테이블 이미지 컨테이너 (A) */}
-                        <div css={S.CharacterAndTableContainer}>
-                            {/* 테이블 이미지 */}
-                            <img src={tableImage} alt="Table" css={S.TableImage} />
+                        {/* 캐릭터+캡션+테이블 이미지 컨테이너 */}
+                        <div css={S.CharacterAndTableContainer(actualTables)}>
+                            {Array.from({ length: actualTables }).map((_, t) => (
+                                <div key={t} css={S.TableAndCharactersWrapper(t)}>
+                                    {/* 테이블 이미지 */}
+                                    <img src={tableImage} alt="Table" css={S.TableImage} />
 
-                            {/* 캐릭터 배치 */}
-                            {characterPlacements.map((placement, index) => (
-                                <div
-                                    key={index}
-                                    css={S.CharacterContainer(placement.position, placement.row)}
-                                >
-                                    {placement.row === 'top' ? (
-                                        <>
-                                            <div css={S.CharacterName(placement.row)}>{placement.name}</div>
-                                            <img
-                                                src={placement.character}
-                                                alt={`Character ${index + 1}`}
-                                                css={S.CharacterImage}
-                                            />
-                                        </>
-                                    ) : (
-                                        <>
-                                            <img
-                                                src={placement.character}
-                                                alt={`Character ${index + 1}`}
-                                                css={S.CharacterImage}
-                                            />
-                                            <div css={S.CharacterName(placement.row)}>{placement.name}</div>
-                                        </>
-                                    )}
+                                    {/* 캐릭터 배치 */}
+                                    {characterPlacements.filter(p => p.tableIndex === t).map((placement, index) => (
+                                        <div
+                                            key={index}
+                                            css={S.CharacterContainer(placement.position, placement.row)}
+                                        >
+                                            {placement.row === 'top' ? (
+                                                <>
+                                                    <div css={S.CharacterName(placement.row)}>{placement.name}</div>
+                                                    <img
+                                                        src={placement.character}
+                                                        alt={`Character ${index + 1}`}
+                                                        css={S.CharacterImage}
+                                                    />
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <img
+                                                        src={placement.character}
+                                                        alt={`Character ${index + 1}`}
+                                                        css={S.CharacterImage}
+                                                    />
+                                                    <div css={S.CharacterName(placement.row)}>{placement.name}</div>
+                                                </>
+                                            )}
+                                        </div>
+                                    ))}
                                 </div>
                             ))}
                         </div>

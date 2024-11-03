@@ -1,10 +1,11 @@
 import supabase from '../api/instance';
 
 // 이벤트 생성
-export const saveEvent = async (title, time) => {
+// 이벤트 생성
+export const saveEvent = async (title, time, imageIndex) => {
     const { data, error } = await supabase
         .from('event_tb')
-        .insert([{ title, time }])
+        .insert([{ title, time, imageIndex }]) // imageIndex 추가
         .select();
 
     if (error) {
@@ -16,10 +17,10 @@ export const saveEvent = async (title, time) => {
 };
 
 // 이벤트 수정
-export const editEvent = async (eventId, title, time) => {
+export const editEvent = async (eventId, title, time, imageIndex) => {
     const { data, error } = await supabase
         .from('event_tb')
-        .update({ title, time })
+        .update({ title, time, imageIndex }) // imageIndex 추가
         .eq('event_id', eventId)
         .select();
 

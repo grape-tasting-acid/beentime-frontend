@@ -192,12 +192,23 @@ export const Tooltip = css`
 `;
 
 // 캐릭터+캡션+테이블 이미지 컨테이너 (A) (720x396px)
-export const CharacterAndTableContainer = css`
-    position: absolute;
+export const CharacterAndTableContainer = (numTables) => css`
+    position: relative;
     margin-top: 20px;
-    top: 62px; /* 툴팁 높이 + 20px 간격 */
-    width: 100%;
+    top: 62px;
+    width: ${numTables * 720 + (numTables - 1) * 50}px; // 테이블 수에 따라 너비 조정
     height: 396px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 0 auto;
+`;
+
+export const TableAndCharactersWrapper = (tableIndex) => css`
+    position: relative;
+    width: 720px;
+    height: 396px;
+    margin-left: ${tableIndex > 0 ? '50px' : '0'}; // 첫 번째 테이블을 제외하고 좌측 마진 적용
 `;
 
 // 메인 이미지 박스 (테이블과 캐릭터 배치)
