@@ -1,3 +1,5 @@
+// CreateEventPage.js
+
 import React, { useEffect, useState } from 'react';
 /** @jsxImportSource @emotion/react */
 import * as S from './Style';
@@ -18,7 +20,7 @@ import queryString from 'query-string';
 function CreateEventPage(props) {
     const [selectedDates, setSelectedDates] = useState([]);
     const [timeSlots, setTimeSlots] = useState([]);
-    const [eventData, setEventData] = useState({ title: ''});
+    const [eventData, setEventData] = useState({ title: '' });
     const [selectedImage, setSelectedImage] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
@@ -38,18 +40,22 @@ function CreateEventPage(props) {
             if (response && response.length > 0) {
                 const event = response[0];
                 setEventData(event);
-                setSelectedImage(event.imageIndex); // 선택된 이미지 인덱스 설정 (추가 필요 시)
+                setSelectedImage(event.imageIndex);
 
                 if (event.time) {
                     const timeList = event.time.split(', ');
-                    setSelectedDates(timeList.map(time => {
-                        const date = time.split(' / ')[0];
-                        return moment(date, 'M월 D일').toDate();
-                    }));
-                    setTimeSlots(timeList.map(time => {
-                        const timePart = time.split(' / ')[1];
-                        return timePart;
-                    }));
+                    setSelectedDates(
+                        timeList.map((time) => {
+                            const date = time.split(' / ')[0];
+                            return moment(date, 'M월 D일').toDate();
+                        })
+                    );
+                    setTimeSlots(
+                        timeList.map((time) => {
+                            const timePart = time.split(' / ')[1];
+                            return timePart;
+                        })
+                    );
                 }
             }
         } catch (error) {
@@ -59,16 +65,18 @@ function CreateEventPage(props) {
 
     const handleDateClick = (date) => {
         const newSelectedDates = [...selectedDates, date];
-        const newTimeSlots = [...timeSlots, '19:00'];
-    
+        const newTimeSlots = [...timeSlots, '19:00']; // 기본값을 '19:00'으로 설정
+
         // 날짜와 시간 슬롯을 함께 정렬
-        const sortedData = newSelectedDates.map((date, index) => ({
-            date,
-            timeSlot: newTimeSlots[index],
-        })).sort((a, b) => new Date(a.date) - new Date(b.date));
-    
-        setSelectedDates(sortedData.map(item => item.date));
-        setTimeSlots(sortedData.map(item => item.timeSlot));
+        const sortedData = newSelectedDates
+            .map((date, index) => ({
+                date,
+                timeSlot: newTimeSlots[index],
+            }))
+            .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        setSelectedDates(sortedData.map((item) => item.date));
+        setTimeSlots(sortedData.map((item) => item.timeSlot));
     };
 
     const handleTodayClick = () => {
@@ -92,7 +100,7 @@ function CreateEventPage(props) {
             alert('모임 제목을 입력해주세요.');
             return;
         }
-        const isValidTimeSlot = timeSlots.every(slot => slot !== '');
+        const isValidTimeSlot = timeSlots.every((slot) => slot !== '');
 
         if (!isValidTimeSlot) {
             alert('시간을 선택해주세요.');
@@ -136,14 +144,14 @@ function CreateEventPage(props) {
                 const response = await saveEvent(title, eventList);
                 if (response) {
                     sessionStorage.setItem('eventId', response[0].event_id);
-                    alert("모임이 생성되었습니다.");
+                    alert('모임이 생성되었습니다.');
                     navigate('/sharing');
                 }
             } else {
                 const response = await editEvent(eventId, title, eventList);
                 if (response) {
                     sessionStorage.setItem('eventId', response[0].event_id);
-                    alert("모임이 수정되었습니다.");
+                    alert('모임이 수정되었습니다.');
                     navigate('/sharing');
                 }
             }
@@ -158,17 +166,13 @@ function CreateEventPage(props) {
 
     const tileContent = ({ date, view }) => {
         if (view === 'month') {
-          const isToday = moment(date).isSame(moment(), 'day');
-          if (isToday) {
-            return (
-              <div css={S.TodayText}>
-                오늘
-              </div>
-            );
-          }
+            const isToday = moment(date).isSame(moment(), 'day');
+            if (isToday) {
+                return <div css={S.TodayText}>오늘</div>;
+            }
         }
         return null;
-      };
+    };
 
     const SelectedDateBox = ({ date, index }) => {
         const handleTimeChange = (e) => {
@@ -182,41 +186,27 @@ function CreateEventPage(props) {
             const newTimeSlots = [...timeSlots];
             newSelectedDates.splice(index, 1);
             newTimeSlots.splice(index, 1);
-        
+
             // 날짜와 시간 슬롯을 함께 정렬
-            const sortedData = newSelectedDates.map((date, index) => ({
-                date,
-                timeSlot: newTimeSlots[index],
-            })).sort((a, b) => new Date(a.date) - new Date(b.date));
-        
-            setSelectedDates(sortedData.map(item => item.date));
-            setTimeSlots(sortedData.map(item => item.timeSlot));
+            const sortedData = newSelectedDates
+                .map((date, index) => ({
+                    date,
+                    timeSlot: newTimeSlots[index],
+                }))
+                .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            setSelectedDates(sortedData.map((item) => item.date));
+            setTimeSlots(sortedData.map((item) => item.timeSlot));
         };
 
         const timeOptions = [];
-        for (let hour = 12; hour < 24; hour++) {
+        for (let hour = 0; hour < 24; hour++) {
             for (let minute = 0; minute < 60; minute += 30) {
-                const formattedHour = hour === 12 ? 12 : hour - 12;
-                const formattedMinute = minute < 10 ? `0${minute}` : minute;
-                const label = `${formattedHour}:${formattedMinute} PM`;
+                const formattedHour = hour < 10 ? `0${hour}` : `${hour}`;
+                const formattedMinute = minute === 0 ? '00' : `${minute}`;
                 const value = `${formattedHour}:${formattedMinute}`;
-                timeOptions.push({ value, label });
+                timeOptions.push({ value, label: value });
             }
-        }
-
-        for (let hour = 0; hour < 12; hour++) {
-            for (let minute = 0; minute < 60; minute += 30) {
-                const formattedHour = hour === 0 ? 12 : hour;
-                const formattedMinute = minute < 10 ? `0${minute}` : minute;
-                const label = hour === 0 && minute === 0 ? '00:00 AM' : `${formattedHour}:${formattedMinute} AM`;
-                const value = hour === 0 && minute === 0 ? '00:00' : `${formattedHour}:${formattedMinute}`;
-                timeOptions.push({ value, label });
-            }
-        }
-
-        const index1230AM = timeOptions.findIndex(option => option.label === '12:30 AM');
-        if (index1230AM !== -1) {
-            timeOptions[index1230AM].label = '00:30 AM';
         }
 
         const formattedDate = moment(date);
@@ -252,15 +242,28 @@ function CreateEventPage(props) {
 
         return (
             <div css={S.SelectedDateBox}>
-                <div css={S.DateText}>{formattedDateString} ({dayOfWeekShort})</div>
-                <input
-                css={S.TimeInput}
-                type="text"
-                value={timeSlots[index]}
-                onChange={handleTimeChange}
-                placeholder="시간 입력"
-                />
-                <button css={S.DeleteButton} onClick={handleDeleteDate}>X</button>
+                <div css={S.DateText}>
+                    {formattedDateString} ({dayOfWeekShort})
+                </div>
+                <select
+                    css={S.TimeInput}
+                    type="text"
+                    value={timeSlots[index]}
+                    onChange={handleTimeChange}
+                    placeholder="시간 입력"
+                >
+                    <option value="" disabled>
+                        시간 선택
+                    </option>
+                    {timeOptions.map((option, idx) => (
+                        <option key={idx} value={option.value}>
+                            {option.label}
+                        </option>
+                    ))}
+                </select>
+                <button css={S.DeleteButton} onClick={handleDeleteDate}>
+                    X
+                </button>
             </div>
         );
     };
@@ -294,7 +297,7 @@ function CreateEventPage(props) {
                                             height="22"
                                             viewBox="0 0 22 22"
                                             fill="none"
-                                            >
+                                        >
                                             <circle cx="11" cy="11" r="11" fill="black" />
                                             <path
                                                 d="M6.59961 10.8032L10.6513 14.6666L16.1329 8.06665"
@@ -303,7 +306,7 @@ function CreateEventPage(props) {
                                                 strokeLinecap="round"
                                                 strokeLinejoin="round"
                                             />
-                                            </svg>
+                                        </svg>
                                     </div>
                                 )}
                             </div>
@@ -327,7 +330,7 @@ function CreateEventPage(props) {
                                             height="22"
                                             viewBox="0 0 22 22"
                                             fill="none"
-                                            >
+                                        >
                                             <circle cx="11" cy="11" r="11" fill="black" />
                                             <path
                                                 d="M6.59961 10.8032L10.6513 14.6666L16.1329 8.06665"
@@ -336,7 +339,7 @@ function CreateEventPage(props) {
                                                 strokeLinecap="round"
                                                 strokeLinejoin="round"
                                             />
-                                            </svg>
+                                        </svg>
                                     </div>
                                 )}
                             </div>
@@ -360,7 +363,7 @@ function CreateEventPage(props) {
                                             height="22"
                                             viewBox="0 0 22 22"
                                             fill="none"
-                                            >
+                                        >
                                             <circle cx="11" cy="11" r="11" fill="black" />
                                             <path
                                                 d="M6.59961 10.8032L10.6513 14.6666L16.1329 8.06665"
@@ -369,7 +372,7 @@ function CreateEventPage(props) {
                                                 strokeLinecap="round"
                                                 strokeLinejoin="round"
                                             />
-                                            </svg>
+                                        </svg>
                                     </div>
                                 )}
                             </div>
@@ -381,12 +384,12 @@ function CreateEventPage(props) {
                 {/* 모임 이름 입력 부분 */}
                 <div css={S.Top}>
                     <h5>모임 이름은?</h5>
-                    <input 
-                        type="text" 
+                    <input
+                        type="text"
                         name="title"
-                        placeholder='개발팀 회식, 동아리 친목회' 
-                        value={eventData.title} 
-                        onChange={handleInputChange} 
+                        placeholder="개발팀 회식, 동아리 친목회"
+                        value={eventData.title}
+                        onChange={handleInputChange}
                     />
                 </div>
 
@@ -399,90 +402,98 @@ function CreateEventPage(props) {
                                     오늘
                                 </button>
                                 <Calendar
-                                activeStartDate={activeStartDate}
-                                onActiveStartDateChange={({ activeStartDate }) => setActiveStartDate(activeStartDate)}
-                                defaultView={'month'}
-                                formatMonthYear={(locale, date) => moment(date).locale('ko').format('YYYY.M')}
-                                formatDay={(local, date) => moment(date).locale('ko').format('DD')}
-                                formatShortWeekday={(locale, date) => {
-                                    const englishDay = moment(date).locale('en').format('dd');
-                                    const koreanDays = {
-                                    Su: '일',
-                                    Mo: '월',
-                                    Tu: '화',
-                                    We: '수',
-                                    Th: '목',
-                                    Fr: '금',
-                                    Sa: '토',
-                                    };
-                                    return koreanDays[englishDay];
-                                }}
-                                showNeighboringMonth={false}
-                                onClickDay={(value) => handleDateClick(value)}
-                                tileDisabled={({ date }) => moment(date).isBefore(moment().startOf('day'), 'day')}
-                                tileClassName={({ date, view }) => {
-                                    if (view === 'month') {
-                                      const classes = [];
-                                      
-                                      // 과거 날짜
-                                      if (moment(date).isBefore(moment().startOf('day'), 'day')) {
-                                        classes.push('past-day');
-                                      }
-                          
-                                      // 오늘 날짜
-                                      const formattedDate = moment(date).startOf('day').format('YYYY-MM-DD');
-                                      const today = moment().startOf('day').format('YYYY-MM-DD');
-                                      if (formattedDate === today) {
-                                        classes.push('today');
-                                      }
-                          
-                                      // 요일 클래스 추가 (0: 일요일, 6: 토요일)
-                                      const dayOfWeek = moment(date).day(); // 0 (일요일)부터 6 (토요일)까지
-                                      classes.push(`weekday-${dayOfWeek}`);
-
-                                      // 첫 번째 날짜 클래스 추가
-                                      if (moment(date).date() === 1) {
-                                            classes.push('first-day');
-                                      }
-                          
-                                      return classes.join(' ');
+                                    activeStartDate={activeStartDate}
+                                    onActiveStartDateChange={({ activeStartDate }) =>
+                                        setActiveStartDate(activeStartDate)
                                     }
-                                    return '';
-                                }}
-                                tileContent={tileContent}
-                                locale="en-US"
-                                prevLabel={
-                                    <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="9"
-                                    height="16"
-                                    viewBox="0 0 9 16"
-                                    fill="none"
-                                    >
-                                    <path
-                                        d="M8 1L2 8L8 15"
-                                        stroke="var(--G10, #000)"
-                                        strokeWidth=""
-                                        strokeLinecap="round"
-                                    />
-                                    </svg>
-                                }
-                                nextLabel={
-                                    <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="9"
-                                    height="16"
-                                    viewBox="0 0 9 16"
-                                    fill="none"
-                                    >
-                                    <path
-                                        d="M1 1L7 8L1 15"
-                                        stroke="var(--G10, #000)"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                    />
-                                    </svg>
-                                }
+                                    defaultView={'month'}
+                                    formatMonthYear={(locale, date) =>
+                                        moment(date).locale('ko').format('YYYY.M')
+                                    }
+                                    formatDay={(local, date) => moment(date).locale('ko').format('DD')}
+                                    formatShortWeekday={(locale, date) => {
+                                        const englishDay = moment(date).locale('en').format('dd');
+                                        const koreanDays = {
+                                            Su: '일',
+                                            Mo: '월',
+                                            Tu: '화',
+                                            We: '수',
+                                            Th: '목',
+                                            Fr: '금',
+                                            Sa: '토',
+                                        };
+                                        return koreanDays[englishDay];
+                                    }}
+                                    showNeighboringMonth={false}
+                                    onClickDay={(value) => handleDateClick(value)}
+                                    tileDisabled={({ date }) =>
+                                        moment(date).isBefore(moment().startOf('day'), 'day')
+                                    }
+                                    tileClassName={({ date, view }) => {
+                                        if (view === 'month') {
+                                            const classes = [];
+
+                                            // 과거 날짜
+                                            if (moment(date).isBefore(moment().startOf('day'), 'day')) {
+                                                classes.push('past-day');
+                                            }
+
+                                            // 오늘 날짜
+                                            const formattedDate = moment(date)
+                                                .startOf('day')
+                                                .format('YYYY-MM-DD');
+                                            const today = moment().startOf('day').format('YYYY-MM-DD');
+                                            if (formattedDate === today) {
+                                                classes.push('today');
+                                            }
+
+                                            // 요일 클래스 추가 (0: 일요일, 6: 토요일)
+                                            const dayOfWeek = moment(date).day(); // 0 (일요일)부터 6 (토요일)까지
+                                            classes.push(`weekday-${dayOfWeek}`);
+
+                                            // 첫 번째 날짜 클래스 추가
+                                            if (moment(date).date() === 1) {
+                                                classes.push('first-day');
+                                            }
+
+                                            return classes.join(' ');
+                                        }
+                                        return '';
+                                    }}
+                                    tileContent={tileContent}
+                                    locale="en-US"
+                                    prevLabel={
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="9"
+                                            height="16"
+                                            viewBox="0 0 9 16"
+                                            fill="none"
+                                        >
+                                            <path
+                                                d="M8 1L2 8L8 15"
+                                                stroke="var(--G10, #000)"
+                                                strokeWidth=""
+                                                strokeLinecap="round"
+                                            />
+                                        </svg>
+                                    }
+                                    nextLabel={
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="9"
+                                            height="16"
+                                            viewBox="0 0 9 16"
+                                            fill="none"
+                                        >
+                                            <path
+                                                d="M1 1L7 8L1 15"
+                                                stroke="var(--G10, #000)"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                            />
+                                        </svg>
+                                    }
                                 />
                             </div>
                         </div>
@@ -490,22 +501,25 @@ function CreateEventPage(props) {
                         <div css={S.TimeBox}>
                             <div css={S.TimeBoxContainer}>
                                 {selectedDates.length > 0 ? (
-                                selectedDates.map((date, index) => (
-                                    <SelectedDateBox key={index} date={date} index={index} />
-                                ))
+                                    selectedDates.map((date, index) => (
+                                        <SelectedDateBox key={index} date={date} index={index} />
+                                    ))
                                 ) : (
-                                <div css={S.PlaceHolder}>
-                                    <div>선택된 날짜가 없어요.</div>
-                                    <div>캘린더에서 날짜를 선택해주세요.</div>
-                                </div>
+                                    <div css={S.PlaceHolder}>
+                                        <div>선택된 날짜가 없어요.</div>
+                                        <div>캘린더에서 날짜를 선택해주세요.</div>
+                                    </div>
                                 )}
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <button onClick={handleEventCreate} css={selectedDates.length ? S.BtnTrue : S.BtnFalse}>
-                    {eventId ? "모임 수정하기" : "모임 만들기"}
+                <button
+                    onClick={handleEventCreate}
+                    css={selectedDates.length ? S.BtnTrue : S.BtnFalse}
+                >
+                    {eventId ? '모임 수정하기' : '모임 만들기'}
                 </button>
             </div>
             <Footer />

@@ -511,6 +511,11 @@ export const TimeInput = css`
   border: 0.718px solid var(--G4, #DFE2E6);
   background: var(--G1, #FFF);
 
+  /* 드롭다운 화살표 숨기기 */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
 `;
 
 export const DeleteButton = css`
