@@ -4,6 +4,7 @@ import * as S from '../AttendanceEventPage/Style';
 import mainLogo from '../../Img/main_logo.svg';
 import tableImage from '../../Img/table1.svg'; // 테이블 이미지
 import editLogo from '../../Img/edit_logo.svg';
+import Footer from '../../component/footer/Footer';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import AttendanceEvent from '../../component/AttendanceEvent';
 import { getEvent, getParticipation, getParticipationName } from '../../services/supabaseService';
@@ -374,17 +375,21 @@ const AttendanceEventListPage = () => {
 
             {/* AttendanceEvent 컴포넌트는 showAttendanceForm이 true일 때만 표시 */}
             {showAttendanceForm && (
-                <AttendanceEvent
-                    eventData={eventData}
-                    timeList={timeList}
-                    existingParticipation={editingParticipant}
-                    onClose={() => {
-                        setShowAttendanceForm(false);
-                        setEditingParticipant(null);
-                    }}
-                    hideBackButton={participants.length === 0 && !editingParticipant}
-                />
+                <>
+                    <div css={S.Divider}></div> {/* 구분선 추가 */}
+                    <AttendanceEvent
+                        eventData={eventData}
+                        timeList={timeList}
+                        existingParticipation={editingParticipant}
+                        onClose={() => {
+                            setShowAttendanceForm(false);
+                            setEditingParticipant(null);
+                        }}
+                        hideBackButton={participants.length === 0 && !editingParticipant}
+                    />
+                </>
             )}
+            <Footer />
         </div>
     );
 

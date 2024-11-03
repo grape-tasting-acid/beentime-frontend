@@ -8,7 +8,7 @@ export const Layout = css`
     align-items: center;
     width: 100vw;
     min-height: 100vh;
-    padding-top: 80px;
+    padding-top: 0 !important; 
 
     @media (max-width: 800px) {
         height: auto;
@@ -115,7 +115,7 @@ export const HeaderItem = css`
             border-radius: 8px;
             font-size: 12px;
             font-weight: 900;
-            color: #0F1720;
+            color: var(--G10, #000);
             cursor: pointer;
             display: none; // 모바일에서 숨김
         }
@@ -174,6 +174,10 @@ export const Tooltip = css`
     font-weight: 800;
     line-height: normal;
     letter-spacing: -0.18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &:after {
         content: '';
@@ -316,26 +320,26 @@ export const TimeItem = css`
     & h3 {
         font-size: 24px;
         font-weight: 900;
-        color: #0F1720;
+        color: var(--G10, #000);
     }
 
     & span {
         font-size: 18px;
         font-weight: 700;
-        color: #0F1720;
+        color: var(--G10, #000);
     }
 
     @media (max-width: 800px) {
         & h3 {
             font-size: 20px;
             font-weight: 900;
-            color: #0F1720;
+            color: var(--G10, #000);
         }
 
         & span {
             font-size: 14px;
             font-weight: 700;
-            color: #0F1720;
+            color: var(--G10, #000);
         }
     }
 `;
@@ -490,7 +494,7 @@ export const InputItem = css`
     & h3 {
         font-size: 24px;
         font-weight: 900;
-        color: #0F1720;
+        color: var(--G10, #000);
     }
 
     & input {
@@ -543,13 +547,13 @@ export const Date = css`
     & h4 {
         font-size: 18px;
         font-weight: 900;
-        color: #0F1720;
+        color: var(--G10, #000);
     }
 
     & span {
         font-size: 18px;
         font-weight: 500;
-        color: #0F1720;
+        color: var(--G10, #000);
     }
 
     @media (max-width: 800px) {
@@ -566,7 +570,7 @@ export const Date = css`
 export const AttendButton = css`
     width: 100%; // 부모 컨테이너의 너비에 맞춤
     height: 68px;
-    font-size: 18px;
+    font-size: 22px;
     background-color: #000000;
     border: none;
     border-radius: 5px;
@@ -697,4 +701,11 @@ export const TimePart = css`
     font-weight: 400;
     line-height: 30px; /* 150% */
     letter-spacing: -0.2px;
+`;
+
+export const Divider = css`
+    width: 1020px;
+    height: 1px;
+    background-color: var(--G4);
+    margin: 100px auto;
 `;

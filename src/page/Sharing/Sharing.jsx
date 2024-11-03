@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 /** @jsxImportSource @emotion/react */
 import * as S from './Style';
-import logo from '../../Img/logo/Logo.svg';
+import logo from '../../Img/logo/shortLogo.svg';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../../component/footer/Footer';
 
 function Sharing(props) {
     const [buttonLabel, setButtonLabel] = useState('링크 복사');
@@ -62,6 +63,7 @@ function Sharing(props) {
                 <button onClick={handleClick}>{buttonLabel}</button>
             </div>
             <button css={S.Btn} onClick={handleOnClick}>모임 페이지 가기</button>
+        <Footer />
         </div>
     );
 }

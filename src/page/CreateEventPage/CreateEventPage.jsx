@@ -6,6 +6,7 @@ import moment from 'moment';
 import Select from 'react-select';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import logo from '../../Img/logo/shortLogo.svg';
+import Footer from '../../component/footer/Footer';
 
 import table1 from '../../Img/tables/table1.svg';
 import table2 from '../../Img/tables/table2.svg';
@@ -507,6 +508,7 @@ function CreateEventPage(props) {
                     {eventId ? "모임 수정하기" : "모임 만들기"}
                 </button>
             </div>
+            <Footer />
         </div>
     );
 }

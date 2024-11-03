@@ -5,9 +5,10 @@ export const Layout = css`
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     position: relative;
+    padding-top: 0 !important; 
 `;
 
 export const H1 = css`
@@ -20,6 +21,7 @@ export const H1 = css`
     letter-spacing: -0.22px;
     text-align: left;
     width: 750px;
+    margin-top: 100px;
 `;
 
 export const LogoContainer = css`
@@ -33,7 +35,7 @@ export const LogoContainer = css`
 
 export const LogoImage = css`
     width: 750px;
-    height: 280px;
+    height: 120px;
     display: block;
 `;
 
