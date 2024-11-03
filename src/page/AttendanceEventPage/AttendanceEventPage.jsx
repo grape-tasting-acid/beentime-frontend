@@ -367,7 +367,7 @@ const AttendanceEventListPage = () => {
                     {/* 모임 참석하기 버튼은 showAttendanceForm이 false이고 editingParticipant가 null일 때만 표시 */}
                     {!showAttendanceForm && !editingParticipant && (
                         <button css={S.AttendButton} onClick={() => setShowAttendanceForm(true)}>
-                            모임 참석하기
+                            참석자 추가하기
                         </button>
                     )}
                 </div>
@@ -376,7 +376,7 @@ const AttendanceEventListPage = () => {
             {/* AttendanceEvent 컴포넌트는 showAttendanceForm이 true일 때만 표시 */}
             {showAttendanceForm && (
                 <>
-                    <div css={S.Divider}></div> {/* 구분선 추가 */}
+                    {participants.length > 0 && <div css={S.Divider}></div>}
                     <AttendanceEvent
                         eventData={eventData}
                         timeList={timeList}
