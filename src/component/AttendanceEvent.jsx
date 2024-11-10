@@ -54,7 +54,8 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose, 
                     .update({
                         checked: selectedRadios,
                     })
-                    .eq('id', existingParticipation.id);
+                    .eq('participation_id', existingParticipation.participation_id)
+                    .select();
 
                 if (updateError) {
                     throw updateError;
@@ -63,14 +64,15 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose, 
                 if (updateData) {
                     sessionStorage.setItem('name', JSON.stringify(attendeeName));
                     alert('참여 정보가 수정되었습니다.');
-                    if (onClose) onClose();
+                    window.location.reload();
                 }
             } else {
                 // 새로운 참여 추가
                 const { data: participationList = [], error: participationError } = await supabase
                     .from('participation_tb')
                     .select('*')
-                    .eq('event_id', id);
+                    .eq('event_id', id)
+                    .select();
 
                 if (participationError) {
                     throw participationError;
@@ -102,7 +104,7 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose, 
                     if (responseData) {
                         sessionStorage.setItem('name', JSON.stringify(attendeeName));
                         alert('참여 완료 하였습니다.');
-                        if (onClose) onClose();
+                        window.location.reload();
                     }
                 }
             }

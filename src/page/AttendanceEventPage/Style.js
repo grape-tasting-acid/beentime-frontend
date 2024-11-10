@@ -22,7 +22,6 @@ export const Header = css`
     display: flex;
     width: 1020px;
     gap: 14px;
-    padding: 100px 0px 60px 0px;
     flex-direction: column;
     align-items: center;
 `;
@@ -36,8 +35,10 @@ export const ImgBox = css`
 // HeaderBox 스타일
 export const HeaderBox = css`
     display: flex;
-    width: 850px;
+    width: 1020px;
     height: 42px;
+    margin-top: 100px;
+    margin-bottom: 60px;
     flex-direction: column;
     justify-content: center;
 
@@ -126,8 +127,12 @@ export const HeaderItem = css`
 export const Component = css`
     display: flex;
     flex-direction: column;
+    align-items: center; // 오타 수정 및 중앙 정렬 적용
     justify-content: center;
-    width: 40vw;
+    width: 100%; // 너비를 100%로 설정하여 부모 요소에 맞춤
+    max-width: 1020px; // 최대 너비를 설정하여 내용물이 너무 넓어지지 않도록 제한
+    margin: 0 auto; // 컨테이너를 화면 중앙에 배치
+    margin-top: 60px;
     margin-bottom: 100px;
 
     @media (max-width: 800px) {
@@ -137,10 +142,14 @@ export const Component = css`
 `;
 
 export const EventContainer = css`
-    width: 720px;
+    width: 100%
+    max-width: 1020px;
     height: 478px;
     position: relative;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 
 export const TooltipContainer = css`
@@ -196,12 +205,12 @@ export const CharacterAndTableContainer = (numTables) => css`
     position: relative;
     margin-top: 20px;
     top: 62px;
-    width: ${numTables * 720 + (numTables - 1) * 50}px; // 테이블 수에 따라 너비 조정
+    width: ${numTables === 1 ? '720px' : '1020px'}; // 테이블 수에 따라 너비 조정
     height: 396px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
-    margin: 0 auto;
+    overflow-x: auto; // 내용이 넘칠 경우 스크롤 표시
 `;
 
 export const TableAndCharactersWrapper = (tableIndex) => css`
@@ -209,6 +218,7 @@ export const TableAndCharactersWrapper = (tableIndex) => css`
     width: 720px;
     height: 396px;
     margin-left: ${tableIndex > 0 ? '50px' : '0'}; // 첫 번째 테이블을 제외하고 좌측 마진 적용
+    flex-shrink: 0; // 아이템이 줄어들지 않도록 설정
 `;
 
 // 메인 이미지 박스 (테이블과 캐릭터 배치)
@@ -319,7 +329,7 @@ export const AttendBox = css`
     flex-grow: 1;
     flex-direction: column;
     gap: 45px;
-    margin-top: 30px;
+    margin-top: 60px;
 `;
 
 // 시간 아이템 (모두의 빈타임)
