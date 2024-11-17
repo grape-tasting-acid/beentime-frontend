@@ -41,7 +41,11 @@ root.render(
             --B1: #2376E5;
             --B2: #FF2D05;
           }
-
+          img {
+            -webkit-user-drag: none;
+            user-select: none;
+            pointer-events: none;
+          }
           /* 필요에 따라 다른 전역 스타일 추가 */
         `}
       />
