@@ -132,7 +132,7 @@ export const Component = css`
     width: 100%; // 너비를 100%로 설정하여 부모 요소에 맞춤
     max-width: 1020px; // 최대 너비를 설정하여 내용물이 너무 넓어지지 않도록 제한
     margin: 0 auto; // 컨테이너를 화면 중앙에 배치
-    margin-top: 60px;
+    margin-top: 30px;
 
     @media (max-width: 800px) {
         width: 90%;

@@ -137,29 +137,53 @@ export const Bottom = css`
   }
 `;
 
-export const BtnTrue = css`
-  margin-top: 60px;
+export const ButtonContainer = css`
+    margin-top: 60px;
+    display: flex;
+    justify-content: space-between; /* 버튼들을 양쪽에 배치 */
+    width: 100%; /* 전체 부모 컨테이너 너비에 맞춤 */
+    margin-bottom: 100px;
+    gap: 14px; /* 버튼 사이의 간격 설정 */
+
+`;
+
+export const BtnCreate = css`
   width: 750px;
   height: 68px; 
+  margin-top: 60px;
   font-size: 22px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 26px; /* 118.182% */
+  letter-spacing: -0.22px;
   background-color: #000000;
   border: none;
   border-radius: 5px;
   color: #ffff;
-  font-weight: 600;
   cursor: pointer;
   margin-bottom: 100px;
+`;
 
-  @media (max-width: 800px) {
-    margin-bottom: 20px;
-    /* 높이를 변경하지 않음 */
-  }
+export const BtnTrue = css`
+  width: 368px;
+  height: 68px; 
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 26px; /* 118.182% */
+  letter-spacing: -0.22px;
+  background-color: #000000;
+  border: none;
+  border-radius: 5px;
+  color: #ffff;
+  cursor: pointer;
+  margin-bottom: 100px;
 `;
 
 export const BtnFalse = css`
-  margin-top: 60px;
   width: 750px;
   height: 68px; 
+  margin-top: 60px;
   font-size: 22px;
   background: var(--G4, #DFE2E6);
   border: none;
@@ -172,6 +196,25 @@ export const BtnFalse = css`
     margin-bottom: 20px;
     /* 높이를 변경하지 않음 */
   }
+`;
+
+export const CancelButton = css`
+    width: 368px; // 버튼 너비 설정
+    height: 68px;
+    font-size: 22px;
+    background-color: #FFFFFF; /* 흰색 배경 */
+    color: #000000; /* 검은색 글씨 */
+    border: 1px solid #000000; /* 테두리 추가 */
+    border-radius: 5px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 26px; /* 118.182% */
+    letter-spacing: -0.22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
 `;
 
 export const DateSelectionContainer = css`
@@ -282,6 +325,11 @@ export const calendarContainer = css`
       display: flex;
       justify-content: center;
       align-items: center;
+      text-decoration: none !important;
+    }
+
+    .react-calendar__month-view__weekdays_weekday abbr {
+      text-decoration: none !important;
     }
   }
 

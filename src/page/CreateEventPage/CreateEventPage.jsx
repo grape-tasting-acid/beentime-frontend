@@ -564,12 +564,29 @@ function CreateEventPage(props) {
                     </div>
                 </div>
 
-                <button
-                    onClick={handleEventCreate}
-                    css={selectedDates.length ? S.BtnTrue : S.BtnFalse}
-                >
-                    {eventId ? '모임 수정하기' : '모임 만들기'}
-                </button>
+                {eventId ? (
+                    <div css={S.ButtonContainer}>
+                        <button
+                            onClick={() => navigate(-1)}
+                            css={S.CancelButton}
+                        >
+                            돌아가기
+                        </button>
+                        <button
+                            onClick={handleEventCreate}
+                            css={selectedDates.length ? S.BtnTrue : S.BtnFalse}
+                        >
+                            수정 완료
+                        </button>
+                    </div>
+                ) : (
+                    <button
+                        onClick={handleEventCreate}
+                        css={selectedDates.length ? S.BtnCreate : S.BtnFalse}
+                    >
+                        모임 만들기
+                    </button>
+                )}
             </div>
             <Footer />
         </div>
