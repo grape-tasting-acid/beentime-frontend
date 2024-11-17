@@ -490,6 +490,9 @@ export const DateText = css`
   font-size: 16px;
   font-weight: 700;
   margin-right: 13px;
+  width: 90px; /* 고정 너비 */
+  text-align: center; /* 가운데 정렬 */
+  white-space: nowrap; /* 줄 바꿈 방지 */
 `;
 
 export const TimeInput = css`

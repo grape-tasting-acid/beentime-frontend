@@ -14,7 +14,7 @@ import table1 from '../../Img/tables/shortTable1.svg';
 import table2 from '../../Img/tables/shortTable2.svg';
 import table3 from '../../Img/tables/shortTable3.svg';
 
-import { saveEvent, editEvent, getEvent } from '../../services/supabaseService';
+import { saveEvent, editEvent, getEvent, getParticipation, updateParticipation } from '../../services/supabaseService';
 import queryString from 'query-string';
 
 function CreateEventPage(props) {
@@ -41,27 +41,31 @@ function CreateEventPage(props) {
                 const event = response[0];
                 setEventData(event);
                 setSelectedImage(event.imageIndex);
-
+    
                 if (event.time) {
-                    const timeList = event.time.split(', ');
-                    setSelectedDates(
-                        timeList.map((time) => {
-                            const date = time.split(' / ')[0];
-                            return moment(date, 'M월 D일').toDate();
-                        })
-                    );
-                    setTimeSlots(
-                        timeList.map((time) => {
-                            const timePart = time.split(' / ')[1];
-                            return timePart;
-                        })
-                    );
+                    // JSON 문자열을 객체로 파싱
+                    const timeList = JSON.parse(event.time); 
+                    
+                    const parsedDates = [];
+                    const parsedTimeSlots = [];
+    
+                    timeList.forEach((time) => {
+                        const [datePart, timePart] = time.split(' / '); // 날짜와 시간 분리
+                        const parsedDate = moment(datePart, 'M월 D일').toDate(); // 날짜 포맷
+                        if (parsedDate && timePart) {
+                            parsedDates.push(parsedDate); // 날짜 리스트
+                            parsedTimeSlots.push(timePart); // 시간 리스트
+                        }
+                    });
+    
+                    setSelectedDates(parsedDates);
+                    setTimeSlots(parsedTimeSlots);
                 }
             }
         } catch (error) {
             console.error('Error fetching event data:', error);
         }
-    };
+    };    
 
     const handleDateClick = (date) => {
         const newSelectedDates = [...selectedDates, date];
@@ -150,6 +154,7 @@ function CreateEventPage(props) {
             } else {
                 const response = await editEvent(eventId, title, eventList, selectedImage);
                 if (response) {
+                    await updateParticipationTable(eventId, eventList);
                     sessionStorage.setItem('eventId', response[0].event_id);
                     alert('모임이 수정되었습니다.');
                     navigate('/sharing');
@@ -160,6 +165,44 @@ function CreateEventPage(props) {
         }
     };
 
+    const updateParticipationTable = async (eventId, updatedTimeList) => {
+        try {
+            // 참여자 데이터 가져오기
+            const participationList = await getParticipation(eventId);
+    
+            for (const participant of participationList) {
+                const existingTimeList = JSON.parse(participant.time); // 기존 시간 리스트
+                const existingCheckedList = JSON.parse(participant.checked); // 기존 체크 상태 리스트
+    
+                // 새로운 checked 리스트 생성
+                const newCheckedList = updatedTimeList.map((time, index) => {
+                    const existingIndex = existingTimeList.indexOf(time); // 기존 시간 확인
+                    if (existingIndex !== -1) {
+                        // 기존 시간이 존재하면 기존 상태 유지 (인덱스 재정렬)
+                        const [status] = existingCheckedList[existingIndex].split('_');
+                        return `${status}_${index}`;
+                    } else {
+                        // 새로운 시간은 기본값 question 설정
+                        return `question_${index}`;
+                    }
+                });
+    
+                // participation_tb 업데이트
+                await updateParticipation(participant.name, JSON.stringify(newCheckedList), JSON.stringify(updatedTimeList));
+    
+                // 로그로 확인
+                console.log('Updated Participation:', {
+                    name: participant.name,
+                    checked: newCheckedList,
+                    time: updatedTimeList,
+                });
+            }
+        } catch (error) {
+            console.error('Error updating participation table:', error);
+        }
+    };
+    
+    
     const handleImageSelect = (imageIndex) => {
         setSelectedImage(imageIndex);
     };
