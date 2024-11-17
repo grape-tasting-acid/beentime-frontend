@@ -122,6 +122,18 @@
                 }
             });
         
+            // 최고 순위 날짜들 찾기
+            topDates = []; // topDates 배열 초기화
+            const highestYesCount = sortedCounts[0].yesCount;
+            const highestQuestionCount = sortedCounts[0].questionCount;
+            
+            // 동일한 순위의 날짜들 모두 추가
+            sortedCounts.forEach(row => {
+                if (row.yesCount === highestYesCount && row.questionCount === highestQuestionCount) {
+                    topDates.push(row.time);
+                }
+            });
+        
             // 순위별로 색깔 매핑
             const colorMapping = {};
             sortedCounts.forEach((row, index) => {

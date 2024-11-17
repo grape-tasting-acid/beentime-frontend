@@ -331,6 +331,7 @@ function CreateEventPage(props) {
                                     alt="밥모임"
                                     onClick={() => handleImageSelect(0)}
                                     style={{ width: '100%', height: '100%', cursor: 'pointer' }}
+                                    onDragStart={(e) => e.preventDefault()}
                                 />
                                 {selectedImage === 0 && (
                                     <div css={S.CheckboxIcon} aria-label="선택됨">
@@ -364,6 +365,7 @@ function CreateEventPage(props) {
                                     alt="술모임"
                                     onClick={() => handleImageSelect(1)}
                                     style={{ width: '100%', height: '100%', cursor: 'pointer' }}
+                                    onDragStart={(e) => e.preventDefault()}
                                 />
                                 {selectedImage === 1 && (
                                     <div css={S.CheckboxIcon} aria-label="선택됨">
@@ -397,6 +399,7 @@ function CreateEventPage(props) {
                                     alt="일모임"
                                     onClick={() => handleImageSelect(2)}
                                     style={{ width: '100%', height: '100%', cursor: 'pointer' }}
+                                    onDragStart={(e) => e.preventDefault()}
                                 />
                                 {selectedImage === 2 && (
                                     <div css={S.CheckboxIcon} aria-label="선택됨">
