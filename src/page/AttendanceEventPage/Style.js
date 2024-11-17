@@ -133,7 +133,6 @@ export const Component = css`
     max-width: 1020px; // 최대 너비를 설정하여 내용물이 너무 넓어지지 않도록 제한
     margin: 0 auto; // 컨테이너를 화면 중앙에 배치
     margin-top: 60px;
-    margin-bottom: 100px;
 
     @media (max-width: 800px) {
         width: 90%;
@@ -253,7 +252,8 @@ export const CharacterContainer = (leftPosition, row) => css`
     left: ${leftPosition}px;
     ${row === 'top' ? 'top: 0;' : 'bottom: 0;'}
     transform: translateX(-50%);
-    width: 104px;
+    width: 100px;
+    height: 232px;
     height: ${row === 'top' ? '244px' : '254px'};
     display: flex;
     flex-direction: column;
@@ -263,8 +263,8 @@ export const CharacterContainer = (leftPosition, row) => css`
 
 // 캐릭터 이미지 스타일
 export const CharacterImage = (row) => css`
-    width: 104px;
-    height: 222px;
+    width: 100px;
+    height: 210px;
 `;
 
 // 이름 스타일
@@ -283,7 +283,7 @@ export const CharacterName = (row) => css`
     //overflow: hidden; /* 넘치는 텍스트 숨김 */
     text-overflow: ellipsis; /* 말줄임표 표시 */
     white-space: nowrap; /* 텍스트 줄바꿈 방지 */
-    ${row === 'bottom' ? 'margin-top: 0px;' : 'margin-bottom: 10px;'}
+    ${row === 'bottom' ? 'margin-top: 0px;' : 'margin-bottom: 0px;'}
 `;
 
 export const NameAbove = css`
@@ -328,7 +328,6 @@ export const AttendBox = css`
     display: flex;
     flex-grow: 1;
     flex-direction: column;
-    gap: 45px;
     margin-top: 60px;
 `;
 
@@ -337,6 +336,7 @@ export const TimeItem = css`
     display: flex;
     flex-direction: column;
     gap: 7px;
+    margin-bottom: 24px;
 
     & h3 {
         font-size: 24px;

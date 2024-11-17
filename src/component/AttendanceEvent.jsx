@@ -5,6 +5,14 @@ import { FaCheck, FaQuestion, FaTimes } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
 import supabase from '../api/instance';
 
+import CheckSelectedIcon from '../Img/icon/checkSelected.svg'; 
+import CheckUnselectedIcon from '../Img/icon/checkUnselected.svg';
+import QuestionSelectedIcon from '../Img/icon/questionSelected.svg';
+import QuestionUnselectedIcon from '../Img/icon/questionUnselected.svg';
+import CrossSelectedIcon from '../Img/icon/crossSelected.svg';
+import CrossUnselectedIcon from '../Img/icon/crossUnselected.svg';
+
+
 const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose, hideBackButton }) => {
     const [selectedRadios, setSelectedRadios] = useState([]);
     const [attendeeName, setAttendeeName] = useState('');
@@ -135,6 +143,7 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose, 
                                     <h4>{date.split('/')[0]}</h4>
                                     <span>{date.split('/')[1]}</span>
                                     <div css={S.Btns}>
+                                        {/* 체크 아이콘 */}
                                         <div css={S.Radio}>
                                             <input
                                                 type="radio"
@@ -143,8 +152,16 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose, 
                                                 onChange={(e) => onChangeRadio(e, index)}
                                                 checked={selectedRadios[index] === `yes_${index}`}
                                             />
-                                            <label htmlFor={`yes_${index}`}><FaCheck /></label>
+                                            <label htmlFor={`yes_${index}`}>
+                                                {selectedRadios[index] === `yes_${index}` ? (
+                                                    <img src={CheckSelectedIcon} alt="참석 가능 선택됨" />
+                                                ) : (
+                                                    <img src={CheckUnselectedIcon} alt="참석 가능" />
+                                                )}
+                                            </label>
                                         </div>
+
+                                        {/* 물음표 아이콘 */}
                                         <div css={S.Radio}>
                                             <input
                                                 type="radio"
@@ -153,8 +170,16 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose, 
                                                 onChange={(e) => onChangeRadio(e, index)}
                                                 checked={selectedRadios[index] === `question_${index}`}
                                             />
-                                            <label htmlFor={`question_${index}`}><FaQuestion /></label>
+                                            <label htmlFor={`question_${index}`}>
+                                                {selectedRadios[index] === `question_${index}` ? (
+                                                    <img src={QuestionSelectedIcon} alt="참석 미정 선택됨" />
+                                                ) : (
+                                                    <img src={QuestionUnselectedIcon} alt="참석 미정" />
+                                                )}
+                                            </label>
                                         </div>
+
+                                        {/* 엑스 아이콘 */}
                                         <div css={S.Radio}>
                                             <input
                                                 type="radio"
@@ -163,13 +188,20 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose, 
                                                 onChange={(e) => onChangeRadio(e, index)}
                                                 checked={selectedRadios[index] === `no_${index}`}
                                             />
-                                            <label htmlFor={`no_${index}`}><FaTimes size={23} style={{ strokeWidth: 1 }} /></label>
+                                            <label htmlFor={`no_${index}`}>
+                                                {selectedRadios[index] === `no_${index}` ? (
+                                                    <img src={CrossSelectedIcon} alt="참석 불가 선택됨" />
+                                                ) : (
+                                                    <img src={CrossUnselectedIcon} alt="참석 불가" />
+                                                )}
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
                             ))}
                         </div>
                     </div>
+
                     <div css={S.ButtonContainer}>
                         {/* hideBackButton이 false일 때만 돌아가기 버튼 표시 */}
                         {!hideBackButton && (

@@ -8,6 +8,7 @@ import moment from 'moment';
 import Select from 'react-select';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import logo from '../../Img/logo/shortLogo.svg';
+import deleteIcon from '../../Img/icon/deleteIcon.svg'; // 경로는 실제 파일 위치에 맞게 수정하세요
 import Footer from '../../component/footer/Footer';
 
 import table1 from '../../Img/tables/shortTable1.svg';
@@ -305,7 +306,7 @@ function CreateEventPage(props) {
                     ))}
                 </select>
                 <button css={S.DeleteButton} onClick={handleDeleteDate}>
-                    X
+                <img src={deleteIcon} alt="삭제" />
                 </button>
             </div>
         );

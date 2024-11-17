@@ -385,7 +385,7 @@ export const calendarContainer = css`
 
 export const TodayText = css`
   position: absolute; /* 절대 위치로 배치 */
-  margin-bottom: -35px;
+  margin-bottom: -38px;
   left: 50%; /* 수평 중앙을 기준으로 */
   transform: translateX(-50%); /* 수평 중앙 정렬 */
   display: flex;
@@ -447,8 +447,8 @@ export const TimeBoxContainer = css`
   position: absolute;
   top: 30px;
   left: 30px;
-  width: calc(100% - 60px);
-  height: 360px;
+  width: calc(100% - 40px);
+  height: 368px;
   overflow-y: auto;
   flex-direction: column;
   align-items: center;
@@ -488,73 +488,13 @@ export const Box = css`
   }
 `;
 
-export const SelectedDateBox = css`const getRowBackgroundColor = (rows) => {
-  // 빈 배열이거나 유효하지 않은 입력 처리
-  if (!rows || rows.length === 0) {
-      return [];
-  }
-
-  // 각 행에 대해 yesCount와 questionCount를 계산
-  const rankedRows = rows.map((row) => {
-      if (!row.statuses) return { ...row, yesCount: 0, questionCount: 0 };
-      
-      const yesCount = row.statuses.filter((status) => status?.includes('yes')).length;
-      const questionCount = row.statuses.filter((status) => status?.includes('question')).length;
-      return { ...row, yesCount, questionCount };
-  });
-
-  // 빈 배열이 아닌 경우에만 정렬 진행
-  if (rankedRows.length === 0) {
-      return [];
-  }
-
-  // yesCount 기준으로 내림차순 정렬, 같으면 questionCount 기준으로 정렬
-  const sortedCounts = [...rankedRows].sort((a, b) => {
-      if (b.yesCount !== a.yesCount) {
-          return b.yesCount - a.yesCount; // yesCount가 높은 순서
-      } else {
-          return b.questionCount - a.questionCount; // questionCount가 높은 순서
-      }
-  });
-
-  // 최고 순위 날짜들 찾기
-  topDates = []; // topDates 배열 초기화
-  const highestYesCount = sortedCounts[0]?.yesCount || 0;
-  const highestQuestionCount = sortedCounts[0]?.questionCount || 0;
-  
-  // 동일한 순위의 날짜들 모두 추가
-  sortedCounts.forEach(row => {
-      if (row.yesCount === highestYesCount && row.questionCount === highestQuestionCount) {
-          topDates.push(row.time);
-      }
-  });
-
-  // 순위별로 색깔 매핑
-  const colorMapping = {};
-  sortedCounts.forEach((row, index) => {
-      // yesCount와 questionCount가 모두 0이면 색상 없음
-      if (row.yesCount === 0 && row.questionCount === 0) {
-          colorMapping[row.time] = null; // 색 없음
-      } else if (index === 0) {
-          colorMapping[row.time] = S.GreenBackground; // 가장 높은 순위 초록색
-      } else if (index === 1) {
-          colorMapping[row.time] = S.BlueBackground; // 두 번째 파란색
-      } else {
-          colorMapping[row.time] = null; // 나머지 색 없음
-      }
-  });
-
-  // 각 행에 색깔 추가
-  return rows.map((row) => ({
-      ...row,
-      backgroundColor: colorMapping[row.time],
-  }));
-};
+export const SelectedDateBox = css`
   width: 216px;
   height: 34px;
   display: flex;
   align-items: center;
-  margin-bottom: 17px;
+  margin-bottom: 16px;
+  gap: 13px;
 `;
 
 export const DateText = css`
@@ -595,7 +535,7 @@ export const TimeInput = css`
 
 export const DeleteButton = css`
   width: 30px;
-  height: 34px;
+  height: 30px;
   background-color: transparent;
   border: none;
   color: #91979e;

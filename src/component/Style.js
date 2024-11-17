@@ -179,8 +179,8 @@ export const Radio = css`
         align-items: center;
         text-align: center;
         border-radius: 8px;
-        height: 45px;
-        width: 45px;
+        height: 54px;
+        width: 54px;
         font-size: larger;
         background-color: #F1F2F4;
         color: #2E343F;

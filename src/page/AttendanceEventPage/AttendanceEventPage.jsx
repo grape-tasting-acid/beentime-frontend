@@ -5,6 +5,9 @@
     import tableImage1 from '../../Img/tables/table1.svg';
     import tableImage2 from '../../Img/tables/table2.svg';
     import tableImage3 from '../../Img/tables/table3.svg';
+    import CheckIcon from '../../Img/icon/checkIcon.svg';
+    import QuestionIcon from '../../Img/icon/questionIcon.svg';
+    import CrossIcon from '../../Img/icon/crossIcon.svg';
     import editLogo from '../../Img/edit_logo.svg';
     import Footer from '../../component/footer/Footer';
     import { useNavigate, useLocation, Link } from 'react-router-dom';
@@ -379,13 +382,17 @@
                                                 <div key={index} css={S.CharacterContainer(placement.position, placement.row)}>
                                                     {placement.row === 'top' ? (
                                                         <>
-                                                            <div css={S.CharacterName(placement.row)}>{placement.name}</div>
+                                                            <div css={S.CharacterName(placement.row)}>
+                                                                {placement.name.length > 6 ? `${placement.name.slice(0, 6)}...` : placement.name}
+                                                            </div>
                                                             <img src={placement.character} alt={`Character ${index + 1}`} css={S.CharacterImage} />
                                                         </>
                                                     ) : (
                                                         <>
                                                             <img src={placement.character} alt={`Character ${index + 1}`} css={S.CharacterImage} />
-                                                            <div css={S.CharacterName(placement.row)}>{placement.name}</div>
+                                                            <div css={S.CharacterName(placement.row)}>
+                                                                {placement.name.length > 6 ? `${placement.name.slice(0, 6)}...` : placement.name}
+                                                            </div>
                                                         </>
                                                     )}
                                                 </div>
@@ -425,9 +432,9 @@
                                                 const status = participant.checked[index];
                                                 return (
                                                     <td key={pIndex}>
-                                                        {status === `yes_${index}` && <FaCheck  size={23} color="#000000"/>}
-                                                        {status === `question_${index}` && <FaQuestion size={23} color="#DFE2E6"/>}
-                                                        {status === `no_${index}` && <FaTimes size={28} color="#DFE2E6"/>}
+                                                        {status === `yes_${index}` && <img src={CheckIcon} alt="참석 가능" width={23} height={23} />}
+                                                        {status === `question_${index}` && <img src={QuestionIcon} alt="참석 미정" width={23} height={23} />}
+                                                        {status === `no_${index}` && <img src={CrossIcon} alt="참석 불가" width={28} height={28} />}
                                                     </td>
                                                 );
                                             })}
