@@ -106,12 +106,24 @@
         let topDates = [];
 
         const getRowBackgroundColor = (rows) => {
+            // 빈 배열이거나 유효하지 않은 입력 처리
+            if (!rows || rows.length === 0) {
+                return [];
+            }
+        
             // 각 행에 대해 yesCount와 questionCount를 계산
             const rankedRows = rows.map((row) => {
-                const yesCount = row.statuses.filter((status) => status.includes('yes')).length;
-                const questionCount = row.statuses.filter((status) => status.includes('question')).length;
+                if (!row.statuses) return { ...row, yesCount: 0, questionCount: 0 };
+                
+                const yesCount = row.statuses.filter((status) => status?.includes('yes')).length;
+                const questionCount = row.statuses.filter((status) => status?.includes('question')).length;
                 return { ...row, yesCount, questionCount };
             });
+        
+            // 빈 배열이 아닌 경우에만 정렬 진행
+            if (rankedRows.length === 0) {
+                return [];
+            }
         
             // yesCount 기준으로 내림차순 정렬, 같으면 questionCount 기준으로 정렬
             const sortedCounts = [...rankedRows].sort((a, b) => {
@@ -124,8 +136,8 @@
         
             // 최고 순위 날짜들 찾기
             topDates = []; // topDates 배열 초기화
-            const highestYesCount = sortedCounts[0].yesCount;
-            const highestQuestionCount = sortedCounts[0].questionCount;
+            const highestYesCount = sortedCounts[0]?.yesCount || 0;
+            const highestQuestionCount = sortedCounts[0]?.questionCount || 0;
             
             // 동일한 순위의 날짜들 모두 추가
             sortedCounts.forEach(row => {
