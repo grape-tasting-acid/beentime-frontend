@@ -191,7 +191,7 @@
         let tooltipMessage = null;
 
         if (participantCount === 1) {
-            tooltipMessage = <span>아직은 나 혼자뿐인가...</span>;
+            tooltipMessage = <span>아직은 나 혼자 뿐인가...</span>;
         } else if (participantCount === 2) {
             tooltipMessage = <span>오 친구가 생겼군!</span>;
         } else if (participantCount >= 3) {
