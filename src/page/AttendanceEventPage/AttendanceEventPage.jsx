@@ -94,7 +94,7 @@
             if (showAttendanceForm && attendanceEventRef.current) {
                 attendanceEventRef.current.scrollIntoView({ behavior: 'smooth' });
             }
-        }, [showAttendanceForm]);
+        }, [showAttendanceForm, editingParticipant]);
 
         const onEditClick = () => {
             navigate(`/edit?eventId=${encodeURIComponent(id)}`);
