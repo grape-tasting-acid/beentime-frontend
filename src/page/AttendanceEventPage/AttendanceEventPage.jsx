@@ -1,4 +1,4 @@
-    import React, { useState, useEffect } from 'react';
+    import React, { useState, useEffect, useRef } from 'react';
     /** @jsxImportSource @emotion/react */
     import * as S from '../AttendanceEventPage/Style';
     import mainLogo from '../../Img/main_logo.svg';
@@ -28,6 +28,7 @@
         const location = useLocation();
         const id = new URLSearchParams(location.search).get('eventId');
         const [tableImage, setTableImage] = useState(tableImage1);
+        const attendanceEventRef = useRef(null);
 
         useEffect(() => {
             const fetchData = async () => {
@@ -87,7 +88,13 @@
                 }
             };
             fetchData();
-        }, [id, name]);    
+        }, [id, name]);
+
+        useEffect(() => {
+            if (showAttendanceForm && attendanceEventRef.current) {
+                attendanceEventRef.current.scrollIntoView({ behavior: 'smooth' });
+            }
+        }, [showAttendanceForm]);
 
         const onEditClick = () => {
             navigate(`/edit?eventId=${encodeURIComponent(id)}`);
@@ -457,16 +464,18 @@
                 {showAttendanceForm && (
                     <>
                         {participants.length > 0 && <div css={S.Divider}></div>}
-                        <AttendanceEvent
-                            eventData={eventData}
-                            timeList={timeList}
-                            existingParticipation={editingParticipant}
-                            onClose={() => {
-                                setShowAttendanceForm(false);
-                                setEditingParticipant(null);
-                            }}
-                            hideBackButton={participants.length === 0 && !editingParticipant}
-                        />
+                        <div ref={attendanceEventRef}>
+                            <AttendanceEvent
+                                eventData={eventData}
+                                timeList={timeList}
+                                existingParticipation={editingParticipant}
+                                onClose={() => {
+                                    setShowAttendanceForm(false);
+                                    setEditingParticipant(null);
+                                }}
+                                hideBackButton={participants.length === 0 && !editingParticipant}
+                            />
+                        </div>
                     </>
                 )}
                 <Footer />
