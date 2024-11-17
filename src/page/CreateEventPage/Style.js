@@ -8,7 +8,8 @@ export const Layout = css`
   width: 100%;
   padding-top: 0 !important; 
 
-  @media (max-width: 430px) {
+  @media screen and (max-width: 375px) {
+    padding: 0 20px; // 모바일에서 좌우 여백 추가
   }
 `;
 
@@ -16,6 +17,15 @@ export const LogoImage = css`
   display: block;
   margin-top: 80px;
   margin-bottom: 80px;
+  @media screen and (max-width: 375px) {
+    width: 204px;
+    height: 30px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: block; // block으로 변경
+    margin-left: auto; // 좌우 마진 auto로 설정
+    margin-right: auto;
+  }
 `;
 
 
@@ -27,8 +37,8 @@ export const Component = css`
   // max-width: 500px;
   margin: 0 auto;
 
-  @media (max-width: 430px) {
-    width: 90%;
+  @media screen and (max-width: 375px) {
+    width: 100%;
   }
 `;
 
@@ -52,8 +62,9 @@ export const H5 = css`
   margin-bottom: 20px;
   color: var(--G10, #000);
 
-  @media (max-width: 800px) {
+  @media (max-width: 375px) {
     font-size: 18px;
+    margin-bottom: 12px;
   }
 `;
 
@@ -84,8 +95,8 @@ export const Top = css`
       color: var(--G6);
     }
 
-    @media (max-width: 800px) {
-      font-size: 16px;
+    @media (max-width: 375px) {
+      font-size: 18px;
 
       &::placeholder {
         font-size: 16px;
@@ -477,7 +488,68 @@ export const Box = css`
   }
 `;
 
-export const SelectedDateBox = css`
+export const SelectedDateBox = css`const getRowBackgroundColor = (rows) => {
+  // 빈 배열이거나 유효하지 않은 입력 처리
+  if (!rows || rows.length === 0) {
+      return [];
+  }
+
+  // 각 행에 대해 yesCount와 questionCount를 계산
+  const rankedRows = rows.map((row) => {
+      if (!row.statuses) return { ...row, yesCount: 0, questionCount: 0 };
+      
+      const yesCount = row.statuses.filter((status) => status?.includes('yes')).length;
+      const questionCount = row.statuses.filter((status) => status?.includes('question')).length;
+      return { ...row, yesCount, questionCount };
+  });
+
+  // 빈 배열이 아닌 경우에만 정렬 진행
+  if (rankedRows.length === 0) {
+      return [];
+  }
+
+  // yesCount 기준으로 내림차순 정렬, 같으면 questionCount 기준으로 정렬
+  const sortedCounts = [...rankedRows].sort((a, b) => {
+      if (b.yesCount !== a.yesCount) {
+          return b.yesCount - a.yesCount; // yesCount가 높은 순서
+      } else {
+          return b.questionCount - a.questionCount; // questionCount가 높은 순서
+      }
+  });
+
+  // 최고 순위 날짜들 찾기
+  topDates = []; // topDates 배열 초기화
+  const highestYesCount = sortedCounts[0]?.yesCount || 0;
+  const highestQuestionCount = sortedCounts[0]?.questionCount || 0;
+  
+  // 동일한 순위의 날짜들 모두 추가
+  sortedCounts.forEach(row => {
+      if (row.yesCount === highestYesCount && row.questionCount === highestQuestionCount) {
+          topDates.push(row.time);
+      }
+  });
+
+  // 순위별로 색깔 매핑
+  const colorMapping = {};
+  sortedCounts.forEach((row, index) => {
+      // yesCount와 questionCount가 모두 0이면 색상 없음
+      if (row.yesCount === 0 && row.questionCount === 0) {
+          colorMapping[row.time] = null; // 색 없음
+      } else if (index === 0) {
+          colorMapping[row.time] = S.GreenBackground; // 가장 높은 순위 초록색
+      } else if (index === 1) {
+          colorMapping[row.time] = S.BlueBackground; // 두 번째 파란색
+      } else {
+          colorMapping[row.time] = null; // 나머지 색 없음
+      }
+  });
+
+  // 각 행에 색깔 추가
+  return rows.map((row) => ({
+      ...row,
+      backgroundColor: colorMapping[row.time],
+  }));
+};
   width: 216px;
   height: 34px;
   display: flex;
@@ -569,6 +641,12 @@ export const SelectImagesContainer = css`
   & > div:last-of-type {
     margin-right: 0; /* 마지막 이미지 간격 제거 */
   }
+  
+  @media screen and (max-width: 375px) {
+    & > div {
+      margin-right: 14px; /* 이미지 간의 간격 */
+    }
+  }
 `;
 
 export const ImageContainer = (isSelected) => css`
@@ -591,8 +669,21 @@ export const ImageContainer = (isSelected) => css`
     : css`
         &:hover {
         }
-      `}
+  `}
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block; /* 이미지 하단의 여백 제거 */
+  }
+  
+  @media screen and (max-width: 375px) {
+    width: 150px;
+    height: 150px;
+  }
 `;
+
 
 export const CheckboxIcon = css`
     position: absolute;
@@ -621,4 +712,8 @@ export const ImageLabel = css`
   margin-top: 18px; 
   margin-bottom: 60px;
   text-align: center;
+
+  @media screen and (max-width: 375px) {
+    margin-top: 12px;
+  }  
 `;
