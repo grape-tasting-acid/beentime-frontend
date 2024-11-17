@@ -403,6 +403,7 @@ export const ThItem = (participantColumnWidth) => css`
 
     & > th:not(:first-of-type) {
         width: ${participantColumnWidth}px;
+        max-width: ${participantColumnWidth}px;
     }
 
     @media (max-width: 800px) {
@@ -435,6 +436,7 @@ export const TdItem = (participantColumnWidth) => css`
 
     & > td:not(:first-of-type) {
         width: ${participantColumnWidth}px;
+        max-width: ${participantColumnWidth}px;
     }
 
     & td > div {
