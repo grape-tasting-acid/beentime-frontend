@@ -106,37 +106,44 @@
         let topDates = [];
 
         const getRowBackgroundColor = (rows) => {
-            const rankedRows = rows.map(row => {
-                const yesCount = row.statuses.filter(status => status.includes('yes')).length;
-                const questionCount = row.statuses.filter(status => status.includes('question')).length;
+            // 각 행에 대해 yesCount와 questionCount를 계산
+            const rankedRows = rows.map((row) => {
+                const yesCount = row.statuses.filter((status) => status.includes('yes')).length;
+                const questionCount = row.statuses.filter((status) => status.includes('question')).length;
                 return { ...row, yesCount, questionCount };
             });
-
+        
+            // yesCount 기준으로 내림차순 정렬, 같으면 questionCount 기준으로 정렬
             const sortedCounts = [...rankedRows].sort((a, b) => {
                 if (b.yesCount !== a.yesCount) {
-                    return b.yesCount - a.yesCount;
+                    return b.yesCount - a.yesCount; // yesCount가 높은 순서
                 } else {
-                    return b.questionCount - a.questionCount;
+                    return b.questionCount - a.questionCount; // questionCount가 높은 순서
                 }
             });
-
+        
+            // 순위별로 색깔 매핑
             const colorMapping = {};
             sortedCounts.forEach((row, index) => {
-                if (index === 0) {
-                    colorMapping[row.time] = S.GreenBackground;
-                    topDates.push(row.time); // 가장 가능성 높은 날짜 추가
+                // yesCount와 questionCount가 모두 0이면 색상 없음
+                if (row.yesCount === 0 && row.questionCount === 0) {
+                    colorMapping[row.time] = null; // 색 없음
+                } else if (index === 0) {
+                    colorMapping[row.time] = S.GreenBackground; // 가장 높은 순위 초록색
                 } else if (index === 1) {
-                    colorMapping[row.time] = S.BlueBackground;
+                    colorMapping[row.time] = S.BlueBackground; // 두 번째 파란색
                 } else {
-                    colorMapping[row.time] = null;
+                    colorMapping[row.time] = null; // 나머지 색 없음
                 }
             });
-
-            return rows.map(row => ({
+        
+            // 각 행에 색깔 추가
+            return rows.map((row) => ({
                 ...row,
-                backgroundColor: colorMapping[row.time]
+                backgroundColor: colorMapping[row.time],
             }));
         };
+        
 
         const sortedTimeList = getRowBackgroundColor(
             timeList.map((time, timeIndex) => {
