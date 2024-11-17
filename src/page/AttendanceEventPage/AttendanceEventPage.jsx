@@ -210,7 +210,7 @@
                             <span css={S.HighlightedDate}>{date}</span>
                             {index < formattedDates.length - 1 && ', '}
                         </React.Fragment>
-                    ))}이구만~!!!
+                    ))} 이구만~!!!
                 </span>
             );
         }
@@ -439,9 +439,9 @@
                                                 const status = participant.checked[index];
                                                 return (
                                                     <td key={pIndex}>
-                                                        {status === `yes_${index}` && <img src={CheckIcon} alt="참석 가능" width={23} height={23} />}
-                                                        {status === `question_${index}` && <img src={QuestionIcon} alt="참석 미정" width={23} height={23} />}
-                                                        {status === `no_${index}` && <img src={CrossIcon} alt="참석 불가" width={28} height={28} />}
+                                                        {status === `yes_${index}` && <img src={CheckIcon} alt="참석 가능" width={30} height={30} />}
+                                                        {status === `question_${index}` && <img src={QuestionIcon} alt="참석 미정" width={30} height={30} />}
+                                                        {status === `no_${index}` && <img src={CrossIcon} alt="참석 불가" width={30} height={30} />}
                                                     </td>
                                                 );
                                             })}

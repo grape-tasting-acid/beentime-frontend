@@ -217,6 +217,8 @@ export const calendarContainer = css`
 
     .react-calendar__navigation__label {
       display: flex;
+      justify-content: center;
+      position: relative;
       width: 67px !important;
       height: 24px;
       flex-grow: 0 !important;
@@ -229,6 +231,7 @@ export const calendarContainer = css`
       line-height: 120%;
       letter-spacing: -0.2px;
       padding: 0;
+      color: #000 !important;
     }
 
     .react-calendar__navigation__prev-button,
@@ -246,7 +249,7 @@ export const calendarContainer = css`
     }
   
     .react-calendar__navigation__prev-button {
-      margin-right: 6px;
+      margin-right: 8px;
     }
   
     .react-calendar__navigation__next-button {

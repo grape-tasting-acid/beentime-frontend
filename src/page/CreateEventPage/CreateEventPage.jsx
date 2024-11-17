@@ -454,6 +454,8 @@ function CreateEventPage(props) {
                                         setActiveStartDate(activeStartDate)
                                     }
                                     defaultView={'month'}
+                                    
+                                    minDetail="month"
                                     formatMonthYear={(locale, date) =>
                                         moment(date).locale('ko').format('YYYY.M')
                                     }
