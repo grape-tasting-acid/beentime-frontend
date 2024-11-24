@@ -91,9 +91,17 @@
             fetchData();
         }, [id, name]);
 
+        const initialRender = useRef(true);
+
         useEffect(() => {
-            if (showAttendanceForm && attendanceEventRef.current) {
-                attendanceEventRef.current.scrollIntoView({ behavior: 'smooth' });
+            if (initialRender.current) {
+                // 첫 번째 렌더링일 경우
+                initialRender.current = false;
+            } else {
+                // 첫 번째 렌더링 이후에만 scrollIntoView 호출
+                if (showAttendanceForm && attendanceEventRef.current) {
+                    attendanceEventRef.current.scrollIntoView({ behavior: 'smooth' });
+                }
             }
         }, [showAttendanceForm, editingParticipant]);
 
