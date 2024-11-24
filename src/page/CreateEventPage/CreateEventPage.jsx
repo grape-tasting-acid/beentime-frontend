@@ -22,7 +22,7 @@ function CreateEventPage(props) {
     const [selectedDates, setSelectedDates] = useState([]);
     const [timeSlots, setTimeSlots] = useState([]);
     const [eventData, setEventData] = useState({ title: '' });
-    const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedImage, setSelectedImage] = useState(0);
     const navigate = useNavigate();
     const location = useLocation();
     const queryData = queryString.parse(location.search);
@@ -441,7 +441,7 @@ function CreateEventPage(props) {
                 </div>
 
                 <div css={S.DateSelectionContainer}>
-                    <h5 css={S.H5}>후보 날짜를 정해볼까?</h5>
+                    <h5 css={S.H5}>후보 날짜를 모두 골라줘!</h5>
                     <div css={S.CalendarLayout}>
                         <div css={S.CalendarBox}>
                             <div css={S.calendarContainer}>
@@ -555,8 +555,8 @@ function CreateEventPage(props) {
                                     ))
                                 ) : (
                                     <div css={S.PlaceHolder}>
-                                        <div>선택된 날짜가 없어요.</div>
-                                        <div>캘린더에서 날짜를 선택해주세요.</div>
+                                        <div>캘린더에서 가능한 후보 날짜를</div>
+                                        <div>모두 선택해주세요.</div>
                                     </div>
                                 )}
                             </div>

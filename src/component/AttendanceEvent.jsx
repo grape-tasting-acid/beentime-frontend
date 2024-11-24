@@ -55,11 +55,39 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose, 
         }
 
         try {
+            const { data: existingParticipants = [], error: fetchError } = await supabase
+            .from('participation_tb')
+            .select('character_index')
+            .eq('event_id', id);
+
+            if (fetchError) {
+                throw fetchError;
+            }
+
+            // 이미 사용된 캐릭터 번호 수집
+            const usedCharacterIndices = new Set(existingParticipants.map(p => p.character_index));
+            let newCharacterIndex;
+
+            // 중복되지 않는 캐릭터 번호 생성
+            const availableCharacterIndices = [];
+            for (let i = 0; i < 20; i++) {
+                if (!usedCharacterIndices.has(i)) {
+                    availableCharacterIndices.push(i);
+                }
+            }
+
+            // 랜덤으로 캐릭터 번호 선택
+            if (availableCharacterIndices.length > 0) {
+                const randomIndex = Math.floor(Math.random() * availableCharacterIndices.length);
+                newCharacterIndex = availableCharacterIndices[randomIndex];
+            }
+
             if (existingParticipation) {
                 // 기존 참여 정보 수정
                 const { data: updateData, error: updateError } = await supabase
                     .from('participation_tb')
                     .update({
+                        name: attendeeName,
                         checked: selectedRadios,
                     })
                     .eq('participation_id', existingParticipation.participation_id)
@@ -97,7 +125,8 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose, 
                         name: attendeeName,
                         time: timeList,
                         checked: selectedRadios,
-                        event_id: eventData.event_id
+                        event_id: eventData.event_id,
+                        character_index: newCharacterIndex
                     };
 
                     const { data: responseData, error: responseError } = await supabase
@@ -132,7 +161,6 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose, 
                             placeholder="홍길동"
                             value={attendeeName}
                             onChange={onNameChange}
-                            disabled={!!existingParticipation} // 기존 참여자 이름은 수정 불가
                         />
                     </div>
                     <div css={S.TimeItem}>

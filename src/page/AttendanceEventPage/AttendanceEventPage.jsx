@@ -15,7 +15,7 @@
     import { getEvent, getParticipation, getParticipationName } from '../../services/supabaseService';
     import { FaCheck, FaQuestion, FaTimes } from 'react-icons/fa';
 
-    const characterImages = Array.from({ length: 10 }, (_, i) => require(`../../Img/characters/character${i + 1}.svg`));
+    const characterImages = Array.from({ length: 20 }, (_, i) => require(`../../Img/characters/character${i}.svg`));
 
     const AttendanceEventListPage = () => {
         const navigate = useNavigate();
@@ -64,6 +64,7 @@
                     if (participationList.length > 0) {
                         const parsedParticipationData = participationList.map(item => ({
                             name: item.name,
+                            character_index: item.character_index,
                             checked: JSON.parse(item.checked),
                             participation_id: item.participation_id, // participation_tb의 primary key
                         }));
@@ -123,11 +124,12 @@
         
             // 각 행에 대해 yesCount와 questionCount를 계산
             const rankedRows = rows.map((row) => {
-                if (!row.statuses) return { ...row, yesCount: 0, questionCount: 0 };
+                if (!row.statuses) return { ...row, yesCount: 0, questionCount: 0, noCount: 0 };
                 
                 const yesCount = row.statuses.filter((status) => status?.includes('yes')).length;
                 const questionCount = row.statuses.filter((status) => status?.includes('question')).length;
-                return { ...row, yesCount, questionCount };
+                const noCount = row.statuses.filter((status) => status?.includes('no')).length;
+                return { ...row, yesCount, questionCount, noCount };
             });
         
             // 빈 배열이 아닌 경우에만 정렬 진행
@@ -144,40 +146,59 @@
                 }
             });
         
-            // 최고 순위 날짜들 찾기
-            topDates = []; // topDates 배열 초기화
-            const highestYesCount = sortedCounts[0]?.yesCount || 0;
-            const highestQuestionCount = sortedCounts[0]?.questionCount || 0;
-            
-            // 동일한 순위의 날짜들 모두 추가
-            sortedCounts.forEach(row => {
-                if (row.yesCount === highestYesCount && row.questionCount === highestQuestionCount) {
-                    topDates.push(row.time);
-                }
-            });
-        
-            // 순위별로 색깔 매핑
-            const colorMapping = {};
-            sortedCounts.forEach((row, index) => {
-                // yesCount와 questionCount가 모두 0이면 색상 없음
-                if (row.yesCount === 0 && row.questionCount === 0) {
-                    colorMapping[row.time] = null; // 색 없음
-                } else if (index === 0) {
-                    colorMapping[row.time] = S.GreenBackground; // 가장 높은 순위 초록색
-                } else if (index === 1) {
-                    colorMapping[row.time] = S.BlueBackground; // 두 번째 파란색
+            let rank = 1;
+            sortedCounts[0].rank = rank;
+            for (let i = 1; i < sortedCounts.length; i++) {
+                const prevRow = sortedCounts[i - 1];
+                const currentRow = sortedCounts[i];
+                if (
+                    currentRow.yesCount === prevRow.yesCount &&
+                    currentRow.questionCount === prevRow.questionCount
+                ) {
+                    currentRow.rank = rank;
                 } else {
-                    colorMapping[row.time] = null; // 나머지 색 없음
+                    rank += 1;
+                    currentRow.rank = rank;
                 }
+            }
+
+
+            const totalParticipants = rows[0]?.statuses.length || 0;
+
+            // Color mapping object
+            const colorMapping = {};
+
+            // Green days
+            const greenDays = sortedCounts.filter(
+                (row) => row.rank === 1 && row.noCount === 0
+            );
+            greenDays.forEach((row) => {
+                colorMapping[row.time] = S.GreenBackground;
             });
-        
-            // 각 행에 색깔 추가
+
+            // Blue days
+            const blueDays = sortedCounts.filter(
+                (row) => row.rank === 2 && row.noCount <= totalParticipants / 2
+            );
+            blueDays.forEach((row) => {
+                colorMapping[row.time] = S.BlueBackground;
+            });
+
+            // Set topDates based on the rules
+            if (greenDays.length > 0) {
+                topDates = greenDays.map((row) => row.time);
+            } else if (blueDays.length > 0) {
+                topDates = blueDays.map((row) => row.time);
+            } else {
+                topDates = []; // No matching times
+            }
+
+            // Assign colors to each row
             return rows.map((row) => ({
                 ...row,
-                backgroundColor: colorMapping[row.time],
+                backgroundColor: colorMapping[row.time] || null,
             }));
         };
-        
 
         const sortedTimeList = getRowBackgroundColor(
             timeList.map((time, timeIndex) => {
@@ -195,24 +216,29 @@
         } else if (participantCount === 2) {
             tooltipMessage = <span>오 친구가 생겼군!</span>;
         } else if (participantCount >= 3) {
-            // 가장 가능성 높은 날짜 포맷팅
-            const formattedDates = topDates.map(dateString => {
-                const datePart = dateString.split(' / ')[0]; // 예: '5월 20일 (금)'
-                const formattedDate = datePart.replace('월 ', '.').replace('일', '');
-                return formattedDate;
-            });
-
-            tooltipMessage = (
-                <span>
-                    가장 가능성 높은 날은{' '}
-                    {formattedDates.map((date, index) => (
-                        <React.Fragment key={index}>
-                            <span css={S.HighlightedDate}>{date}</span>
-                            {index < formattedDates.length - 1 && ', '}
-                        </React.Fragment>
-                    ))} 이구만~!!!
-                </span>
-            );
+            if (topDates.length > 0) {
+                // Format the most probable dates
+                const formattedDates = topDates.map((dateString) => {
+                    const datePart = dateString.split(' / ')[0]; // e.g., '5월 20일 (금)'
+                    const formattedDate = datePart.replace('월 ', '.').replace('일', '');
+                    return formattedDate;
+                });
+        
+                tooltipMessage = (
+                    <span>
+                        가장 가능성 높은 날은{' '}
+                        {formattedDates.map((date, index) => (
+                            <React.Fragment key={index}>
+                                <span css={S.HighlightedDate}>{date}</span>
+                                {index < formattedDates.length - 1 && ', '}
+                            </React.Fragment>
+                        ))}{' '}
+                        이구만~!!!
+                    </span>
+                );
+            } else {
+                tooltipMessage = <span>맞는 시간이 없구만...</span>;
+            }
         }
 
         // 참석자 수에 따른 열 너비 결정
@@ -300,13 +326,12 @@
         
                 topParticipants.forEach((participant, i) => {
                     const leftPosition = startXTop + i * (characterWidth + characterSpacing);
-                    const character = getUniqueCharacter(usedCharacters);
-        
+
                     placements.push({
                         tableIndex: t,
                         row: 'top',
                         position: leftPosition - startX,
-                        character,
+                        character: characterImages[participant.character_index],
                         name: participant.name,
                     });
                 });
@@ -329,8 +354,8 @@
                     placements.push({
                         tableIndex: t,
                         row: 'bottom',
-                        position: leftPosition - startX, // 컨테이너에 상대적인 위치 조정
-                        character,
+                        position: leftPosition - startX,
+                        character: characterImages[participant.character_index],
                         name: participant.name,
                     });
                 });

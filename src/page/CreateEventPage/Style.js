@@ -319,18 +319,18 @@ export const calendarContainer = css`
   .react-calendar__month-view__weekdays {
     color: #c2c8cf;
     font-size: 14px;
+    font-weight: bold;
     margin-bottom: 20px;
 
     .react-calendar__month-view__weekdays__weekday {
       display: flex;
       justify-content: center;
       align-items: center;
-      text-decoration: none !important;
     }
+  }
 
-    .react-calendar__month-view__weekdays_weekday abbr {
-      text-decoration: none !important;
-    }
+  abbr[title] {
+    text-decoration: none;
   }
 
   .react-calendar__month-view__days {

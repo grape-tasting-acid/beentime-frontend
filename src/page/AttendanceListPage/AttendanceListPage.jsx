@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { FaCheck, FaQuestion, FaTimes } from 'react-icons/fa'; 
 import { getParticipation } from '../../services/supabaseService';
 
-const characterImages = Array.from({ length: 10 }, (_, i) => require(`../../Img/characters/character${i + 1}.png`));
+const characterImages = Array.from({ length: 20 }, (_, i) => require(`../../Img/characters/character${i}.svg`));
 
 const AttendanceListPage = () => {
     const navigate = useNavigate();
@@ -37,6 +37,7 @@ const AttendanceListPage = () => {
 
                 const parsedParticipationData = participationList.map(item => ({
                     name: item.name,
+                    character_index: item.character_index,
                     checked: JSON.parse(item.checked)
                 }));
                 setEventData(parsedParticipationData);
