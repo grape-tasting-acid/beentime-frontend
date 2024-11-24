@@ -465,6 +465,7 @@ export const TdItem = (participantColumnWidth) => css`
     & > td:not(:first-of-type) {
         width: ${participantColumnWidth}px;
         max-width: ${participantColumnWidth}px;
+        min-width: ${participantColumnWidth}px;
         justify-content: center;
         align-items: center;
     }

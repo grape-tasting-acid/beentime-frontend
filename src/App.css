@@ -1,7 +1,8 @@
+@import "Font/css/noto-sans-korean.css";
 /* 노토 산스 폰트 적용 */
 body {
   margin: 0;
-  font-family: 'Noto Sans', sans-serif;
+  font-family: "Noto Sans Korean", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .App {

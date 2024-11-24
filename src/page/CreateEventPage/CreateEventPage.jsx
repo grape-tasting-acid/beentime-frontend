@@ -5,7 +5,7 @@ import Calendar from 'react-calendar';
 import moment from 'moment';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import logo from '../../Img/logo/shortLogo.svg';
+import logo from '../../Img/logo/newLogo.svg';
 import deleteIcon from '../../Img/icon/deleteIcon.svg';
 import Footer from '../../component/footer/Footer';
 

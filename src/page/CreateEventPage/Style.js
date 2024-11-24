@@ -15,8 +15,8 @@ export const Layout = css`
 
 export const LogoImage = css`
   display: block;
-  margin-top: 80px;
-  margin-bottom: 80px;
+  
+  align-items: center;
   @media screen and (max-width: 375px) {
     width: 204px;
     height: 30px;

@@ -7,6 +7,23 @@ import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { Global, css } from '@emotion/react'; // Global과 css 가져오기
 
+const resetStyles = css`
+  /* Safari의 user agent stylesheet 재정의 */
+  * {
+    -webkit-appearance: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Safari의 테이블 관련 기본 스타일 초기화 */
+  table {
+    -webkit-border-horizontal-spacing: 0;
+    -webkit-border-vertical-spacing: 0;
+  }
+`;
+
+export const GlobalStyle = () => <Global styles={resetStyles} />;
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <RecoilRoot>
@@ -23,7 +40,7 @@ root.render(
           }
 
           body {
-            font-family: 'Noto Sans', sans-serif;
+            font-family: "Noto Sans Korean", "Helvetica Neue", Helvetica, Arial, sans-serif;
           }
 
           /* CSS 변수 정의 */
