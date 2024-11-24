@@ -1,14 +1,12 @@
-// CreateEventPage.js
-
 import React, { useEffect, useState } from 'react';
 /** @jsxImportSource @emotion/react */
 import * as S from './Style';
 import Calendar from 'react-calendar';
 import moment from 'moment';
-import Select from 'react-select';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import logo from '../../Img/logo/shortLogo.svg';
-import deleteIcon from '../../Img/icon/deleteIcon.svg'; // 경로는 실제 파일 위치에 맞게 수정하세요
+import deleteIcon from '../../Img/icon/deleteIcon.svg';
 import Footer from '../../component/footer/Footer';
 
 import table1 from '../../Img/tables/shortTable1.svg';
@@ -19,8 +17,7 @@ import { saveEvent, editEvent, getEvent, getParticipation, updateParticipation }
 import queryString from 'query-string';
 
 function CreateEventPage(props) {
-    const [selectedDates, setSelectedDates] = useState([]);
-    const [timeSlots, setTimeSlots] = useState([]);
+    const [selectedDates, setSelectedDates] = useState([]); // 날짜 객체 배열로 변경
     const [eventData, setEventData] = useState({ title: '' });
     const [selectedImage, setSelectedImage] = useState(0);
     const navigate = useNavigate();
@@ -42,46 +39,41 @@ function CreateEventPage(props) {
                 const event = response[0];
                 setEventData(event);
                 setSelectedImage(event.imageIndex);
-    
+
                 if (event.time) {
                     // JSON 문자열을 객체로 파싱
-                    const timeList = JSON.parse(event.time); 
-                    
-                    const parsedDates = [];
-                    const parsedTimeSlots = [];
-    
-                    timeList.forEach((time) => {
+                    const timeList = JSON.parse(event.time);
+
+                    const parsedSelectedDates = timeList.map((time) => {
                         const [datePart, timePart] = time.split(' / '); // 날짜와 시간 분리
                         const parsedDate = moment(datePart, 'M월 D일').toDate(); // 날짜 포맷
-                        if (parsedDate && timePart) {
-                            parsedDates.push(parsedDate); // 날짜 리스트
-                            parsedTimeSlots.push(timePart); // 시간 리스트
-                        }
+                        return {
+                            id: Date.now() + Math.random(), // 고유 ID 생성
+                            date: parsedDate,
+                            timeSlot: timePart || '19:00',
+                        };
                     });
-    
-                    setSelectedDates(parsedDates);
-                    setTimeSlots(parsedTimeSlots);
+
+                    setSelectedDates(parsedSelectedDates);
                 }
             }
         } catch (error) {
             console.error('Error fetching event data:', error);
         }
-    };    
+    };
 
     const handleDateClick = (date) => {
-        const newSelectedDates = [...selectedDates, date];
-        const newTimeSlots = [...timeSlots, '19:00']; // 기본값을 '19:00'으로 설정
+        const newDateObj = {
+            id: Date.now() + Math.random(), // 고유 ID 생성
+            date: date,
+            timeSlot: '19:00', // 기본 시간 설정
+        };
+        const newSelectedDates = [...selectedDates, newDateObj];
 
         // 날짜와 시간 슬롯을 함께 정렬
-        const sortedData = newSelectedDates
-            .map((date, index) => ({
-                date,
-                timeSlot: newTimeSlots[index],
-            }))
-            .sort((a, b) => new Date(a.date) - new Date(b.date));
+        const sortedData = newSelectedDates.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-        setSelectedDates(sortedData.map((item) => item.date));
-        setTimeSlots(sortedData.map((item) => item.timeSlot));
+        setSelectedDates(sortedData);
     };
 
     const handleTodayClick = () => {
@@ -99,23 +91,24 @@ function CreateEventPage(props) {
     };
 
     const handleEventCreate = async () => {
-        const title = document.querySelector('input[placeholder="개발팀 회식, 동아리 친목회"]').value;
+        const title = eventData.title;
 
         if (!title.trim()) {
             alert('모임 제목을 입력해주세요.');
             return;
         }
-        const isValidTimeSlot = timeSlots.every((slot) => slot !== '');
+
+        const isValidTimeSlot = selectedDates.every((dateObj) => dateObj.timeSlot !== '');
 
         if (!isValidTimeSlot) {
             alert('시간을 선택해주세요.');
             return;
         }
 
-        const eventList = selectedDates.map((date, index) => {
-            const formattedDate = moment(date).format('M월 D일');
-            let dayOfWeekShort = moment(date).locale('ko').format('ddd');
-            const timeSlot = timeSlots[index];
+        const eventList = selectedDates.map((dateObj) => {
+            const formattedDate = moment(dateObj.date).format('M월 D일');
+            let dayOfWeekShort = moment(dateObj.date).locale('ko').format('ddd');
+            const timeSlot = dateObj.timeSlot;
             switch (dayOfWeekShort) {
                 case 'Mon':
                     dayOfWeekShort = '월';
@@ -170,11 +163,11 @@ function CreateEventPage(props) {
         try {
             // 참여자 데이터 가져오기
             const participationList = await getParticipation(eventId);
-    
+
             for (const participant of participationList) {
                 const existingTimeList = JSON.parse(participant.time); // 기존 시간 리스트
                 const existingCheckedList = JSON.parse(participant.checked); // 기존 체크 상태 리스트
-    
+
                 // 새로운 checked 리스트 생성
                 const newCheckedList = updatedTimeList.map((time, index) => {
                     const existingIndex = existingTimeList.indexOf(time); // 기존 시간 확인
@@ -187,10 +180,10 @@ function CreateEventPage(props) {
                         return `question_${index}`;
                     }
                 });
-    
+
                 // participation_tb 업데이트
                 await updateParticipation(participant.name, JSON.stringify(newCheckedList), JSON.stringify(updatedTimeList));
-    
+
                 // 로그로 확인
                 console.log('Updated Participation:', {
                     name: participant.name,
@@ -202,8 +195,7 @@ function CreateEventPage(props) {
             console.error('Error updating participation table:', error);
         }
     };
-    
-    
+
     const handleImageSelect = (imageIndex) => {
         setSelectedImage(imageIndex);
     };
@@ -218,29 +210,18 @@ function CreateEventPage(props) {
         return null;
     };
 
-    const SelectedDateBox = ({ date, index }) => {
+    const SelectedDateBox = ({ dateObj, index }) => {
         const handleTimeChange = (e) => {
-            const newTimeSlots = [...timeSlots];
-            newTimeSlots[index] = e.target.value;
-            setTimeSlots(newTimeSlots);
+            const newTimeSlot = e.target.value;
+            const updatedDates = selectedDates.map((d, idx) =>
+                idx === index ? { ...d, timeSlot: newTimeSlot } : d
+            );
+            setSelectedDates(updatedDates);
         };
 
         const handleDeleteDate = () => {
-            const newSelectedDates = [...selectedDates];
-            const newTimeSlots = [...timeSlots];
-            newSelectedDates.splice(index, 1);
-            newTimeSlots.splice(index, 1);
-
-            // 날짜와 시간 슬롯을 함께 정렬
-            const sortedData = newSelectedDates
-                .map((date, index) => ({
-                    date,
-                    timeSlot: newTimeSlots[index],
-                }))
-                .sort((a, b) => new Date(a.date) - new Date(b.date));
-
-            setSelectedDates(sortedData.map((item) => item.date));
-            setTimeSlots(sortedData.map((item) => item.timeSlot));
+            const newSelectedDates = selectedDates.filter((_, idx) => idx !== index);
+            setSelectedDates(newSelectedDates);
         };
 
         const timeOptions = [];
@@ -253,12 +234,10 @@ function CreateEventPage(props) {
             }
         }
 
-        const formattedDate = moment(date);
+        const formattedDate = moment(dateObj.date);
         const formattedDateString = formattedDate.format('M월 D일');
-        const formattedDayOfWeek = moment(date).locale('ko').format('ddd');
-        let dayOfWeekShort;
-
-        switch (formattedDayOfWeek.substring(0, 3)) {
+        let dayOfWeekShort = formattedDate.locale('ko').format('ddd');
+        switch (dayOfWeekShort) {
             case 'Mon':
                 dayOfWeekShort = '월';
                 break;
@@ -291,10 +270,8 @@ function CreateEventPage(props) {
                 </div>
                 <select
                     css={S.TimeInput}
-                    type="text"
-                    value={timeSlots[index]}
+                    value={dateObj.timeSlot}
                     onChange={handleTimeChange}
-                    placeholder="시간 입력"
                 >
                     <option value="" disabled>
                         시간 선택
@@ -306,7 +283,7 @@ function CreateEventPage(props) {
                     ))}
                 </select>
                 <button css={S.DeleteButton} onClick={handleDeleteDate}>
-                <img src={deleteIcon} alt="삭제" />
+                    <img src={deleteIcon} alt="삭제" />
                 </button>
             </div>
         );
@@ -454,7 +431,6 @@ function CreateEventPage(props) {
                                         setActiveStartDate(activeStartDate)
                                     }
                                     defaultView={'month'}
-                                    
                                     minDetail="month"
                                     formatMonthYear={(locale, date) =>
                                         moment(date).locale('ko').format('YYYY.M')
@@ -549,16 +525,44 @@ function CreateEventPage(props) {
 
                         <div css={S.TimeBox}>
                             <div css={S.TimeBoxContainer}>
-                                {selectedDates.length > 0 ? (
-                                    selectedDates.map((date, index) => (
-                                        <SelectedDateBox key={index} date={date} index={index} />
-                                    ))
-                                ) : (
-                                    <div css={S.PlaceHolder}>
-                                        <div>캘린더에서 가능한 후보 날짜를</div>
-                                        <div>모두 선택해주세요.</div>
-                                    </div>
-                                )}
+                                <TransitionGroup>
+                                    {selectedDates.length > 0 ? (
+                                        selectedDates.map((dateObj, index) => (
+                                            <CSSTransition
+                                                key={dateObj.id}
+                                                timeout={300}
+                                                classNames={{
+                                                    enter: 'stack-enter',
+                                                    enterActive: 'stack-enter-active',
+                                                    exit: 'stack-exit',
+                                                    exitActive: 'stack-exit-active',
+                                                }}
+                                            >
+                                                <div css={S.SelectedDateBoxWrapper}>
+                                                    <SelectedDateBox dateObj={dateObj} index={index} />
+                                                </div>
+                                            </CSSTransition>
+                                        ))
+                                    ) : (
+                                        <CSSTransition
+                                            key="placeholder"
+                                            timeout={300}
+                                            classNames={{
+                                                enter: 'placeholder-enter',
+                                                enterActive: 'placeholder-enter-active',
+                                                exit: 'placeholder-exit',
+                                                exitActive: 'placeholder-exit-active',
+                                            }}
+                                            >
+                                            <div css={[S.PlaceHolderWrapper]}>
+                                                <div css={S.PlaceHolder}>
+                                                <div>캘린더에서 가능한 후보 날짜를</div>
+                                                <div>모두 선택해주세요.</div>
+                                                </div>
+                                            </div>
+                                            </CSSTransition>
+                                    )}
+                                </TransitionGroup>
                             </div>
                         </div>
                     </div>

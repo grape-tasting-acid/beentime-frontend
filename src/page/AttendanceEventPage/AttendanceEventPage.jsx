@@ -498,7 +498,7 @@
                                     setShowAttendanceForm(false);
                                     setEditingParticipant(null);
                                 }}
-                                hideBackButton={participants.length === 0 && !editingParticipant}
+                                hideBackButton={!editingParticipant}
                             />
                         </div>
                     </>

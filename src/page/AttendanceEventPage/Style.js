@@ -329,6 +329,8 @@ export const AttendBox = css`
     flex-grow: 1;
     flex-direction: column;
     margin-top: 60px;
+    max-width: 1020px;
+    overflow: hidden;
 `;
 
 // 시간 아이템 (모두의 빈타임)
@@ -368,18 +370,40 @@ export const TimeItem = css`
 // 테이블 박스 (참석자 상태)
 export const TableBox = css`
     text-align: center;
-    overflow-x: auto;
     margin-bottom: 60px;
-    width: 100%; // 테이블 박스 너비 100%로 설정
+    width: 100%;
+    overflow-x: scroll; // 항상 스크롤 표시
 `;
 
 export const Table = css`
     margin: 0 auto; 
-    width: 100%;
+    width: width: max-content;
     border-radius: 8px; 
     overflow: hidden;
-    border-collapse: collapse; /* 셀 간격 제거 */
-    border-spacing: 0; /* 셀 간격 제거 */
+    border-collapse: separate; /* Changed from collapse to separate */
+    border-spacing: 0; /* Keep this to prevent gaps */
+    border: 0.5px solid #DFE2E6; /* Add outer border */
+    table-layout: fixed;
+
+    & th:first-of-type {
+        border-top-left-radius: 8px;
+        border: 0.5px solid var(--G4, #DFE2E6);
+    }
+    
+    & th:last-of-type {
+        border-top-right-radius: 8px;
+        border: 0.5px solid var(--G4, #DFE2E6);
+    }
+    
+    & tr:last-of-type td:first-of-type {
+        border-bottom-left-radius: 8px;
+        border: 0.5px solid var(--G4, #DFE2E6);
+    }
+    
+    & tr:last-of-type td:last-of-type {
+        border-bottom-right-radius: 8px;
+        border: 0.5px solid var(--G4, #DFE2E6);
+    }
 `;
 
 // 참석자 수에 따른 동적 스타일 적용
@@ -388,7 +412,7 @@ export const ThItem = (participantColumnWidth) => css`
         height: 64px;
         font-size: 18px;
         background-color: #F9FAFA;
-        border: 1px solid #DFE2E6;
+        border: 0.5px solid #DFE2E6;
         text-align: center;
         vertical-align: middle;
         width: ${participantColumnWidth}px; /* 고정 너비 설정 */
@@ -399,11 +423,13 @@ export const ThItem = (participantColumnWidth) => css`
 
     & > th:first-of-type {
         width: 220px; // 일정 열 고정 너비
+        min-width: 220px;
     }
 
     & > th:not(:first-of-type) {
         width: ${participantColumnWidth}px;
         max-width: ${participantColumnWidth}px;
+        min-width: ${participantColumnWidth}px;
     }
 
     @media (max-width: 800px) {
@@ -419,7 +445,8 @@ export const TdItem = (participantColumnWidth) => css`
         height: 50px;
         text-align: center;
         vertical-align: middle;
-        border: 1px solid #DFE2E6;
+        border: 0.5px solid #DFE2E6;
+        position: relative;
     }
 
     & > td:first-of-type {
@@ -428,6 +455,7 @@ export const TdItem = (participantColumnWidth) => css`
         width: 220px; // 일정 열 고정 너비
         height: 64px;
         padding: 10px;
+        display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
@@ -437,6 +465,8 @@ export const TdItem = (participantColumnWidth) => css`
     & > td:not(:first-of-type) {
         width: ${participantColumnWidth}px;
         max-width: ${participantColumnWidth}px;
+        justify-content: center;
+        align-items: center;
     }
 
     & td > div {

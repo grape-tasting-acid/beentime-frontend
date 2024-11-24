@@ -512,14 +512,65 @@ export const TimeBoxContainer = css`
   }
 `;
 
+export const SelectedDateBoxWrapper = css`
+  width: 100%;
+  height: 100%;
+  margin-bottom: 10px;
+
+  &.stack-enter {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  &.stack-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 300ms ease-in-out;
+  }
+  &.stack-exit {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  &.stack-exit-active {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 300ms ease-in-out;
+  }
+`;
+
+export const PlaceHolderWrapper = css`
+  width: 100%;
+
+  &.placeholder-enter {
+    opacity: 0;
+  }
+  &.placeholder-enter-active {
+    opacity: 1;
+    transition: opacity 300ms ease-in-out;
+  }
+  &.placeholder-exit {
+    opacity: 1;
+  }
+  &.placeholder-exit-active {
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+  }
+`;
+
 export const PlaceHolder = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-align: center;
   align-items: center;
   color: #c2c8cf;
   font-size: 14px;
+  width: 177px;
   height: 100%;
+  position: absolute;  /* 절대 위치로 설정 */
+  top: 50%;  /* 상단에서 50% 위치 */
+  left: 50%;  /* 좌측에서 50% 위치 */
+  transform: translate(-50%, -50%);  /* 정확한 중앙 정렬을 위한 변환 */
+
 `;
 
 export const SelectedDateContainer = css`
@@ -549,10 +600,11 @@ export const SelectedDateBox = css`
 `;
 
 export const DateText = css`
-  font-family: 'Noto Sans', sans-serif;
+  font-family: 'Noto Sans';
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 900;
   margin-right: 13px;
+  font-style: normal;
   width: 90px; /* 고정 너비 */
   text-align: center; /* 가운데 정렬 */
   white-space: nowrap; /* 줄 바꿈 방지 */

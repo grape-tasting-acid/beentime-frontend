@@ -27,7 +27,7 @@ export const Component = css`
 export const AttendBox = css`
     display: flex;
     flex-direction: column;
-    gap: 45px;
+    gap: 60px;
     margin-top: 30px;
     width: 100%; // 부모 컨테이너의 너비에 맞춤
     box-sizing: border-box; // 패딩과 보더를 포함하여 너비를 계산
