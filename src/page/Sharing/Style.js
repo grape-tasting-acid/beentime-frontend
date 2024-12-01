@@ -21,12 +21,11 @@ export const H1 = css`
     letter-spacing: -0.22px;
     text-align: left;
     width: 750px;
-    margin-top: 100px;
 `;
 
 export const LogoContainer = css`
     display: flex;
-    padding: 80px 0px;
+    padding: 50px 0px 60px 0px;
     justify-content: center;
     align-items: flex-start;
     gap: 2px;
@@ -35,7 +34,7 @@ export const LogoContainer = css`
 
 export const LogoImage = css`
     width: 750px;
-    height: 120px;
+    height: 200px;
     display: block;
 `;
 
