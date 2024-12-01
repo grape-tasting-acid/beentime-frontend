@@ -82,22 +82,33 @@ export const HeaderItem = css`
         letter-spacing: -0.3px;
     }
 
+    & .header-buttons {
+        display: flex;
+        align-items: center;
+        gap: 10px; 
+    }
+
     & button {
-        height: 42px; // 버튼 높이 설정
-        width: 150px; // 버튼 너비 고정
-        padding: 4px 14px;  
-        border: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: 42px;
+        padding: 4px 14px;
+        justify-content: center;
         border-radius: 8px;
+        background: var(--G3, #F1F2F4);
+        border: none;
+        cursor: pointer;
         font-size: 16px;
         font-style: normal;
         font-weight: 700;
         line-height: 26px; /* 162.5% */
         letter-spacing: -0.16px;
-        background: var(--G3, #F1F2F4);
-        cursor: pointer;
-        display: flex; // 아이콘과 텍스트 수평 정렬
-        align-items: center; // 수직 정렬
-        justify-content: center; // 텍스트 중앙 정렬
+    }
+
+    & .button-icon {
+        width: 26px;
+        height: 26px;
     }
 
     @media (max-width: 800px) {

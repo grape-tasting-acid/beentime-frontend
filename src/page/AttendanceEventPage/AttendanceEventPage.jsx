@@ -9,6 +9,7 @@
     import QuestionIcon from '../../Img/icon/questionIcon.svg';
     import CrossIcon from '../../Img/icon/crossIcon.svg';
     import editLogo from '../../Img/edit_logo.svg';
+    import shareLogo from '../../Img/share_logo.svg';
     import Footer from '../../component/footer/Footer';
     import { useNavigate, useLocation, Link } from 'react-router-dom';
     import AttendanceEvent from '../../component/AttendanceEvent';
@@ -382,15 +383,36 @@
                             </Link>
                         </div>
                         <div css={S.HeaderItem}>
-                            <h1>{eventData?.title}</h1>
-                            <button onClick={onEditClick} style={{ display: 'flex', alignItems: 'center' }}>
-                                <img
-                                    src={editLogo}
-                                    alt="모임 수정하기"
-                                    style={{ width: '26px', height: '26px', marginRight: '4px' }} // 아이콘 크기 및 간격
-                                />
-                                모임 수정하기
-                            </button>
+                            <h1 onClick={() => window.location.reload()}>
+                                {eventData?.title}
+                            </h1>
+                            <div className="header-buttons">
+                                <button onClick={onEditClick}>
+                                    <img
+                                        className="button-icon"
+                                        src={editLogo}
+                                        alt="수정하기"
+                                    />
+                                    수정하기
+                                </button>
+                                <button 
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(window.location.href).then(() => {
+                                            alert('링크가 클립보드에 복사되었습니다.');
+                                        }).catch(err => {
+                                            console.error('링크 복사 중 오류 발생:', err);
+                                            alert('링크 복사에 실패했습니다.');
+                                        });
+                                    }}
+                                >
+                                    <img
+                                        className="button-icon"
+                                        src={shareLogo}
+                                        alt="공유하기"
+                                    />
+                                    공유하기
+                                </button>
+                            </div>
                         </div>
                         <h3>{eventData?.detail}</h3>
                     </div>
