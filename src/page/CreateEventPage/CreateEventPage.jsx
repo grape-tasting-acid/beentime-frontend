@@ -481,6 +481,17 @@ function CreateEventPage(props) {
                                                 classes.push('first-day');
                                             }
 
+                                            // 선택된 날짜 확인 로직 수정
+                                            const currentDate = moment(date);
+                                            const isSelected = selectedDates.some(dateObj => 
+                                                moment(dateObj.date).isSame(currentDate, 'day')
+                                            );
+
+                                            if (isSelected) {
+                                                console.log('Selected date:', currentDate.format('YYYY-MM-DD'));
+                                                classes.push('selected-date');
+                                            }
+
                                             return classes.join(' ');
                                         }
                                         return '';

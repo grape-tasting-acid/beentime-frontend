@@ -10,10 +10,9 @@ export const Layout = css`
     min-height: 100vh;
     padding-top: 0 !important; 
 
-    @media (max-width: 800px) {
-        height: auto;
-        padding-top: 0px;
-        margin-top: 20px;
+    @media screen and (max-width: 375px) {
+        width: 100%;
+        padding: 0 20px; // 모바일에서 좌우 여백 추가
     }
 `;
 
@@ -24,12 +23,20 @@ export const Header = css`
     gap: 14px;
     flex-direction: column;
     align-items: center;
+
+    @media (max-width: 375px) {
+        width: 100%;
+    }
 `;
 
 // ImgBox 스타일
 export const ImgBox = css`
     width: 148px;
     height: 21px;
+
+    @media (max-width: 375px) {
+        width: 100%;
+    }
 `;
 
 // HeaderBox 스타일
@@ -52,7 +59,7 @@ export const HeaderBox = css`
         letter-spacing: -0.3px;
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 375px) {
         margin-left: 20px;
         margin-bottom: 20px;
         width: 100%;
@@ -111,25 +118,17 @@ export const HeaderItem = css`
         height: 26px;
     }
 
-    @media (max-width: 800px) {
-        justify-content: start;
-        gap: 10px;
-        height: 30px;
-
+    @media (max-width: 375px) {
+        width: 100%;
+        flex-direction: column; /* 요소들을 세로로 배치 */
+        align-items: flex-start; /* 왼쪽 정렬 */
+    
         & h1 {
-            font-size: 24px;
+          margin-bottom: 10px; /* 제목과 버튼 사이의 간격 */
         }
-
-        & button {
-            height: 30px; // 모바일 버튼 높이 조정
-            width: auto; // 내용에 맞게 너비 조정
-            border: 1px solid;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 900;
-            color: var(--G10, #000);
-            cursor: pointer;
-            display: none; // 모바일에서 숨김
+    
+        & .header-buttons {
+          justify-content: flex-start; /* 버튼들을 왼쪽으로 정렬 */
         }
     }
 `;
@@ -145,9 +144,8 @@ export const Component = css`
     margin: 0 auto; // 컨테이너를 화면 중앙에 배치
     margin-top: 30px;
 
-    @media (max-width: 800px) {
-        width: 90%;
-        height: auto;
+    @media (max-width: 375px) {
+        width: 100%;
     }
 `;
 
@@ -160,6 +158,10 @@ export const EventContainer = css`
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    @media (max-width: 375px) {
+        width: 100%;
+    }
 `;
 
 export const TooltipContainer = css`
@@ -168,6 +170,10 @@ export const TooltipContainer = css`
     width: 100%;
     display: flex;
     justify-content: center;
+
+    @media (max-width: 375px) {
+        width: 100%;
+    }
 `;
 
 export const Tooltip = css`
@@ -208,6 +214,10 @@ export const Tooltip = css`
         border-style: solid;
         border-color: black transparent transparent transparent;
     }
+
+    @media (max-width: 375px) {
+        width: 100%;
+    }
 `;
 
 // 캐릭터+캡션+테이블 이미지 컨테이너 (A) (720x396px)
@@ -221,6 +231,12 @@ export const CharacterAndTableContainer = (numTables) => css`
     justify-content: flex-start;
     align-items: flex-start;
     overflow-x: auto; // 내용이 넘칠 경우 스크롤 표시
+
+    @media (max-width: 375px) {
+        margin-top: 0px;
+        width: 320px;
+        height: 277px;
+    }
 `;
 
 export const TableAndCharactersWrapper = (tableIndex) => css`
@@ -229,6 +245,10 @@ export const TableAndCharactersWrapper = (tableIndex) => css`
     height: 396px;
     margin-left: ${tableIndex > 0 ? '50px' : '0'}; // 첫 번째 테이블을 제외하고 좌측 마진 적용
     flex-shrink: 0; // 아이템이 줄어들지 않도록 설정
+
+    @media (max-width: 375px) {
+        width: 320px;
+    }
 `;
 
 // 메인 이미지 박스 (테이블과 캐릭터 배치)
@@ -244,6 +264,10 @@ export const TableContainer = css`
     width: 720px;
     height: 170px;
     margin: 0 auto;
+
+    @media (max-width: 375px) {
+        width: 100%;
+    }
 `;
 
 // 테이블 이미지 스타일
@@ -255,6 +279,11 @@ export const TableImage = css`
     width: /* 테이블 이미지의 너비 */;
     height: /* 테이블 이미지의 높이 */;
     z-index: 2;
+
+    @media (max-width: 375px) {
+        width: 320px;
+        height: 75px;
+    }
 `;
 
 // 캐릭터 컨테이너 스타일
@@ -270,12 +299,23 @@ export const CharacterContainer = (leftPosition, row) => css`
     flex-direction: column;
     align-items: center;
     z-index: ${row === 'top' ? 1 : 3};
+
+    @media (max-width: 375px) {
+        left: ${leftPosition-200}px;
+        width: 100%;
+        height: auto;
+      }
     `;
 
 // 캐릭터 이미지 스타일
 export const CharacterImage = (row) => css`
     width: 100px;
     height: 210px;
+
+    @media (max-width: 375px) {
+        width: 48px;
+        height: 100px;
+    }
 `;
 
 // 이름 스타일
@@ -342,6 +382,10 @@ export const AttendBox = css`
     margin-top: 60px;
     max-width: 1020px;
     overflow: hidden;
+
+    @media (max-width: 375px) {
+        width: 100%;
+    }
 `;
 
 // 시간 아이템 (모두의 빈타임)
@@ -363,7 +407,7 @@ export const TimeItem = css`
         color: var(--G10, #000);
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 375px) {
         & h3 {
             font-size: 20px;
             font-weight: 900;
@@ -443,7 +487,7 @@ export const ThItem = (participantColumnWidth) => css`
         min-width: ${participantColumnWidth}px;
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 375px) {
         & > th {
             height: 40px;
             width: 70px; // 모바일에서는 70px 고정
@@ -488,7 +532,7 @@ export const TdItem = (participantColumnWidth) => css`
         gap: 10px;
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 375px) {
         & > td {
             height: 40px;
             font-size: 12px;
@@ -521,7 +565,7 @@ export const BtnLeft = css`
     cursor: pointer;
     margin-right: 10px;
 
-    @media (max-width: 800px) {
+    @media (max-width: 375px) {
         margin-bottom: 20px;
         width: 400px;
         font-size: 12px;
@@ -539,7 +583,7 @@ export const BtnRight = css`
     font-weight: 600;
     cursor: pointer;
 
-    @media (max-width: 800px) {
+    @media (max-width: 375px) {
         margin-bottom: 20px;
         width: 400px;
         font-size: 12px;
@@ -575,7 +619,7 @@ export const InputItem = css`
         }
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 375px) {
         & h3 {
             font-size: 18px;
         }
@@ -773,4 +817,8 @@ export const Divider = css`
     height: 1px;
     background-color: var(--G4);
     margin: 100px auto;
+
+    @media (max-width: 375px) {
+        width: 100%;
+    }
 `;

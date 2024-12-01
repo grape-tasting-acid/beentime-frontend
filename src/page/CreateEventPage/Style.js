@@ -19,7 +19,7 @@ export const LogoImage = css`
   align-items: center;
   @media screen and (max-width: 375px) {
     width: 204px;
-    height: 30px;
+    height: 50px;
     margin-top: 40px;
     margin-bottom: 40px;
     display: block; // block으로 변경
@@ -48,7 +48,7 @@ export const Title = css`
   margin-bottom: 50px;
   color: #0f1720;
 
-  @media (max-width: 800px) {
+  @media (max-width: 375px) {
     font-size: 26px;
   }
 `;
@@ -74,7 +74,7 @@ export const Top = css`
   }
 
   & input {
-    width: 750px;
+    width: 100%;
     height: 52px;
     padding: 13.5px 18px;
     border-radius: 8px;
@@ -148,7 +148,7 @@ export const ButtonContainer = css`
 `;
 
 export const BtnCreate = css`
-  width: 750px;
+  width: 100%;
   height: 68px; 
   margin-top: 60px;
   font-size: 22px;
@@ -162,6 +162,11 @@ export const BtnCreate = css`
   color: #ffff;
   cursor: pointer;
   margin-bottom: 100px;
+
+  @media (max-width: 375px) {
+    height: 60px;
+    padding: 20px 0px;
+  }
 `;
 
 export const BtnTrue = css`
@@ -181,7 +186,7 @@ export const BtnTrue = css`
 `;
 
 export const BtnFalse = css`
-  width: 750px;
+  width: 100%;
   height: 68px; 
   margin-top: 60px;
   font-size: 22px;
@@ -192,9 +197,9 @@ export const BtnFalse = css`
   font-weight: 600;
   margin-bottom: 100px;
 
-  @media (max-width: 800px) {
-    margin-bottom: 20px;
-    /* 높이를 변경하지 않음 */
+  @media (max-width: 375px) {
+    height: 60px;
+    padding: 20px 0px;
   }
 `;
 
@@ -222,6 +227,11 @@ export const DateSelectionContainer = css`
   height: 446px;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 375px) {
+    width: 100%;
+    height: auto;
+  }
 `;
 
 
@@ -231,6 +241,12 @@ export const CalendarLayout = css`
   gap: 34px; /* 두 부분의 간격 */
   height: 400px; /* 남은 높이 */
   align-items: flex-start;
+
+  @media (max-width: 375px) {
+    flex-direction: column; /* 모바일에서 열 방향으로 변경 */
+    gap: 20px; /* 모바일에서의 간격 조정 */
+    height: auto; /* 높이 자동 조절 */
+  }
 `;
 
 export const CalendarBox = css`
@@ -238,12 +254,20 @@ export const CalendarBox = css`
   height: 366px;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 375px) {
+    width: 100%; /* 모바일에서 너비를 100%로 */
+    height: auto; /* 높이 자동 조절 */
+  }
 `;
 
 export const calendarContainer = css`
   width: 386px !important;
-  //height: 366px !important;
   position: relative;
+
+  @media (max-width: 375px) {
+    width: 100% !important; /* 모바일에서 너비를 100%로 변경 */
+  }
 
   .react-calendar {
     width: 100%;
@@ -362,13 +386,6 @@ export const calendarContainer = css`
     align-items: center !important;
   }
 
-  .calendarContainer .react-calendar__month-view__days {
-    display: grid !important;
-    grid-template-columns: repeat(7, 50px) !important;
-    grid-gap: 8px 6px;
-    justify-content: center;
-  }
-
   .react-calendar__tile {
     box-sizing: border-box;
     width: 50px !important;
@@ -432,6 +449,35 @@ export const calendarContainer = css`
       color: #dbdbdb;
     }
   }
+
+  .selected-date {
+    border: 1.5px solid var(--G10, #000);
+    border-radius: 50%;
+    width: 50px !important;
+    height: 50px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media (max-width: 375px) {
+    .react-calendar__month-view__days {
+      grid-template-columns: repeat(7, 1fr);
+      width: 100% !important;
+    }
+
+    .react-calendar__tile {
+      width: 100% !important; /* 타일 너비를 부모에 맞게 */
+      height: auto !important; /* 높이를 자동으로 */
+      aspect-ratio: 1 / 1; /* 정사각형 유지 */
+      font-size: 16px !important; /* 필요에 따라 폰트 크기 조정 */
+    }
+
+    .selected-date {
+      width: 100% !important; /* 선택된 날짜의 너비 조정 */
+      height: 100% !important;
+    }
+  }
 `;
 
 export const TodayText = css`
@@ -492,6 +538,10 @@ export const TimeBox = css`
   justify-content: center;
   align-items: center;
   position: relative;
+
+  @media (max-width: 375px) {
+    width: 100% !important;
+  }
 `;
 
 export const TimeBoxContainer = css`
@@ -506,9 +556,10 @@ export const TimeBoxContainer = css`
   overflow-x: auto;
 
   @media (max-width: 800px) {
-    flex-direction: column;
-    align-items: center;
-    height: 200px;
+    position: static; 
+    width: 100%;
+    height: auto;
+    padding: 0 16px;
   }
 `;
 
@@ -686,6 +737,11 @@ export const SelectImagesContainer = css`
   }
   
   @media screen and (max-width: 375px) {
+    flex-wrap: nowrap; /* 항목들이 한 줄에 나타나도록 설정 */
+    overflow-x: auto; /* 가로 스크롤 활성화 */
+    width: 100%; /* 부모 컨테이너 너비에 맞춤 */
+    -webkit-overflow-scrolling: touch; /* iOS에서 부드러운 스크롤을 위해 추가 */
+
     & > div {
       margin-right: 14px; /* 이미지 간의 간격 */
     }
@@ -693,8 +749,8 @@ export const SelectImagesContainer = css`
 `;
 
 export const ImageContainer = (isSelected) => css`
-  width: 230px;
-  height: 160px;
+  width: 230px !important;
+  height: 160px !important;
   flex-shrink: 0;
   position: relative;
   display: inline-block;
@@ -722,8 +778,8 @@ export const ImageContainer = (isSelected) => css`
   }
   
   @media screen and (max-width: 375px) {
-    width: 150px;
-    height: 150px;
+    width: 150px !important;
+    height: 110px !important;
   }
 `;
 
@@ -740,6 +796,14 @@ export const CheckboxIcon = css`
     background-color: black;
     border-radius: 50%;
     cursor: pointer;
+
+    @media screen and (max-width: 375px) {
+      top: 8px;
+      right: 8px;
+      width: 18px;
+      height: 18px;
+    }
+
 `;
 
 export const ImageLabel = css`

@@ -5,10 +5,10 @@ export const Layout = css`
     flex-direction: column;
     align-items: center;
     width: 600px;
+    margin-top: 60px;
 
-    @media (max-width: 800px) {
-        height: auto;
-        margin-top: 20px;
+    @media (max-width: 375px) {
+        width: 100%;
     }
 `;
 
@@ -18,9 +18,9 @@ export const Component = css`
     justify-content: center;
     width: 600px;
 
-    @media (max-width: 800px) {
-        width: 90%;
-        height: auto;
+    @media (max-width: 375px) {
+        width: 375px;
+        padding: 0 20px; // 모바일에서 좌우 여백 추가
     }
 `;
 
@@ -32,8 +32,8 @@ export const AttendBox = css`
     width: 100%; // 부모 컨테이너의 너비에 맞춤
     box-sizing: border-box; // 패딩과 보더를 포함하여 너비를 계산
 
-    @media (max-width: 800px) {
-        gap: 30px;
+    @media (max-width: 375px) {
+        width: 100%;
     }
 `;
 
@@ -72,12 +72,15 @@ export const InputItem = css`
         }
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 375px) {
+        width: 100%;
+
         & h3 {
             font-size: 18px;
         }
 
         & input {
+            width: 100%;
             font-size: 14px;
             padding: 8px 12px; // 모바일에서 패딩 조정
         }
@@ -100,7 +103,8 @@ export const TimeItem = css`
         margin-bottom: 20px;
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 375px) {
+        width: 100%;
         & h3 {
             font-size: 18px;
         }
@@ -115,6 +119,10 @@ export const TimeBox = css`
     align-items: flex-start;
     width: 100%;
     gap: 14px;
+
+    @media (max-width: 375px) {
+        width: 100%;
+    }
 `;
 
 export const Times = css`
@@ -144,7 +152,8 @@ export const Times = css`
         letter-spacing: -0.22px;
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 375px) {
+        width: 100%;
         & h4 {
             font-size: 16px;
         }
@@ -161,8 +170,8 @@ export const Btns = css`
     gap: 10px;
     margin-left: auto; /* Btns 컨테이너를 오른쪽으로 밀기 */
 
-    @media (max-width: 800px) {
-        margin-right: 5px;
+    @media (max-width: 375px) {
+        gap: 20px;
     }
 `;
 
@@ -192,10 +201,16 @@ export const Radio = css`
         color: #2E343F;
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 375px) {
+        & input[type="radio"] {
+            width: 42px;
+            height: 42px;
+            display: none;
+        }
+
         & label {
-            height: 35px;
-            width: 35px;
+            height: 42px;
+            width: 42px;
             font-size: medium;
         }
     }
@@ -208,8 +223,8 @@ export const ButtonContainer = css`
     margin-bottom: 100px;
     gap: 14px; /* 버튼 사이의 간격 설정 */
 
-    @media (max-width: 800px) {
-        margin-bottom: 20px;
+    @media (max-width: 375px) {
+        width: 100%;
     }
 `;
 
@@ -228,7 +243,7 @@ export const BtnTrue = css`
     justify-content: center;
     box-sizing: border-box;
 
-    @media (max-width: 800px) {
+    @media (max-width: 375px) {
         width: 100%; // 모바일에서는 전체 너비 사용
         height: 50px;
         font-size: 16px;
@@ -250,7 +265,7 @@ export const CancelButton = css`
     justify-content: center;
     box-sizing: border-box;
 
-    @media (max-width: 800px) {
+    @media (max-width: 375px) {
         width: 100%; // 모바일에서는 전체 너비 사용
         height: 50px;
         font-size: 16px;
@@ -271,4 +286,8 @@ export const LargeAttendButton = css`
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
+
+    @media (max-width: 375px) {
+        width: 100%;
+    }
 `;

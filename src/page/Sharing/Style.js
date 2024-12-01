@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 
 export const Layout = css`
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -9,6 +9,10 @@ export const Layout = css`
     align-items: center;
     position: relative;
     padding-top: 0 !important; 
+
+    @media screen and (max-width: 375px) {
+        padding: 0 20px; // 모바일에서 좌우 여백 추가
+      }
 `;
 
 export const H1 = css`
@@ -21,6 +25,10 @@ export const H1 = css`
     letter-spacing: -0.22px;
     text-align: left;
     width: 750px;
+
+    @media (max-width: 375px) {
+        width: 100%;
+    }
 `;
 
 export const LogoContainer = css`
@@ -30,12 +38,20 @@ export const LogoContainer = css`
     align-items: flex-start;
     gap: 2px;
     align-self: stretch;
+
+    @media (max-width: 375px) {
+        width: 100%;
+    }
 `;
 
 export const LogoImage = css`
     width: 750px;
     height: 200px;
     display: block;
+
+    @media (max-width: 375px) {
+        width: 100%;
+    }
 `;
 
 export const UrlBox = css`
@@ -83,6 +99,46 @@ export const UrlBox = css`
         line-height: 30px; /* 166.667% */
         letter-spacing: -0.18px;
     }
+
+    @media (max-width: 375px) {
+        width: 100%; /* 모바일에서 UrlBox의 너비를 100%로 설정 */
+        height: auto; /* 높이를 자동으로 조절 */
+        flex-direction: column; /* 모바일에서 요소들을 세로로 배치 */
+        align-items: center; /* 중앙 정렬 */
+        margin-top: 12px; /* 위쪽 마진 조정 */
+        margin-bottom: 12px; /* 아래쪽 마진 조정 */
+    
+        input {
+          width: 336px;
+          height: 48px;
+          display: flex;
+          padding: 14px 18px;
+          align-items: center;
+          gap: 10px;
+          align-self: stretch;
+          margin-bottom: 12px; /* 위아래 마진 적용 */
+          border-radius: 8px;
+          border: 1.5px solid var(--G3, #F1F2F4);
+          background: var(--G1, #FFF);
+          color: var(--G10, #000);
+          font-size: 16px; /* 필요에 따라 폰트 크기 조정 */
+          line-height: 20px;
+          letter-spacing: -0.18px;
+        }
+    
+        button {
+          width: 336px;
+          height: 48px;
+          margin-left: 0; /* 왼쪽 마진 제거 */
+          border-radius: 8px;
+          border: 1px solid var(--G10, #000);
+          background: var(--G1, #FFF);
+          color: var(--G10, #000);
+          font-size: 16px; /* 필요에 따라 폰트 크기 조정 */
+          line-height: 24px;
+          letter-spacing: -0.18px;
+        }
+    }
 `;
 
 export const Btn = css`
@@ -102,4 +158,14 @@ export const Btn = css`
     font-weight: 700;
     line-height: 26px; /* 118.182% */
     letter-spacing: -0.22px;
+
+    @media (max-width: 375px) {
+        width: 100%;
+        display: flex;
+        height: 60px;
+        padding: 20px 0px;
+        justify-content: center;
+        align-items: center;
+        align-self: stretch;
+    }
 `;
