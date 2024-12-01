@@ -557,7 +557,7 @@ function CreateEventPage(props) {
                                             <div css={[S.PlaceHolderWrapper]}>
                                                 <div css={S.PlaceHolder}>
                                                 <div>캘린더에서 가능한 후보 날짜를</div>
-                                                <div>모두 선택해주세요.</div>
+                                                <div>모두 선택해주세요</div>
                                                 </div>
                                             </div>
                                             </CSSTransition>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 /** @jsxImportSource @emotion/react */
 import * as S from './Style';
-import logo from '../../Img/logo/shortLogo.svg';
+import logo from '../../Img/logo/newLogo.svg';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../../component/footer/Footer';
 
