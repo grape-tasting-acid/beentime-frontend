@@ -29,6 +29,7 @@
         const id = new URLSearchParams(location.search).get('eventId');
         const [tableImage, setTableImage] = useState(tableImage1);
         const attendanceEventRef = useRef(null);
+        const isInitialMount = useRef(true);
 
         useEffect(() => {
             const fetchData = async () => {
@@ -94,15 +95,11 @@
         const initialRender = useRef(true);
 
         useEffect(() => {
-            if (initialRender.current) {
-                // 첫 번째 렌더링일 경우
-                initialRender.current = false;
-            } else {
-                // 첫 번째 렌더링 이후에만 scrollIntoView 호출
-                if (showAttendanceForm && attendanceEventRef.current) {
-                    attendanceEventRef.current.scrollIntoView({ behavior: 'smooth' });
-                }
+            // 초기 마운트(참가자가 0명일 때)가 아니고, showAttendanceForm이나 editingParticipant가 변경됐을 때만 스크롤
+            if (!isInitialMount.current && (showAttendanceForm || editingParticipant)) {
+                attendanceEventRef.current?.scrollIntoView({ behavior: 'smooth' });
             }
+            isInitialMount.current = false;
         }, [showAttendanceForm, editingParticipant]);
 
         const onEditClick = () => {

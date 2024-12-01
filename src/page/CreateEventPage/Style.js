@@ -519,20 +519,20 @@ export const SelectedDateBoxWrapper = css`
 
   &.stack-enter {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateX(20px);
   }
   &.stack-enter-active {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
     transition: all 300ms ease-in-out;
   }
   &.stack-exit {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
   }
   &.stack-exit-active {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateX(20px);
     transition: all 300ms ease-in-out;
   }
 `;
