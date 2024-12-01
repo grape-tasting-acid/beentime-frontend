@@ -435,7 +435,7 @@ function CreateEventPage(props) {
                                     formatMonthYear={(locale, date) =>
                                         moment(date).locale('ko').format('YYYY.M')
                                     }
-                                    formatDay={(local, date) => moment(date).locale('ko').format('DD')}
+                                    formatDay={(local, date) => moment(date).locale('ko').format('D')}
                                     formatShortWeekday={(locale, date) => {
                                         const englishDay = moment(date).locale('en').format('dd');
                                         const koreanDays = {
