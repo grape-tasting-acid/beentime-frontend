@@ -158,7 +158,7 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose, 
                         <h3>이름을 알려줘!</h3>
                         <input
                             type="text"
-                            placeholder="홍길동"
+                            placeholder="차은우"
                             value={attendeeName}
                             onChange={onNameChange}
                         />
