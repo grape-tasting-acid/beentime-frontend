@@ -29,7 +29,7 @@ function Sharing(props) {
             await navigator.share({
                 title: '이벤트 페이지 공유하기',
                 text: '이벤트 페이지를 확인해보세요!',
-                url: `${window.location.origin}/attend?eventId=${encodeURIComponent(sessionStorage.getItem('eventId'))}`,
+                url: `${window.location.origin}/attend?eventCode=${encodeURIComponent(sessionStorage.getItem('eventCode'))}`,
             });
             console.log('링크 공유 완료');
         } catch (error) {
@@ -38,7 +38,7 @@ function Sharing(props) {
     };
 
     const handleOnClick = () => {
-        window.location.href = `${window.location.origin}/attend?eventId=${encodeURIComponent(sessionStorage.getItem('eventId'))}`;
+        window.location.href = `${window.location.origin}/attend?eventCode=${encodeURIComponent(sessionStorage.getItem('eventCode'))}`;
     };
 
     const handleClick = buttonLabel === '링크 복사' ? handleCopyLink : handleShareLink;
@@ -56,7 +56,7 @@ function Sharing(props) {
             <div css={S.UrlBox}>
                 <input 
                     type="text" 
-                    value={`${window.location.origin}/attend?eventId=${encodeURIComponent(sessionStorage.getItem('eventId'))}`} 
+                    value={`${window.location.origin}/attend?eventCode=${encodeURIComponent(sessionStorage.getItem('eventCode'))}`} 
                     onChange={() => {}} 
                     readOnly
                 />

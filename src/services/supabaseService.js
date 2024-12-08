@@ -1,11 +1,21 @@
 import supabase from '../api/instance';
 
-// 이벤트 생성
+function generateRandomCode(length = 16) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  }
+
 // 이벤트 생성
 export const saveEvent = async (title, time, imageIndex) => {
+    const event_code = generateRandomCode();
+
     const { data, error } = await supabase
         .from('event_tb')
-        .insert([{ title, time, imageIndex }]) // imageIndex 추가
+        .insert([{ title, time, imageIndex, event_code }])
         .select();
 
     if (error) {
@@ -17,11 +27,11 @@ export const saveEvent = async (title, time, imageIndex) => {
 };
 
 // 이벤트 수정
-export const editEvent = async (eventId, title, time, imageIndex) => {
+export const editEvent = async (eventCode, title, time, imageIndex) => {
     const { data, error } = await supabase
         .from('event_tb')
         .update({ title, time, imageIndex }) // imageIndex 추가
-        .eq('event_id', eventId)
+        .eq('event_code', eventCode)
         .select();
 
     if (error) {
@@ -33,11 +43,11 @@ export const editEvent = async (eventId, title, time, imageIndex) => {
 };
 
 // 이벤트 조회
-export const getEvent = async (eventId) => {
+export const getEvent = async (eventCode) => {
     const { data, error } = await supabase
         .from('event_tb')
         .select('*')
-        .eq('event_id', eventId);
+        .eq('event_code', eventCode);
 
     if (error) {
         console.error('Error fetching event:', error);
@@ -48,10 +58,10 @@ export const getEvent = async (eventId) => {
 };
 
 // 참여 생성
-export const saveParticipation = async (eventId, name, checked, time) => {
+export const saveParticipation = async (eventCode, name, checked, time) => {
     const { data, error } = await supabase
         .from('participation_tb')
-        .insert([{ event_id: eventId, name, checked, time }])
+        .insert([{ event_code: eventCode, name, checked, time }])
         .select();
 
     if (error) {
@@ -77,7 +87,7 @@ export const updateParticipation = async (name, checked, time) => {
 };
 
 // 참여 조회
-export const getParticipation = async (eventId) => {
+export const getParticipation = async (eventCode) => {
     const { data, error } = await supabase
         .from('participation_tb')
         .select(`
@@ -86,7 +96,7 @@ export const getParticipation = async (eventId) => {
                 title
             )
         `)
-        .eq('event_id', eventId);
+        .eq('event_code', eventCode);
 
     if (error) {
         console.error('Error fetching participation:', error);
@@ -97,11 +107,11 @@ export const getParticipation = async (eventId) => {
 };
 
 // 참여자 이름 조회
-export const getParticipationName = async (eventId, name) => {
+export const getParticipationName = async (eventCode, name) => {
     const { data, error } = await supabase
         .from('participation_tb')
         .select('name')
-        .eq('event_id', eventId)
+        .eq('event_code', eventCode)
         .eq('name', name);
 
     if (error) {

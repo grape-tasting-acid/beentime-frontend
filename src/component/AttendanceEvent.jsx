@@ -17,7 +17,7 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose, 
     const [selectedRadios, setSelectedRadios] = useState([]);
     const [attendeeName, setAttendeeName] = useState('');
     const location = useLocation();
-    const id = new URLSearchParams(location.search).get('eventId');
+    const id = new URLSearchParams(location.search).get('eventCode');
 
     useEffect(() => {
         if (timeList && timeList.length > 0) {
@@ -58,7 +58,7 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose, 
             const { data: existingParticipants = [], error: fetchError } = await supabase
             .from('participation_tb')
             .select('character_index')
-            .eq('event_id', id);
+            .eq('event_code', id);
 
             if (fetchError) {
                 throw fetchError;
@@ -107,7 +107,7 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose, 
                 const { data: participationList = [], error: participationError } = await supabase
                     .from('participation_tb')
                     .select('*')
-                    .eq('event_id', id)
+                    .eq('event_code', id)
                     .select();
 
                 if (participationError) {
@@ -125,7 +125,7 @@ const AttendanceEvent = ({ timeList, eventData, existingParticipation, onClose, 
                         name: attendeeName,
                         time: timeList,
                         checked: selectedRadios,
-                        event_id: eventData.event_id,
+                        event_code: eventData.event_code,
                         character_index: newCharacterIndex
                     };
 

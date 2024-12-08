@@ -163,9 +163,15 @@ export const Btn = css`
         width: 100%;
         display: flex;
         height: 60px;
+        font-size: 18px;
         padding: 20px 0px;
         justify-content: center;
         align-items: center;
         align-self: stretch;
-    }
+        position: fixed; /* 화면에 고정 */
+        bottom: 0;       /* 하단에 위치 */
+        left: 0;         /* 좌측에 붙이기 */
+        z-index: 1000;   /* 다른 요소보다 위에 표시 */
+        border-radius: 0; /* 모서리 둥글기를 제거하여 전체 너비에 맞춤 */
+      }
 `;

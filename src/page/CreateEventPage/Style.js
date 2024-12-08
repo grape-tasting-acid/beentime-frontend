@@ -441,6 +441,7 @@ export const calendarContainer = css`
 
   .react-calendar__tile:not(.past-day):hover {
     background-color: var(--G3, #F1F2F4);
+    cursor: pointer;
     border-radius: 50%;
   }
 
@@ -553,7 +554,22 @@ export const TimeBoxContainer = css`
   overflow-y: auto;
   flex-direction: column;
   align-items: center;
-  overflow-x: auto;
+  overflow-x: hidden;
+
+  /* 스크롤바 커스텀 (크롬, 사파리, 엣지 등 Webkit 기반 브라우저) */
+  ::-webkit-scrollbar {
+    width: 8px;
+    background-color: #F1F2F4; /* 스크롤바 배경색 */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #C2C8CF; /* 스크롤바 드래그 가능한 영역 색 */
+    border-radius: 4px;
+  }
+
+  /* Firefox 전용 스크롤바 스타일 (옵션) */
+  scrollbar-width: thin;
+  scrollbar-color: #C2C8CF #F1F2F4; /* thumb 색상 #C2C8CF, track 배경 #F1F2F4 */
 
   @media (max-width: 800px) {
     position: static; 

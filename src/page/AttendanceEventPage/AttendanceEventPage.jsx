@@ -27,7 +27,7 @@
         const [editingParticipant, setEditingParticipant] = useState(null);
         const name = JSON.parse(sessionStorage.getItem('name'));
         const location = useLocation();
-        const id = new URLSearchParams(location.search).get('eventId');
+        const id = new URLSearchParams(location.search).get('eventCode');
         const [tableImage, setTableImage] = useState(tableImage1);
         const attendanceEventRef = useRef(null);
         const isInitialMount = useRef(true);
@@ -79,7 +79,7 @@
                     // 이미 참여한 경우 리스트 페이지로 이동
                     const participationResponse = await getParticipationName(id, name);
                     if (participationResponse.data > 0) {
-                        window.location.href = `${window.location.origin}/list?eventId=${encodeURIComponent(id)}`;
+                        window.location.href = `${window.location.origin}/list?eventCode=${encodeURIComponent(id)}`;
                     }
 
                     // 참가자가 0명인 경우 AttendanceEvent를 바로 띄우기
@@ -104,7 +104,7 @@
         }, [showAttendanceForm, editingParticipant]);
 
         const onEditClick = () => {
-            navigate(`/edit?eventId=${encodeURIComponent(id)}`);
+            navigate(`/edit?eventCode=${encodeURIComponent(id)}`);
         };
 
         const formatDateString = (dateString) => {
@@ -383,7 +383,7 @@
                             </Link>
                         </div>
                         <div css={S.HeaderItem}>
-                            <h1 onClick={() => window.location.reload()}>
+                            <h1 onClick={() => window.location.reload()} style={{ cursor: 'pointer' }} >
                                 {eventData?.title}
                             </h1>
                             <div className="header-buttons">
