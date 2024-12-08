@@ -148,7 +148,7 @@ function CreateEventPage(props) {
         const title = eventData.title;
 
         if (!title.trim()) {
-            alert('모임 제목을 입력해주세요.');
+            alert('모임 이름을 입력해주세요.');
             return;
         }
 
