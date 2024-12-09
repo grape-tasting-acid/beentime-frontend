@@ -1,0 +1,879 @@
+.Layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-top: 0 !important;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+@media screen and (max-width: 375px) {
+  .Layout {
+    padding: 0 20px; /* 모바일에서 좌우 여백 추가 */
+  }
+}
+
+.H5 {
+  font-family: "Noto Sans", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+  color: var(--G10, #000);
+
+  @media (max-width: 375px) {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+}
+
+.LogoImage {
+  display: block;
+  align-items: center;
+  width: 100%;
+  max-width: 750px;
+}
+
+@media screen and (max-width: 375px) {
+  .LogoImage {
+    width: 204px;
+    height: 50px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: block; /* block으로 변경 */
+    margin-left: auto; /* 좌우 마진 auto로 설정 */
+    margin-right: auto;
+  }
+}
+
+.Component {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 375px) {
+  .Component {
+    width: 100%;
+  }
+}
+
+.Title {
+  font-size: 40px;
+  font-weight: 900;
+  margin-bottom: 50px;
+  color: #0f1720;
+}
+
+@media (max-width: 375px) {
+  .Title {
+    font-size: 26px;
+  }
+}
+
+.Top h5 {
+  font-family: "Noto Sans", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+  color: var(--G10, #000);
+}
+
+@media (max-width: 375px) {
+  .Top h5 {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+}
+
+.Top input {
+  width: 100%;
+  height: 52px;
+  padding: 13.5px 18px;
+  border-radius: 8px;
+  border: 1.5px solid var(--G3, #f1f2f4);
+  background: var(--G1, #fff);
+  outline: none;
+  font-size: 18px;
+  line-height: 22px;
+  margin-bottom: 60px;
+  box-sizing: border-box !important;
+}
+
+.Top input::placeholder {
+  font-family: "Noto Sans";
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.01em;
+  color: var(--G6);
+}
+
+@media (max-width: 375px) {
+  .Top input {
+    font-size: 18px;
+  }
+
+  .Top input::placeholder {
+    font-size: 16px;
+    line-height: 22px;
+  }
+}
+
+.Bottom h5 {
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--G10, #000);
+}
+
+@media (max-width: 800px) {
+  .Bottom h5 {
+    font-size: 18px;
+  }
+}
+
+.Bottom input {
+  width: 100%;
+  height: 50px;
+  padding-left: 10px;
+  border-radius: 5px;
+  border: 1px solid #f1f2f4;
+  outline: none;
+  font-size: 18px;
+  margin-bottom: 60px;
+}
+
+.Bottom input::placeholder {
+  color: #a9afb6;
+}
+
+@media (max-width: 800px) {
+  .Bottom input {
+    font-size: 16px;
+  }
+}
+
+.ButtonContainer {
+  margin-top: 60px;
+  display: flex;
+  justify-content: space-between; /* 버튼들을 양쪽에 배치 */
+  width: 100%; /* 전체 부모 컨테이너 너비에 맞춤 */
+  margin-bottom: 100px;
+  gap: 14px; /* 버튼 사이의 간격 설정 */
+}
+
+.BtnCreate {
+  width: 100%;
+  height: 68px;
+  margin-top: 60px;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 26px; /* 118.182% */
+  letter-spacing: -0.22px;
+  background-color: #000000;
+  border: none;
+  border-radius: 5px;
+  color: #ffff;
+  cursor: pointer;
+  margin-bottom: 100px;
+}
+
+@media (max-width: 375px) {
+  .BtnCreate {
+    height: 60px;
+    padding: 20px 0px;
+  }
+}
+
+.BtnTrue {
+  width: 368px;
+  height: 68px;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 26px; /* 118.182% */
+  letter-spacing: -0.22px;
+  background-color: #000000;
+  border: none;
+  border-radius: 5px;
+  color: #ffff;
+  cursor: pointer;
+  margin-bottom: 100px;
+}
+
+.BtnFalse {
+  width: 100%;
+  height: 68px;
+  font-size: 22px;
+  background: var(--G4, #dfe2e6);
+  border: none;
+  border-radius: 5px;
+  color: #ffff;
+  font-weight: 600;
+  margin-bottom: 100px;
+}
+
+@media (max-width: 375px) {
+  .BtnFalse {
+    height: 60px;
+    padding: 20px 0px;
+  }
+}
+
+.CancelButton {
+  width: 368px; /* 버튼 너비 설정 */
+  height: 68px;
+  font-size: 22px;
+  background-color: #ffffff; /* 흰색 배경 */
+  color: #000000; /* 검은색 글씨 */
+  border: 1px solid #000000; /* 테두리 추가 */
+  border-radius: 5px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 26px; /* 118.182% */
+  letter-spacing: -0.22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.DateSelectionContainer {
+  max-width: 750px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 375px) {
+  .DateSelectionContainer {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.CalendarLayout {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
+  gap: 34px; /* 두 부분의 간격 */
+  height: fit-content;
+  /* max-height: 366px; */
+  align-items: flex-start;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 375px) {
+  .CalendarLayout {
+    display: flex;
+    flex-direction: column; /* 모바일에서 열 방향으로 변경 */
+    gap: 20px; /* 모바일에서의 간격 조정 */
+    height: auto; /* 높이 자동 조절 */
+  }
+}
+
+.CalendarBox {
+  /* max-width: 386px; */
+  width: 100%;
+  height: 366px;
+  justify-content: center;
+  align-items: center;
+  /* grid-column: auto-fill, minmax(386px, auto); */
+
+  :global .calendarContainer {
+    /* max-width: 386px; */
+    width: 100%;
+    position: relative;
+
+    :global .react-calendar {
+      width: 100%;
+      height: 100%;
+      margin-top: 0 !important;
+    }
+    :global .react-calendar__navigation {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 20px;
+      margin-top: 0px;
+    }
+
+    :global .react-calendar__navigation__label {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      width: 67px !important;
+      height: 24px;
+      flex-grow: 0 !important;
+      align-items: center;
+      border: none;
+      background-color: transparent;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 120%;
+      letter-spacing: -0.2px;
+      padding: 0;
+      color: #000 !important;
+    }
+
+    :global .react-calendar__navigation__prev-button,
+    :global .react-calendar__navigation__next-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 10px;
+      height: 18px;
+      padding: 0;
+      margin: 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    :global .react-calendar__navigation__prev-button {
+      margin-right: 8px;
+    }
+
+    :global .react-calendar__navigation__next-button {
+      margin-left: 8px;
+    }
+
+    :global .react-calendar__navigation__prev-button svg,
+    :global .react-calendar__navigation__next-button svg {
+      width: 9px;
+      height: 16px;
+      stroke: var(--G10, #000);
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+
+    :global .react-calendar__navigation__next2-button {
+      display: none;
+    }
+
+    :global .react-calendar__navigation__prev2-button {
+      display: none;
+    }
+
+    :global .react-calendar__month-view__weekdays {
+      color: #c2c8cf;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    :global .react-calendar__month-view__weekdays__weekday {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    :global abbr[title] {
+      text-decoration: none;
+    }
+
+    :global .react-calendar__month-view__days {
+      display: grid !important;
+      grid-template-columns: repeat(7, 1fr);
+      grid-gap: 8px 6px;
+      /* width: 386px; */
+      justify-content: center;
+      padding: 0 !important; /* 불필요한 패딩 제거 */
+      margin: 0 !important; /* 불필요한 마진 제거 */
+    }
+
+    :global .react-calendar__month-view__days__day {
+      display: block !important; /* 기본 display를 block으로 설정 */
+      margin: 0 !important; /* 불필요한 마진 제거 */
+      padding: 0 !important; /* 불필요한 패딩 제거 */
+    }
+
+    :global .react-calendar__tile.past-day,
+    :global .react-calendar__tile.past-day abbr {
+      color: var(--G4, #dfe2e6);
+    }
+
+    :global .react-calendar__tile.today {
+      color: var(--T1, #2376e5) !important;
+      font-weight: 400;
+      flex-direction: column !important;
+      justify-content: center !important;
+      align-items: center !important;
+    }
+
+    :global .react-calendar__tile {
+      box-sizing: border-box;
+      /* width: 50px !important; */
+      height: 50px !important;
+      text-align: center;
+      position: relative;
+      font-feature-settings: "liga" off, "clig" off;
+      font-size: 20px !important;
+      font-style: normal;
+      font-weight: 400 !important;
+      line-height: 25px; /* 125% */
+      letter-spacing: -0.4px;
+      border: none;
+      background-color: transparent;
+    }
+
+    :global .react-calendar__tile.today {
+      display: flex !important;
+      flex-direction: column !important; /* 필요 시 사용 */
+      justify-content: center !important;
+      align-items: center !important;
+    }
+
+    :global .react-calendar__month-view__days .react-calendar__tile {
+      margin: 0; /* 마진 제거 */
+    }
+
+    :global .weekday-0.first-day {
+      /* 일요일 */
+      grid-column-start: 1;
+    }
+
+    :global .weekday-1.first-day {
+      /* 월요일 */
+      grid-column-start: 2;
+    }
+
+    :global .weekday-2.first-day {
+      /* 화요일 */
+      grid-column-start: 3;
+    }
+
+    :global .weekday-3.first-day {
+      /* 수요일 */
+      grid-column-start: 4;
+    }
+
+    :global .weekday-4.first-day {
+      /* 목요일 */
+      grid-column-start: 5;
+    }
+
+    :global .weekday-5.first-day {
+      /* 금요일 */
+      grid-column-start: 6;
+    }
+
+    :global .weekday-6.first-day {
+      /* 토요일 */
+      grid-column-start: 7;
+    }
+
+    :global .react-calendar__tile:not(.past-day):hover {
+      background-color: var(--G3, #f1f2f4);
+      border-radius: 50%;
+    }
+
+    :global .other-month abbr {
+      color: #dbdbdb;
+    }
+
+    :global .selected-date {
+      border: 1.5px solid var(--G10, #000);
+      border-radius: 50%;
+      width: 50px !important;
+      height: 50px !important;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @media (max-width: 375px) {
+      :global .react-calendar__month-view__days {
+        grid-template-columns: repeat(7, 1fr);
+        width: 100% !important;
+      }
+
+      :global .react-calendar__tile {
+        width: 100% !important; /* 타일 너비를 부모에 맞게 */
+        height: auto !important; /* 높이를 자동으로 */
+        aspect-ratio: 1 / 1; /* 정사각형 유지 */
+        font-size: 16px !important; /* 필요에 따라 폰트 크기 조정 */
+      }
+
+      :global .selected-date {
+        width: 100% !important; /* 선택된 날짜의 너비 조정 */
+        height: 100% !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 375px) {
+  .CalendarBox {
+    width: 100%; /* 모바일에서 너비를 100%로 */
+    height: auto; /* 높이 자동 조절 */
+  }
+}
+
+@media (max-width: 375px) {
+  .calendarContainer {
+    width: 100% !important; /* 모바일에서 너비를 100%로 변경 */
+  }
+}
+
+.TodayText {
+  position: absolute; /* 절대 위치로 배치 */
+  margin-bottom: -38px;
+  left: 50%; /* 수평 중앙을 기준으로 */
+  transform: translateX(-50%); /* 수평 중앙 정렬 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 12px;
+  font-size: 10px;
+  color: var(--T1, #2376e5);
+  font-weight: 500;
+}
+
+.TodayButton {
+  display: flex;
+  width: 44px;
+  height: 28px;
+  padding: 4px 10px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background: var(--G3, #f1f2f4);
+  border: none;
+  gap: 10px;
+  flex-shrink: 0;
+  cursor: pointer;
+  position: absolute;
+  right: 0px; /* 필요에 따라 조정 */
+  color: var(--G10, #000);
+  font-family: "Noto Sans";
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 153.846% */
+  letter-spacing: -0.13px;
+}
+
+.TodayButton:hover {
+  background: var(--G4, #dfe2e6);
+}
+
+.TimeBox {
+  /* max-width: 330px; */
+  flex: 1 0 330px;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #f1f2f4;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  .TimeBoxContainer {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    width: calc(100% - 40px);
+    height: 368px;
+    overflow-y: auto;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: auto;
+  }
+  :global .SelectedDateBoxWrapper {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 10px;
+  }
+  :global .SelectedDateBoxWrapper:nth-child(1) {
+    margin-top: 10px;
+  }
+
+  :global .SelectedDateBoxWrapper.stack-enter {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  :global .SelectedDateBoxWrapper.stack-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition: all 300ms ease-in-out;
+  }
+
+  :global .SelectedDateBoxWrapper.stack-exit {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  :global .SelectedDateBoxWrapper.stack-exit-active {
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 300ms ease-in-out;
+  }
+}
+
+@media (max-width: 375px) {
+  .TimeBox {
+    width: 100% !important;
+    height: auto !important;
+  }
+}
+
+@media (max-width: 800px) {
+  .TimeBoxContainer {
+    position: static;
+    width: 100%;
+    height: auto;
+    padding: 0 16px;
+  }
+}
+
+.PlaceHolderWrapper {
+  width: 100%;
+}
+
+.PlaceHolderWrapper.placeholder-enter {
+  opacity: 0;
+}
+
+.PlaceHolderWrapper.placeholder-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in-out;
+}
+
+.PlaceHolderWrapper.placeholder-exit {
+  opacity: 1;
+}
+
+.PlaceHolderWrapper.placeholder-exit-active {
+  opacity: 0;
+  transition: opacity 300ms ease-in-out;
+}
+
+.PlaceHolder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  color: #c2c8cf;
+  font-size: 14px;
+  width: 177px;
+  height: 100%;
+  position: absolute; /* 절대 위치로 설정 */
+  top: 50%; /* 상단에서 50% 위치 */
+  left: 50%; /* 좌측에서 50% 위치 */
+  transform: translate(-50%, -50%); /* 정확한 중앙 정렬을 위한 변환 */
+}
+
+.SelectedDateContainer {
+  width: 90%;
+}
+
+.Box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.css-13cymwt-control {
+  width: 200px;
+}
+
+.css-t3ipsp-control {
+  width: 200px;
+}
+
+.SelectedDateBox {
+  /* width: 216px;
+  height: 34px; */
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 13px;
+}
+
+.DateText {
+  font-family: "Noto Sans";
+  font-size: 16px;
+  font-weight: 900;
+  margin-right: 13px;
+  font-style: normal;
+  width: 90px; /* 고정 너비 */
+  text-align: center; /* 가운데 정렬 */
+  white-space: nowrap; /* 줄 바꿈 방지 */
+}
+
+.TimeInput {
+  display: flex;
+  width: 70px;
+  height: 34px;
+  padding: 8px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 19px; /* 118.75% */
+  letter-spacing: -0.16px;
+  border-radius: 4px;
+  border: 0.718px solid var(--G4, #dfe2e6);
+  background: var(--G1, #fff);
+
+  /* 드롭다운 화살표 숨기기 */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.DeleteButton {
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+  color: #91979e;
+  cursor: pointer;
+}
+
+.DateBox {
+  width: 150px;
+}
+
+.ImgBox {
+  width: 100%;
+  margin: 30px 0px 0px 50px;
+
+  @media (max-width: 800px) {
+    margin: 0px 0px 30px 0px;
+  }
+}
+
+.AddBtn {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: transparent;
+  font-size: 30px;
+}
+
+.SelectImagesContainer {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.SelectImagesContainer > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 30px; /* 이미지 간의 간격 */
+}
+
+.SelectImagesContainer > div:last-of-type {
+  margin-right: 0; /* 마지막 이미지 간격 제거 */
+}
+
+@media screen and (max-width: 375px) {
+  .SelectImagesContainer {
+    flex-wrap: nowrap; /* 항목들이 한 줄에 나타나도록 설정 */
+    overflow-x: auto; /* 가로 스크롤 활성화 */
+    width: 100%; /* 부모 컨테이너 너비에 맞춤 */
+    -webkit-overflow-scrolling: touch; /* iOS에서 부드러운 스크롤을 위해 추가 */
+  }
+
+  .SelectImagesContainer > div {
+    margin-right: 14px; /* 이미지 간의 간격 */
+  }
+}
+
+.ImageContainer {
+  max-width: 230px !important;
+  width: 100%;
+  flex-shrink: 0;
+  position: relative;
+  display: inline-block;
+  border-radius: 8px;
+  border: 1.5px solid #ccc;
+  background: #fff;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.ImageContainer.selected {
+  border: 1.5px solid black;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.ImageContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block; /* 이미지 하단의 여백 제거 */
+}
+
+@media screen and (max-width: 375px) {
+  .ImageContainer {
+    width: 150px !important;
+    height: 110px !important;
+  }
+}
+
+.CheckboxIcon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  border-radius: 50%;
+  cursor: pointer;
+
+  @media screen and (max-width: 375px) {
+    top: 8px;
+    right: 8px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.ImageLabel {
+  display: flex;
+  color: var(--G10, #000);
+  text-align: center;
+  font-family: "Noto Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 22px; /* 122.222% */
+  letter-spacing: -0.18px;
+  margin-top: 18px;
+  margin-bottom: 60px;
+  text-align: center;
+
+  @media screen and (max-width: 375px) {
+    margin-top: 12px;
+  }
+}
