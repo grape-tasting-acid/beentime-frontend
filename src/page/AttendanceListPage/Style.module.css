@@ -1,0 +1,474 @@
+.Layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+@media (max-width: 800px) {
+  .Layout {
+    height: auto;
+    margin-top: 20px;
+  }
+}
+
+.Header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  background-color: #f9fafa;
+}
+
+.ImgBox {
+  width: 100%;
+  margin: 30px 0px 0px 50px;
+}
+
+@media (max-width: 800px) {
+  .ImgBox {
+    margin: 0px 0px 30px 0px;
+  }
+}
+
+.Component {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 40vw;
+  margin-bottom: 100px;
+}
+
+@media (max-width: 800px) {
+  .Component {
+    width: 90%;
+    height: auto;
+  }
+}
+
+.MainImgBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.TableContainer {
+  position: relative;
+  width: 720px;
+  height: 170px;
+  margin: 0 auto;
+}
+
+.TableImage {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.FrontCharacterContainer {
+  position: absolute;
+  text-align: center;
+  width: 104px;
+}
+
+.BackCharacterContainer {
+  position: absolute;
+  text-align: center;
+  width: 104px;
+}
+
+.NameAbove {
+  position: absolute;
+  bottom: 100%; /* 캐릭터 위에 배치 */
+  transform: translateY(-10px); /* 캐릭터와의 간격 조정 */
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: #333;
+}
+
+.NameBelow {
+  position: absolute;
+  top: 100%; /* 캐릭터 아래에 배치 */
+  transform: translateY(10px); /* 캐릭터와의 간격 조정 */
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: #333;
+}
+
+.BackCharacter {
+  position: absolute;
+  bottom: 78px;
+  width: 104px;
+  height: 222px;
+  z-index: 1; /* 테이블 이미지 뒤에 배치 */
+}
+
+.FrontCharacter {
+  position: absolute;
+  bottom: -42px;
+  width: 104px;
+  height: 222px;
+  z-index: 3;
+}
+
+.HeaderBox {
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+  margin-bottom: 40px;
+}
+
+.HeaderBox h3 {
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: 900;
+  color: #0f1720;
+}
+
+@media (max-width: 800px) {
+  .HeaderBox {
+    margin-left: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
+  .HeaderBox h3 {
+    margin-top: 6px;
+    font-size: 14px;
+  }
+}
+
+.HeaderItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+}
+
+.HeaderItem h1 {
+  font-size: 40px;
+  font-weight: 900;
+  color: #0f1720;
+}
+
+.HeaderItem button {
+  height: 75%;
+  width: 10%;
+  border: 1px solid;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 900;
+  color: #0f1720;
+  cursor: pointer;
+}
+
+@media (max-width: 800px) {
+  .HeaderItem {
+    justify-content: start;
+    gap: 10px;
+    height: 30px;
+  }
+
+  .HeaderItem h1 {
+    font-size: 24px;
+  }
+
+  .HeaderItem button {
+    height: 75%;
+    width: 10%;
+    border: 1px solid;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 900;
+    color: #0f1720;
+    cursor: pointer;
+    display: none;
+  }
+}
+
+.AttendBox {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  gap: 45px;
+  margin-top: 30px;
+}
+
+.TimeItem {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.TimeItem h3 {
+  font-size: 24px;
+  font-weight: 900;
+  color: #0f1720;
+}
+
+.TimeItem span {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f1720;
+}
+
+@media (max-width: 800px) {
+  .TimeItem h3 {
+    font-size: 20px;
+    font-weight: 900;
+    color: #0f1720;
+  }
+
+  .TimeItem span {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f1720;
+  }
+}
+
+.TableBox {
+  text-align: center;
+  overflow-x: auto;
+  height: 30vh;
+}
+
+.Table {
+  margin: 0 auto;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ThItem > th {
+  height: 50px;
+  background-color: #f9fafa;
+  border: 1px solid #dfe2e6;
+  text-align: center;
+  vertical-align: middle;
+}
+
+@media (max-width: 800px) {
+  .ThItem > th {
+    height: 40px;
+  }
+}
+
+.TdItem > td {
+  height: 50px;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid #dfe2e6;
+}
+
+.TdItem > td:first-of-type {
+  background-color: #f9fafa;
+  width: 25%;
+}
+
+.TdItem td > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (max-width: 800px) {
+  .TdItem > td {
+    height: 40px;
+    font-size: 12px;
+  }
+
+  .TdItem td > div {
+    display: block;
+  }
+}
+
+.BtnLeft {
+  width: 100%;
+  height: 40px;
+  font-size: 18px;
+  background-color: transparent;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+@media (max-width: 800px) {
+  .BtnLeft {
+    margin-bottom: 20px;
+    width: 400px;
+    font-size: 12px;
+  }
+}
+
+.GreenBackground {
+  background-color: #9bfbd9;
+}
+
+.BlueBackground {
+  background-color: #ddffef;
+}
+
+.EventEdit {
+  background-color: transparent;
+}
+
+.gray {
+  color: #dbdbdb;
+}
+
+.BtnBox {
+  display: flex;
+  justify-content: center;
+  width: 40vw;
+  margin-bottom: 100px;
+}
+
+.BtnRight {
+  width: 100%;
+  height: 40px;
+  font-size: 18px;
+  background-color: #000000;
+  border: none;
+  border-radius: 5px;
+  color: #ffff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (max-width: 800px) {
+  .BtnRight {
+    margin-bottom: 20px;
+    width: 400px;
+    font-size: 12px;
+  }
+}
+
+.Line {
+  border-top: 1px solid #dbdbdb;
+}
+
+.InputItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.InputItem h3 {
+  font-size: 24px;
+  font-weight: 900;
+  color: #0f1720;
+}
+
+.InputItem input {
+  margin-top: 15px;
+  padding: 10px 18px;
+  border-radius: 5px;
+  border: 2px solid #f1f2f4;
+  font-size: 18px;
+  align-items: center;
+}
+
+.InputItem input::placeholder {
+  color: #a9afb6;
+}
+
+@media (max-width: 800px) {
+  .InputItem h3 {
+    font-size: 18px;
+  }
+
+  .InputItem input {
+    font-size: 14px;
+  }
+}
+
+.TimeBox {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow-x: auto;
+  height: 30vh;
+}
+
+.Times {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Date {
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Date h4 {
+  font-size: 18px;
+  font-weight: 900;
+  color: #0f1720;
+}
+
+.Date span {
+  font-size: 18px;
+  font-weight: 500;
+  color: #0f1720;
+}
+
+@media (max-width: 800px) {
+  .Date h4 {
+    font-size: 16px;
+  }
+
+  .Date span {
+    font-size: 16px;
+  }
+}
+
+.Btns {
+  display: flex;
+  gap: 10px;
+  margin-right: 10px;
+}
+
+.Radio input[type="radio"] {
+  display: none;
+}
+
+.Radio label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 8px;
+  height: 45px;
+  width: 45px;
+  font-size: larger;
+  background-color: #f1f2f4;
+  color: #2e343f;
+}
+
+.Radio input[type="radio"]:checked + label {
+  background-color: #32e3ae;
+  color: #2e343f;
+}
+
+.Radio input[type="radio"] + label {
+  background-color: #f1f2f4;
+  color: #2e343f;
+}
+
+@media (max-width: 800px) {
+  .Radio label {
+    height: 35px;
+    width: 35px;
+    font-size: medium;
+  }
+}
