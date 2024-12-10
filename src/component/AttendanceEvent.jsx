@@ -183,9 +183,11 @@ const AttendanceEvent = ({
             <h3>나의 빈타임은?</h3>
             <div className={styles.TimeBox}>
               {timeList?.map((date, index) => (
-                <div key={index} css={S.Times}>
-                  <h4>{date.split("/")[0]}</h4>
-                  <span>{date.split("/")[1]}</span>
+                <div key={index} className={styles.Times}>
+                  <div className={styles.texts}>
+                    <h4>{date.split("/")[0]}</h4>
+                    <span>{date.split("/")[1]}</span>
+                  </div>
                   <div className={styles.Btns}>
                     {/* 체크 아이콘 */}
                     <div className={styles.Radio}>
