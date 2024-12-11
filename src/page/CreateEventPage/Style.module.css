@@ -221,6 +221,7 @@
   color: #ffff;
   font-weight: 600;
   margin-bottom: 100px;
+  margin-top: 60px;
 }
 
 @media (max-width: 375px) {
@@ -417,7 +418,7 @@
     :global .react-calendar__tile {
       box-sizing: border-box;
       /* width: 50px !important; */
-      height: 50px !important;
+      /* height: 50px !important; */
       text-align: center;
       position: relative;
       font-feature-settings: "liga" off, "clig" off;
@@ -439,6 +440,8 @@
 
     :global .react-calendar__month-view__days .react-calendar__tile {
       margin: 0; /* 마진 제거 */
+      width: 50px !important;
+      height: 50px !important;
     }
 
     :global .weekday-0.first-day {
@@ -586,16 +589,16 @@
   position: relative;
 
   :global .TimeBoxContainer {
-    /* position: absolute; */
+    position: absolute;
     top: 30px;
     left: 30px;
     width: calc(100% - 40px);
-    max-height: 368px;
+    max-height: 305px;
     min-height: 100px;
     overflow-y: auto;
     flex-direction: column;
     align-items: center;
-    /* overflow-x: auto; */
+    overflow-x: auto;
   }
   :global .SelectedDateBoxWrapper {
     width: 100%;

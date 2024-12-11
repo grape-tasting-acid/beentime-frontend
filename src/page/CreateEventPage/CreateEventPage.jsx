@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react"; // useRef 추가
+import React, { useEffect, useRef, useState } from "react";
 /** @jsxImportSource @emotion/react */
 // import * as S from "./Style";
 import styles from "./Style.module.css";
@@ -27,24 +27,24 @@ import queryString from "query-string";
 
 function CreateEventPage(props) {
   const [selectedDates, setSelectedDates] = useState([]); // 날짜 객체 배열로 변경
+  const containerRef = useRef(null);
   const [eventData, setEventData] = useState({ title: "" });
   const [selectedImage, setSelectedImage] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
   const queryData = queryString.parse(location.search);
-  const eventId = queryData.eventId ? JSON.parse(queryData.eventId) : null;
+  const eventCode = queryData.eventCode ? queryData.eventCode : null;
   const [activeStartDate, setActiveStartDate] = useState(new Date());
-  const titleInputRef = useRef(null); // 입력란에 대한 참조 생성
 
   useEffect(() => {
-    if (eventId) {
-      fetchEventData(eventId);
+    if (eventCode) {
+      fetchEventData(eventCode);
     }
-  }, [eventId]);
+  }, [eventCode]);
 
-  const fetchEventData = async (eventId) => {
+  const fetchEventData = async (eventCode) => {
     try {
-      const response = await getEvent(eventId);
+      const response = await getEvent(eventCode);
       if (response && response.length > 0) {
         const event = response[0];
         setEventData(event);
@@ -54,12 +54,25 @@ function CreateEventPage(props) {
           // JSON 문자열을 객체로 파싱
           const timeList = JSON.parse(event.time);
 
+          const today = moment().startOf("day");
+          const currentYear = today.year();
+
           const parsedSelectedDates = timeList.map((time) => {
             const [datePart, timePart] = time.split(" / "); // 날짜와 시간 분리
-            const parsedDate = moment(datePart, "M월 D일").toDate(); // 날짜 포맷
+            // 우선 현재 연도를 가정하여 파싱
+            let parsedMoment = moment(
+              `${currentYear}년 ${datePart}`,
+              "YYYY년 M월 D일"
+            );
+
+            // 만약 파싱한 날짜가 오늘보다 이전이면 다음 해로 이동
+            if (parsedMoment.isBefore(today, "day")) {
+              parsedMoment.add(1, "year");
+            }
+
             return {
               id: Date.now() + Math.random(), // 고유 ID 생성
-              date: parsedDate,
+              date: parsedMoment.toDate(),
               timeSlot: timePart || "19:00",
             };
           });
@@ -73,20 +86,63 @@ function CreateEventPage(props) {
   };
 
   const handleDateClick = (date) => {
+    const clickedDate = moment(date).startOf("day");
+    // 같은 날짜로 이미 선택된 시간들이 있는지 확인
+    const existingDateEntries = selectedDates.filter((dateObj) =>
+      moment(dateObj.date).isSame(clickedDate, "day")
+    );
+
+    let newTimeSlot = "19:00";
+
+    if (existingDateEntries.length > 0) {
+      const lastSelected = existingDateEntries[existingDateEntries.length - 1];
+      const lastTime = lastSelected.timeSlot;
+      const lastMoment = moment(lastTime, "HH:mm");
+      const newMoment = lastMoment.add(30, "minutes");
+      newTimeSlot = newMoment.format("HH:mm");
+    }
+
     const newDateObj = {
       id: Date.now() + Math.random(), // 고유 ID 생성
       date: date,
-      timeSlot: "19:00", // 기본 시간 설정
+      timeSlot: newTimeSlot, // 기본 시간 설정
     };
-    const newSelectedDates = [...selectedDates, newDateObj];
 
-    // 날짜와 시간 슬롯을 함께 정렬
-    const sortedData = newSelectedDates.sort(
+    const newSelectedDates = [...selectedDates, newDateObj].sort(
       (a, b) => new Date(a.date) - new Date(b.date)
     );
-
-    setSelectedDates(sortedData);
+    setSelectedDates(newSelectedDates);
   };
+
+  useEffect(() => {
+    if (selectedDates.length > 0 && containerRef.current) {
+      const container = containerRef.current;
+      const lastItem = selectedDates[selectedDates.length - 1];
+      const itemElement = document.getElementById(`time-item-${lastItem.id}`);
+      if (!itemElement) return;
+
+      const containerRect = container.getBoundingClientRect();
+      const itemRect = itemElement.getBoundingClientRect();
+
+      const offsetTopDiff = itemRect.top - containerRect.top;
+      const offsetBottomDiff = itemRect.bottom - containerRect.bottom;
+
+      // 아이템이 위로 벗어났을 경우
+      if (offsetTopDiff < 0) {
+        container.scrollTo({
+          top: container.scrollTop + offsetTopDiff,
+          behavior: "smooth",
+        });
+      }
+      // 아이템이 아래로 벗어났을 경우
+      else if (offsetBottomDiff > 0) {
+        container.scrollTo({
+          top: container.scrollTop + offsetBottomDiff,
+          behavior: "smooth",
+        });
+      }
+    }
+  }, [selectedDates]);
 
   const handleTodayClick = () => {
     const today = new Date();
@@ -106,8 +162,7 @@ function CreateEventPage(props) {
     const title = eventData.title;
 
     if (!title.trim()) {
-      alert("모임 제목을 입력해주세요.");
-      titleInputRef.current.focus(); // 포커스 설정
+      alert("모임 이름을 입력해주세요.");
       return;
     }
 
@@ -152,26 +207,38 @@ function CreateEventPage(props) {
       return `${formattedDate} (${dayOfWeekShort}) / ${timeSlot}`;
     });
 
+    function generateRandomCode(length = 10) {
+      const chars =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      let result = "";
+      for (let i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return result;
+    }
+
     try {
-      if (!eventId) {
+      if (!eventCode) {
         const response = await saveEvent(title, eventList, selectedImage);
         if (response) {
-          sessionStorage.setItem("eventId", response[0].event_id);
+          const eventCode = response[0].event_code;
+          sessionStorage.setItem("eventCode", eventCode);
           alert("모임이 생성되었습니다.");
           navigate("/sharing");
         }
       } else {
         const response = await editEvent(
-          eventId,
+          eventCode,
           title,
           eventList,
           selectedImage
         );
         if (response) {
-          await updateParticipationTable(eventId, eventList);
-          sessionStorage.setItem("eventId", response[0].event_id);
+          const eventCode = response[0].event_code;
+          await updateParticipationTable(eventCode, eventList);
+          sessionStorage.setItem("eventCode", eventCode);
           alert("모임이 수정되었습니다.");
-          navigate("/sharing");
+          navigate(`/attend?eventCode=${eventCode}`);
         }
       }
     } catch (error) {
@@ -179,10 +246,10 @@ function CreateEventPage(props) {
     }
   };
 
-  const updateParticipationTable = async (eventId, updatedTimeList) => {
+  const updateParticipationTable = async (eventCode, updatedTimeList) => {
     try {
       // 참여자 데이터 가져오기
-      const participationList = await getParticipation(eventId);
+      const participationList = await getParticipation(eventCode);
 
       for (const participant of participationList) {
         const existingTimeList = JSON.parse(participant.time); // 기존 시간 리스트
@@ -448,7 +515,6 @@ function CreateEventPage(props) {
         <div className={styles.Top}>
           <h5>모임 이름은?</h5>
           <input
-            ref={titleInputRef} // 참조 연결
             type="text"
             name="title"
             placeholder="개발팀 회식, 동아리 친목회"
@@ -629,7 +695,7 @@ function CreateEventPage(props) {
           </div>
         </div>
 
-        {eventId ? (
+        {eventCode ? (
           <div className={styles.ButtonContainer}>
             <button
               onClick={() => navigate(-1)}
