@@ -95,6 +95,8 @@
   margin-top: 14px;
   flex-flow: wrap;
   gap: 15px;
+  max-width: 1020px;
+  width: 100%;
 }
 
 .HeaderItem h1 {
