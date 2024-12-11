@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react"; // useRef 추가
 /** @jsxImportSource @emotion/react */
 // import * as S from "./Style";
 import styles from "./Style.module.css";
@@ -34,6 +34,7 @@ function CreateEventPage(props) {
   const queryData = queryString.parse(location.search);
   const eventId = queryData.eventId ? JSON.parse(queryData.eventId) : null;
   const [activeStartDate, setActiveStartDate] = useState(new Date());
+  const titleInputRef = useRef(null); // 입력란에 대한 참조 생성
 
   useEffect(() => {
     if (eventId) {
@@ -106,6 +107,7 @@ function CreateEventPage(props) {
 
     if (!title.trim()) {
       alert("모임 제목을 입력해주세요.");
+      titleInputRef.current.focus(); // 포커스 설정
       return;
     }
 
@@ -446,6 +448,7 @@ function CreateEventPage(props) {
         <div className={styles.Top}>
           <h5>모임 이름은?</h5>
           <input
+            ref={titleInputRef} // 참조 연결
             type="text"
             name="title"
             placeholder="개발팀 회식, 동아리 친목회"
