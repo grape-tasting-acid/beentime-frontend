@@ -18,7 +18,7 @@
     align-items: center;
 
     + div {
-      max-width: 600px;
+      max-width: 720px;
       width: 100%;
     }
   }
@@ -93,6 +93,8 @@
   align-items: center;
   height: 50px;
   margin-top: 14px;
+  flex-flow: wrap;
+  gap: 15px;
 }
 
 .HeaderItem h1 {
@@ -171,12 +173,14 @@
 .EventContainer {
   width: 100%;
   max-width: 1020px;
-  height: 478px;
+  height: 100%;
+  max-height: 478px;
   position: relative;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1;
 }
 
 @media (max-width: 375px) {
@@ -246,8 +250,10 @@
   position: relative;
   margin-top: 20px;
   top: 62px;
-  width: 720px; /* 테이블 수에 따라 너비 조정 */
-  height: 396px;
+  max-width: 720px; /* 테이블 수에 따라 너비 조정 */
+  width: clamp(320px, 100%, 720px);
+  /* height: auto;
+  max-height: 450px; */
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -257,22 +263,25 @@
 @media (max-width: 375px) {
   .CharacterAndTableContainer {
     margin-top: 0px;
-    width: 320px;
-    height: 277px;
+    /* width: 320px;
+    height: 277px; */
   }
 }
 
 .TableAndCharactersWrapper {
   position: relative;
-  width: 720px;
-  height: 396px;
+  width: 100%;
+  max-width: 720px;
+  height: 29em;
+  max-height: 550px;
   margin-left: 0; /* 첫 번째 테이블을 제외하고 좌측 마진 적용 */
-  flex-shrink: 0; /* 아이템이 줄어들지 않도록 설정 */
+  flex: 1;
 }
 
 @media (max-width: 375px) {
   .TableAndCharactersWrapper {
     width: 320px;
+    height: 19em;
   }
 }
 
@@ -299,19 +308,21 @@
 
 /* 테이블 이미지 스타일 */
 .TableImage {
+  width: 100%;
   position: absolute;
-  bottom: 74px; /* A 컨테이너의 하단에서 위로 74px */
   left: 50%;
-  transform: translateX(-50%);
-  /* width: ; */
-  /* height:  ; */
+  transform: translate(-50%, -50%);
   z-index: 2;
+  top: 50%;
+  margin-top: 3vw;
 }
 
 @media (max-width: 375px) {
   .TableImage {
-    width: 320px;
+    max-width: 320px;
+    width: 100%;
     height: 75px;
+    margin-top: -2vh;
   }
 }
 
@@ -320,28 +331,33 @@
   position: absolute;
   left: 0px;
   top: 0; /* 기본값 */
-  transform: translateX(-50%);
-  width: 100px;
-  height: 232px;
-  height: 244px; /* 기본값 */
+  transform: translate(-50%, -50%);
+  width: clamp(48px, 30vw, 100px);
+  max-width: 100px;
+  /* height: 232px; */
+  height: 0vh; /* 기본값 */
   display: flex;
   flex-direction: column;
   align-items: center;
   z-index: 1; /* 기본값 */
+
+  + .CharacterContainer {
+    /* margin-left: 30px; */
+  }
 }
 
 @media (max-width: 375px) {
   .CharacterContainer {
-    left: -200px;
     width: 100%;
     height: auto;
+    transform: translate(-50%, 0vh);
   }
 }
 
 /* 캐릭터 이미지 스타일 */
 .CharacterImage {
-  width: 100px;
-  height: 210px;
+  max-width: 100px;
+  width: 20vw;
 }
 
 @media (max-width: 375px) {
@@ -411,6 +427,7 @@
   flex-grow: 1;
   flex-direction: column;
   margin-top: 60px;
+  width: 100%;
   max-width: 1020px;
   overflow: hidden;
 }

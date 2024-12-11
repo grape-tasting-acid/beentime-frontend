@@ -364,14 +364,11 @@ const AttendanceEventListPage = () => {
       topParticipants.forEach((participant, i) => {
         const leftPosition =
           startXTop + i * (characterWidth + characterSpacing);
-        const positionPercentage =
-          ((leftPosition - startX) / totalTableWidth) * 100; // %로 변환
 
         placements.push({
           tableIndex: t,
           row: "top",
-          position: `${positionPercentage}%`, // %로 설정
-          marginTop: "margin-top",
+          position: leftPosition - startX,
           character: characterImages[participant.character_index],
           name: participant.name,
         });
@@ -397,14 +394,12 @@ const AttendanceEventListPage = () => {
       bottomParticipants.forEach((participant, i) => {
         const leftPosition =
           startXBottom + i * (characterWidth + characterSpacing);
-        const positionPercentage =
-          ((leftPosition - startX) / totalTableWidth) * 100; // %로 변환
         const character = getUniqueCharacter(usedCharacters);
 
         placements.push({
           tableIndex: t,
           row: "bottom",
-          position: `${positionPercentage}%`, // %로 설정
+          position: leftPosition - startX,
           character: characterImages[participant.character_index],
           name: participant.name,
         });
@@ -474,7 +469,7 @@ const AttendanceEventListPage = () => {
             </div>
 
             {/* 캐릭터+캡션+테이블 이미지 컨테이너 */}
-            {/* <div css={S.CharacterAndTableContainer(actualTables)}>
+            <div css={S.CharacterAndTableContainer(actualTables)}>
               {Array.from({ length: actualTables }).map((_, t) => (
                 <div key={t} css={S.TableAndCharactersWrapper(t)}>
                   <img src={tableImage} alt="Table" css={S.TableImage} />
@@ -519,91 +514,22 @@ const AttendanceEventListPage = () => {
                     ))}
                 </div>
               ))}
-            </div> */}
-
-            <div className={styles.CharacterAndTableContainer}>
-              {Array.from({ length: actualTables }).map((_, t) => (
-                <div key={t} className={styles.TableAndCharactersWrapper}>
-                  <img
-                    src={tableImage}
-                    alt="Table"
-                    className={styles.TableImage}
-                  />
-                  {characterPlacements
-                    .filter((p) => p.tableIndex === t)
-                    .map((placement, index) => {
-                      // z-index를 동적으로 설정
-                      const zIndex = placement.row === "top" ? 1 : 3; // 'top'은 1, 'bottom'은 3
-
-                      return (
-                        <div
-                          key={index}
-                          className={styles.CharacterContainer}
-                          style={{
-                            left: placement.position,
-                            top: placement.row === "top" ? "0" : "50%", // 위치 조정
-                            zIndex: zIndex, // z-index 동적 설정
-                            marginTop:
-                              placement.marginTop === "margin-top"
-                                ? "10px"
-                                : "-40px",
-                          }}
-                        >
-                          {placement.row === "top" ? (
-                            <>
-                              <div className={styles.CharacterName}>
-                                {placement.name.length > 6
-                                  ? `${placement.name.slice(0, 6)}...`
-                                  : placement.name}
-                              </div>
-                              <img
-                                src={placement.character}
-                                alt={`Character ${index + 1}`}
-                                className={styles.CharacterImage}
-                              />
-                            </>
-                          ) : (
-                            <>
-                              <img
-                                src={placement.character}
-                                alt={`Character ${index + 1}`}
-                                className={styles.CharacterImage}
-                              />
-                              <div className={styles.CharacterName}>
-                                {placement.name.length > 6
-                                  ? `${placement.name.slice(0, 6)}...`
-                                  : placement.name}
-                              </div>
-                            </>
-                          )}
-                        </div>
-                      );
-                    })}
-                </div>
-              ))}
             </div>
           </div>
-          <div className={styles.AttendBox}>
-            <div className={styles.TimeItem}>
+          <div css={S.AttendBox}>
+            <div css={S.TimeItem}>
               <h3>모두의 빈타임</h3>
               <span>일정을 수정하려면 참석자별 이름을 누르세요</span>
             </div>
-            <div className={styles.TableBox}>
-              <table className={styles.Table}>
+            <div css={S.TableBox}>
+              <table css={S.Table}>
                 <thead>
-                  <tr className={styles.ThItem}>
+                  <tr css={S.ThItem(participantColumnWidth)}>
                     <th>일정</th>
                     {participants.map((participant, index) => (
-                      <th
-                        key={index}
-                        style={{
-                          width: participantColumnWidth,
-                          maxWidth: participantColumnWidth,
-                          minWidth: participantColumnWidth,
-                        }}
-                      >
+                      <th key={index}>
                         <span
-                          className={styles.ParticipantName}
+                          css={S.ParticipantName}
                           onClick={() =>
                             handleParticipantNameClick(participant)
                           }
@@ -619,7 +545,10 @@ const AttendanceEventListPage = () => {
                   {sortedTimeList.map((row, index) => (
                     <tr
                       key={index}
-                      className={`${styles.TdItem} ${row.backgroundColor}`}
+                      css={[
+                        S.TdItem(participantColumnWidth),
+                        row.backgroundColor,
+                      ]}
                     >
                       <td>{formatDateString(row.time)}</td>
                       {participants.map((participant, pIndex) => {
@@ -661,7 +590,7 @@ const AttendanceEventListPage = () => {
             {/* 모임 참석하기 버튼은 showAttendanceForm이 false이고 editingParticipant가 null일 때만 표시 */}
             {!showAttendanceForm && !editingParticipant && (
               <button
-                className={styles.AttendButton}
+                css={S.AttendButton}
                 onClick={() => setShowAttendanceForm(true)}
               >
                 참석자 추가하기
@@ -674,7 +603,7 @@ const AttendanceEventListPage = () => {
       {/* AttendanceEvent 컴포넌트는 showAttendanceForm이 true일 때만 표시 */}
       {showAttendanceForm && (
         <>
-          {participants.length > 0 && <div css={styles.Divider}></div>}
+          {participants.length > 0 && <div css={S.Divider}></div>}
           <div ref={attendanceEventRef}>
             <AttendanceEvent
               eventData={eventData}
