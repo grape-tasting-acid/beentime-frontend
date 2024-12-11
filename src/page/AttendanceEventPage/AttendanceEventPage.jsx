@@ -123,9 +123,9 @@ const AttendanceEventListPage = () => {
     const [month, dayWithWeekday] = datePart.split("월 ");
     const day = dayWithWeekday.replace("일", "");
     return (
-      <div css={S.DateTimeContainer}>
-        <span css={S.DatePart}>{`${month}.${day}`}</span>
-        <span css={S.TimePart}>{`${timePart}`}</span>
+      <div className={styles.DateTimeContainer}>
+        <span className={styles.DatePart}>{`${month}.${day}`}</span>
+        <span className={styles.TimePart}>{`${timePart}`}</span>
       </div>
     );
   };
@@ -254,7 +254,7 @@ const AttendanceEventListPage = () => {
           가장 가능성 높은 날은{" "}
           {formattedDates.map((date, index) => (
             <React.Fragment key={index}>
-              <span css={S.HighlightedDate}>{date}</span>
+              <span className={styles.HighlightedDate}>{date}</span>
               {index < formattedDates.length - 1 && ", "}
             </React.Fragment>
           ))}{" "}
@@ -420,7 +420,7 @@ const AttendanceEventListPage = () => {
     <div className={styles.Layout}>
       <div className={"Header"}>
         <div className={styles.HeaderBox}>
-          <div css={S.ImgBox}>
+          <div className={styles.ImgBox}>
             <Link to="/" style={{ display: "inline-block" }}>
               <img
                 src={mainLogo}
@@ -674,7 +674,7 @@ const AttendanceEventListPage = () => {
       {/* AttendanceEvent 컴포넌트는 showAttendanceForm이 true일 때만 표시 */}
       {showAttendanceForm && (
         <>
-          {participants.length > 0 && <div css={styles.Divider}></div>}
+          {participants.length > 0 && <div className={"Divider"}></div>}
           <div ref={attendanceEventRef}>
             <AttendanceEvent
               eventData={eventData}

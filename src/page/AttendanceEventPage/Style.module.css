@@ -863,13 +863,18 @@
   letter-spacing: -0.2px;
 }
 
-.Divider {
+:global .Divider {
   width: 1020px;
   height: 1px;
   background-color: var(--G4);
   margin: 100px auto;
 
   @media (max-width: 375px) {
+    width: 100%;
+  }
+
+  + div {
+    max-width: 720px;
     width: 100%;
   }
 }

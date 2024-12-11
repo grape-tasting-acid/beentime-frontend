@@ -710,6 +710,17 @@
   align-items: center;
   margin-bottom: 16px;
   gap: 13px;
+  width: 100%;
+
+  @media (max-width: 609px) {
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+
+  > div:last-child {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .DateText {

@@ -290,23 +290,26 @@ function CreateEventPage(props) {
         <div className={styles.DateText}>
           {formattedDateString} ({dayOfWeekShort})
         </div>
-        <select
-          className={styles.TimeInput}
-          value={dateObj.timeSlot}
-          onChange={handleTimeChange}
-        >
-          <option value="" disabled>
-            시간 선택
-          </option>
-          {timeOptions.map((option, idx) => (
-            <option key={idx} value={option.value}>
-              {option.label}
+        <div>
+          <select
+            className={styles.TimeInput}
+            value={dateObj.timeSlot}
+            onChange={handleTimeChange}
+          >
+            <option value="" disabled>
+              시간 선택
             </option>
-          ))}
-        </select>
-        <button className={styles.DeleteButton} onClick={handleDeleteDate}>
-          <img src={deleteIcon} alt="삭제" />
-        </button>
+            {timeOptions.map((option, idx) => (
+              <option key={idx} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+
+          <button className={styles.DeleteButton} onClick={handleDeleteDate}>
+            <img src={deleteIcon} alt="삭제" />
+          </button>
+        </div>
       </div>
     );
   };
