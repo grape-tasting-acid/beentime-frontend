@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 /** @jsxImportSource @emotion/react */
-// import * as S from "./Style";
+import * as S from "./Style";
 import styles from "./Style.module.css";
 import classNames from "classnames";
 
@@ -468,7 +468,7 @@ function CreateEventPage(props) {
                   </div>
                 )}
               </div>
-              <div className={styles.ImageLabel}>술모임</div>
+              <div css={S.ImageLabel}>술모임</div>
             </div>
 
             {/* 일모임 이미지 */}
@@ -536,7 +536,6 @@ function CreateEventPage(props) {
                   onActiveStartDateChange={({ activeStartDate }) =>
                     setActiveStartDate(activeStartDate)
                   }
-                  className={styles.reactCalendar}
                   defaultView={"month"}
                   minDetail="month"
                   formatMonthYear={(locale, date) =>
@@ -651,7 +650,7 @@ function CreateEventPage(props) {
             </div>
 
             <div className={styles.TimeBox}>
-              <div className={"TimeBoxContainer"}>
+              <div className={styles.TimeBoxContainer} ref={containerRef}>
                 <TransitionGroup>
                   {selectedDates.length > 0 ? (
                     selectedDates.map((dateObj, index) => (
@@ -665,7 +664,10 @@ function CreateEventPage(props) {
                           exitActive: "stack-exit-active",
                         }}
                       >
-                        <div className={"SelectedDateBoxWrapper"}>
+                        <div
+                          className={"SelectedDateBoxWrapper"}
+                          id={`time-item-${dateObj.id}`}
+                        >
                           <SelectedDateBox dateObj={dateObj} index={index} />
                         </div>
                       </CSSTransition>

@@ -277,7 +277,7 @@
   height: 29em;
   max-height: 550px;
   margin-left: 0; /* 첫 번째 테이블을 제외하고 좌측 마진 적용 */
-  flex: 1;
+  flex: 1 0 auto;
 }
 
 @media (max-width: 375px) {
@@ -331,9 +331,9 @@
 /* 캐릭터 컨테이너 스타일 */
 .CharacterContainer {
   position: absolute;
-  left: 0px;
+  /* left: 0px; */
   top: 0; /* 기본값 */
-  transform: translate(-50%, -50%);
+  /* transform: translate(-50%, -50%); */
   width: clamp(48px, 30vw, 100px);
   max-width: 100px;
   /* height: 232px; */

@@ -588,8 +588,8 @@
   align-items: center;
   position: relative;
 
-  :global .TimeBoxContainer {
-    position: absolute;
+  .TimeBoxContainer {
+    /* position: absolute; */
     top: 30px;
     left: 30px;
     width: calc(100% - 40px);

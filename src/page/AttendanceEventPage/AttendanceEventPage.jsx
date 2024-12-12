@@ -40,6 +40,7 @@ const AttendanceEventListPage = () => {
   const [tableImage, setTableImage] = useState(tableImage1);
   const attendanceEventRef = useRef(null);
   const isInitialMount = useRef(true);
+  const elementRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -343,12 +344,26 @@ const AttendanceEventListPage = () => {
 
       // 캐릭터 배치 설정
       const characterWidth = 104;
-      const characterSpacing = 16;
+      const characterSpacing = 100;
 
       // 윗줄 캐릭터 배치
       const topRowCount = topParticipants.length;
       const totalTopRowWidth =
         topRowCount * characterWidth + (topRowCount - 1) * characterSpacing;
+
+      // 부모 요소의 너비를 가져옵니다. (예: document.getElementById("parent").offsetWidth를 사용)
+      // const parentWidth = elementRef.current.offsetWidth; // 부모 요소의 너비를 가져옴
+      // const topRowCount = topParticipants.length;
+
+      // const totalTopRowWidth =
+      //   topRowCount > 0
+      //     ? ((topRowCount * characterWidth +
+      //         (topRowCount - 1) * characterSpacing +
+      //         10) /
+      //         parentWidth) *
+      //         100 +
+      //       "%"
+      //     : "0%"; // 참가자가 없을 경우의 처리
 
       let startXTop;
       if (t === 0) {
@@ -365,7 +380,7 @@ const AttendanceEventListPage = () => {
         const leftPosition =
           startXTop + i * (characterWidth + characterSpacing);
         const positionPercentage =
-          ((leftPosition - startX) / totalTableWidth) * 100; // %로 변환
+          ((leftPosition - startX) / totalTableWidth) * 100 + 20; // %로 변환
 
         placements.push({
           tableIndex: t,
@@ -398,7 +413,7 @@ const AttendanceEventListPage = () => {
         const leftPosition =
           startXBottom + i * (characterWidth + characterSpacing);
         const positionPercentage =
-          ((leftPosition - startX) / totalTableWidth) * 100; // %로 변환
+          ((leftPosition - startX) / totalTableWidth) * 100 + 20; // %로 변환
         const character = getUniqueCharacter(usedCharacters);
 
         placements.push({
@@ -521,7 +536,7 @@ const AttendanceEventListPage = () => {
               ))}
             </div> */}
 
-            <div className={styles.CharacterAndTableContainer}>
+            <div className={styles.CharacterAndTableContainer} ref={elementRef}>
               {Array.from({ length: actualTables }).map((_, t) => (
                 <div key={t} className={styles.TableAndCharactersWrapper}>
                   <img
