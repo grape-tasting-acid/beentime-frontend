@@ -344,7 +344,7 @@ const AttendanceEventListPage = () => {
 
       // 캐릭터 배치 설정
       const characterWidth = 104;
-      const characterSpacing = 120;
+      const characterSpacing = 100;
 
       // 윗줄 캐릭터 배치
       const topRowCount = topParticipants.length;
@@ -380,7 +380,7 @@ const AttendanceEventListPage = () => {
         const leftPosition =
           startXTop + i * (characterWidth + characterSpacing);
         const positionPercentage =
-          ((leftPosition - startX) / totalTableWidth) * 100 + 30; // %로 변환
+          ((leftPosition - startX) / totalTableWidth) * 100 + 20; // %로 변환
 
         placements.push({
           tableIndex: t,
@@ -413,7 +413,7 @@ const AttendanceEventListPage = () => {
         const leftPosition =
           startXBottom + i * (characterWidth + characterSpacing);
         const positionPercentage =
-          ((leftPosition - startX) / totalTableWidth) * 100 + 25; // %로 변환
+          ((leftPosition - startX) / totalTableWidth) * 100 + 20; // %로 변환
         const character = getUniqueCharacter(usedCharacters);
 
         placements.push({
