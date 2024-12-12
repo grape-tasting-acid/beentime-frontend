@@ -272,7 +272,7 @@
 
 .TableAndCharactersWrapper {
   position: relative;
-  width: 100%;
+  width: 90%;
   max-width: 720px;
   height: 29em;
   max-height: 550px;
@@ -282,7 +282,8 @@
 
 @media (max-width: 375px) {
   .TableAndCharactersWrapper {
-    width: 320px;
+    max-width: 320px;
+    width: 90%;
     height: 19em;
   }
 }

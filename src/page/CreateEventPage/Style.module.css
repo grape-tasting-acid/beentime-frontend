@@ -511,6 +511,11 @@
         font-size: 16px !important; /* 필요에 따라 폰트 크기 조정 */
       }
 
+      :global .react-calendar__month-view__days .react-calendar__tile {
+        width: 40px !important;
+        height: 40px !important;
+      }
+
       :global .selected-date {
         width: 100% !important; /* 선택된 날짜의 너비 조정 */
         height: 100% !important;
@@ -825,6 +830,7 @@
 
 .ImageContainer {
   max-width: 230px !important;
+  min-width: 150px;
   width: 100%;
   flex-shrink: 0;
   position: relative;
