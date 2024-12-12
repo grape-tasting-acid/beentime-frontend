@@ -141,7 +141,7 @@
 @media (max-width: 375px) {
   .HeaderItem {
     width: 100%;
-    flex-direction: column; /* 요소들을 세로로 배치 */
+    flex-direction: row; /* 요소들을 세로로 배치 */
     align-items: flex-start; /* 왼쪽 정렬 */
   }
 
@@ -169,6 +169,7 @@
 @media (max-width: 375px) {
   .Component {
     width: 100%;
+    margin-top: 40px;
   }
 }
 
@@ -188,6 +189,7 @@
 @media (max-width: 375px) {
   .EventContainer {
     width: 100%;
+    margin-top: 40px;
   }
 }
 
