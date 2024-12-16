@@ -526,7 +526,7 @@ const AttendanceEventListPage = () => {
                           className={styles.CharacterContainer}
                           style={{
                             left: placement.position,
-                            top: placement.row === "top" ? "8%" : "50%", // 위치 조정
+                            top: placement.row === "top" ? "12%" : "45%", // 위치 조정
                             zIndex: zIndex, // z-index 동적 설정
                             marginTop:
                               placement.marginTop === "margin-top"
