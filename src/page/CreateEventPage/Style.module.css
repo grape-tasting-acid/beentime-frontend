@@ -186,7 +186,6 @@
   font-size: 22px;
   font-style: normal;
   font-weight: 700;
-  line-height: 26px; /* 118.182% */
   letter-spacing: -0.22px;
   background-color: #000000;
   border: none;
@@ -194,12 +193,14 @@
   color: #ffff;
   cursor: pointer;
   margin-bottom: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (max-width: 375px) {
   .BtnCreate {
     height: 60px;
-    padding: 20px 0px;
   }
 }
 
