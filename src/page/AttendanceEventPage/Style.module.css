@@ -20,6 +20,7 @@
     + div {
       max-width: 720px;
       width: 100%;
+      margin-top: 0 !important;
     }
   }
 
@@ -78,6 +79,11 @@
     margin-left: 20px;
     margin-bottom: 20px;
     width: 100%;
+    margin-top: 30px;
+    height: auto;
+    > .ImgBox {
+      margin-bottom: 30px;
+    }
   }
 
   .HeaderBox h3 {
@@ -140,13 +146,24 @@
 
 @media (max-width: 375px) {
   .HeaderItem {
-    width: 100%;
-    flex-direction: row; /* 요소들을 세로로 배치 */
-    align-items: flex-start; /* 왼쪽 정렬 */
+    width: auto;
+    display: block;
+
+    button {
+      font-size: 14px;
+      height: 34px;
+
+      > img {
+        width: 20px;
+        height: 20px;
+      }
+    }
   }
 
   .HeaderItem h1 {
-    margin-bottom: 10px; /* 제목과 버튼 사이의 간격 */
+    margin-bottom: 14px; /* 제목과 버튼 사이의 간격 */
+    font-size: 24px;
+    display: flex;
   }
 
   .HeaderItem .header-buttons {
@@ -202,6 +219,7 @@
 
   @media (max-width: 375px) {
     width: 100%;
+    padding-bottom: 20px;
   }
 }
 
@@ -266,7 +284,7 @@
 
 @media (max-width: 375px) {
   .CharacterAndTableContainer {
-    margin-top: 0px;
+    margin-top: 20px;
     /* width: 320px;
     height: 277px; */
   }
@@ -476,7 +494,7 @@
   flex-direction: column;
   margin-top: 120px;
   width: 100%;
-  max-width: 1020px;
+  max-width: 600px;
   overflow: hidden;
 }
 
@@ -529,7 +547,6 @@
 }
 
 .Table {
-  margin: 0 auto;
   width: max-content;
   border-radius: 8px;
   overflow: hidden;
@@ -580,15 +597,24 @@
   }
 
   & > th:not(:first-of-type) {
-    /* width: ; */
-    /* max-width:  ; */
-    /* min-width: ; */
+    width: 380px !important;
+    min-width: 380px !important;
   }
 
   @media (max-width: 375px) {
     & > th {
       height: 40px;
       width: 70px; /* 모바일에서는 70px 고정 */
+    }
+
+    & > th:first-of-type {
+      min-width: 90px !important;
+      width: 90px !important;
+      height: 44px !important;
+    }
+    & > th:not(:first-of-type) {
+      width: 70px !important;
+      min-width: 70px !important;
     }
   }
 }
@@ -632,13 +658,8 @@
 
   @media (max-width: 375px) {
     & > td {
-      height: 40px;
-      font-size: 12px;
-      width: 70px; /* 모바일에서는 70px 고정 */
-    }
-
-    & td > div {
-      display: block;
+      height: 52px !important;
+      width: 90px !important; /* 모바일에서는 70px 고정 */
     }
   }
 }
@@ -887,6 +908,17 @@
   align-items: flex-start;
   gap: 10px;
   flex-shrink: 0;
+}
+
+@media (max-width: 375px) {
+  .DateTimeContainer {
+    flex-direction: column;
+    gap: 0 !important;
+    > span {
+      font-size: 14px;
+      line-height: normal !important;
+    }
+  }
 }
 
 .DatePart {
