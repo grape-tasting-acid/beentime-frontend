@@ -264,6 +264,9 @@
 
   @media (max-width: 375px) {
     width: 100%;
+    font-size: 13px;
+    max-width: 100%;
+    padding: 10px 16px;
   }
 }
 
@@ -346,6 +349,10 @@
     width: 100%;
     height: 75px;
     margin-top: -2vh;
+  }
+
+  .HighlightedDate {
+    font-size: 13px !important;
   }
 }
 
