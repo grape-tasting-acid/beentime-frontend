@@ -501,6 +501,7 @@
 @media (max-width: 375px) {
   .AttendBox {
     width: 100%;
+    margin-top: 40px;
   }
 }
 
