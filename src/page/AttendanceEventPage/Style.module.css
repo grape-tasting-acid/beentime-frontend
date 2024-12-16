@@ -331,6 +331,46 @@
   }
 }
 
+/* 백그라운드 색상 설정 */
+.GreenBackground {
+  background-color: #9bfbd9; /* 초록색 배경 */
+}
+
+.BlueBackground {
+  background-color: #ddffef; /* 파란색 배경 */
+}
+
+.EventEdit {
+  background-color: transparent; /* 투명 배경 */
+}
+
+.gray {
+  color: #dbdbdb; /* 회색 글자 색상 */
+}
+
+.HighlightedDate {
+  color: var(--M3, #31edb5);
+  font-family: "Noto Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: -0.18px;
+}
+
+.ParticipantName {
+  text-decoration: underline;
+  cursor: pointer;
+  color: inherit; /* 기존 글자 색상 유지 */
+  display: block; /* 블록 요소로 설정 */
+  overflow: hidden; /* 넘치는 텍스트 숨김 */
+  text-overflow: ellipsis; /* 말줄임표 표시 */
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  max-width: 100%; /* 부모 요소의 너비를 넘지 않도록 설정 */
+}
+
+/* 추가적인 스타일 정의 필요에 따라 추가 */
+
 /* 캐릭터 컨테이너 스타일 */
 .CharacterContainer {
   position: absolute;
@@ -357,7 +397,7 @@
     width: 100%;
     height: auto;
     transform: translate(-50%, 0vh);
-    /* margin-left: 0%; */
+    margin-left: 6%;
     margin-top: -10%;
   }
 }

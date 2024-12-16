@@ -197,7 +197,7 @@ const AttendanceEventListPage = () => {
       (row) => row.rank === 1 && row.noCount === 0
     );
     greenDays.forEach((row) => {
-      colorMapping[row.time] = S.GreenBackground;
+      colorMapping[row.time] = "GreenBackground"; // 문자열로 클래스 이름 설정
     });
 
     // Blue days
@@ -205,7 +205,7 @@ const AttendanceEventListPage = () => {
       (row) => row.rank === 2 && row.noCount <= totalParticipants / 2
     );
     blueDays.forEach((row) => {
-      colorMapping[row.time] = S.BlueBackground;
+      colorMapping[row.time] = "BlueBackground"; // 문자열로 클래스 이름 설정
     });
 
     // Set topDates based on the rules
@@ -220,7 +220,8 @@ const AttendanceEventListPage = () => {
     // Assign colors to each row
     return rows.map((row) => ({
       ...row,
-      backgroundColor: colorMapping[row.time] || null,
+      // backgroundColor: colorMapping[row.time] || null,
+      backgroundColor: colorMapping[row.time] || null, // CSS Module 클래스 이름
     }));
   };
 
@@ -603,7 +604,9 @@ const AttendanceEventListPage = () => {
                   {sortedTimeList.map((row, index) => (
                     <tr
                       key={index}
-                      className={`${styles.TdItem} ${row.backgroundColor}`}
+                      className={`${styles.TdItem} ${
+                        row.backgroundColor ? styles[row.backgroundColor] : ""
+                      }`} // CSS Module 클래스를 적용
                     >
                       <td>{formatDateString(row.time)}</td>
                       {participants.map((participant, pIndex) => {
