@@ -167,7 +167,6 @@ export const UrlBox = css`
 export const Btn = css`
   width: 750px;
   height: 68px;
-  padding: 20px 0px;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
@@ -179,8 +178,10 @@ export const Btn = css`
   font-size: 22px;
   font-style: normal;
   font-weight: 700;
-  line-height: 26px; /* 118.182% */
   letter-spacing: -0.22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   @media (max-width: 375px) {
     width: 100%;
