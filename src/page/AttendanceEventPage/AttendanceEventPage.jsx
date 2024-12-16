@@ -308,7 +308,7 @@ const AttendanceEventListPage = () => {
     return characterImages[characterIndex];
   };
 
-  // **캐릭터 배치 함수 수정**
+  // 캐릭터 배치 함수 수정
   const getFixedCharacterPlacements = () => {
     const placements = [];
     const usedCharacters = new Set();
@@ -343,50 +343,25 @@ const AttendanceEventListPage = () => {
       });
 
       // 캐릭터 배치 설정
-      const characterWidth = 104;
-      const characterSpacing = 100;
+      const characterWidth = 104; // 캐릭터의 너비
+      const characterSpacing = 16; // 캐릭터 간의 간격
 
       // 윗줄 캐릭터 배치
       const topRowCount = topParticipants.length;
       const totalTopRowWidth =
         topRowCount * characterWidth + (topRowCount - 1) * characterSpacing;
 
-      // 부모 요소의 너비를 가져옵니다. (예: document.getElementById("parent").offsetWidth를 사용)
-      // const parentWidth = elementRef.current.offsetWidth; // 부모 요소의 너비를 가져옴
-      // const topRowCount = topParticipants.length;
-
-      // const totalTopRowWidth =
-      //   topRowCount > 0
-      //     ? ((topRowCount * characterWidth +
-      //         (topRowCount - 1) * characterSpacing +
-      //         10) /
-      //         parentWidth) *
-      //         100 +
-      //       "%"
-      //     : "0%"; // 참가자가 없을 경우의 처리
-
-      let startXTop;
-      if (t === 0) {
-        startXTop =
-          tablePositionX -
-          totalTopRowWidth / 2 +
-          characterWidth / 2 +
-          tableWidth / 2;
-      } else {
-        startXTop = -totalTopRowWidth / 2 + characterWidth / 2;
-      }
+      // 중앙 기준으로 윗줄 시작 X 위치 계산
+      const startXTop = (tableWidth - totalTopRowWidth) / 2;
 
       topParticipants.forEach((participant, i) => {
         const leftPosition =
           startXTop + i * (characterWidth + characterSpacing);
-        const positionPercentage =
-          ((leftPosition - startX) / totalTableWidth) * 100 + 20; // %로 변환
 
         placements.push({
           tableIndex: t,
           row: "top",
-          position: `${positionPercentage}%`, // %로 설정
-          marginTop: "margin-top",
+          position: leftPosition, // 중앙 기준으로 조정 (퍼센트로 변환 필요)
           character: characterImages[participant.character_index],
           name: participant.name,
         });
@@ -398,33 +373,27 @@ const AttendanceEventListPage = () => {
         bottomRowCount * characterWidth +
         (bottomRowCount - 1) * characterSpacing;
 
-      let startXBottom;
-      if (t === 0) {
-        startXBottom =
-          tablePositionX -
-          totalBottomRowWidth / 2 +
-          characterWidth / 2 +
-          tableWidth / 2;
-      } else {
-        startXBottom = -totalBottomRowWidth / 2 + characterWidth / 2;
-      }
+      // 중앙 기준으로 아랫줄 시작 X 위치 계산
+      const startXBottom = (tableWidth - totalBottomRowWidth) / 2;
 
       bottomParticipants.forEach((participant, i) => {
         const leftPosition =
           startXBottom + i * (characterWidth + characterSpacing);
-        const positionPercentage =
-          ((leftPosition - startX) / totalTableWidth) * 100 + 20; // %로 변환
-        const character = getUniqueCharacter(usedCharacters);
 
         placements.push({
           tableIndex: t,
           row: "bottom",
-          position: `${positionPercentage}%`, // %로 설정
+          position: leftPosition, // 중앙 기준으로 조정 (퍼센트로 변환 필요)
           character: characterImages[participant.character_index],
           name: participant.name,
         });
       });
     }
+
+    // 전체 중앙 정렬을 위한 퍼센트 변환
+    placements.forEach((placement) => {
+      placement.position = `${(placement.position / tableWidth) * 100}%`; // 위치를 퍼센트로 변환
+    });
 
     return placements;
   };
@@ -556,7 +525,7 @@ const AttendanceEventListPage = () => {
                           className={styles.CharacterContainer}
                           style={{
                             left: placement.position,
-                            top: placement.row === "top" ? "0" : "50%", // 위치 조정
+                            top: placement.row === "top" ? "8%" : "50%", // 위치 조정
                             zIndex: zIndex, // z-index 동적 설정
                             marginTop:
                               placement.marginTop === "margin-top"

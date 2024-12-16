@@ -277,7 +277,7 @@
   width: 90%;
   max-width: 720px;
   height: 29em;
-  max-height: 550px;
+  max-height: 600px;
   margin-left: 0; /* 첫 번째 테이블을 제외하고 좌측 마진 적용 */
   flex: 1 0 auto;
 }
@@ -319,7 +319,7 @@
   transform: translate(-50%, -50%);
   z-index: 2;
   top: 50%;
-  margin-top: 3vw;
+  margin-top: 2vw;
 }
 
 @media (max-width: 375px) {
@@ -336,8 +336,9 @@
   position: absolute;
   /* left: 0px; */
   top: 0; /* 기본값 */
-  /* transform: translate(-50%, -50%); */
-  width: clamp(48px, 30vw, 100px);
+  /* transform: translateX(-50%); */
+  /* width: clamp(48px, 30vw, 100px); */
+  width: 30%;
   max-width: 100px;
   /* height: 232px; */
   height: 0vh; /* 기본값 */
@@ -356,6 +357,8 @@
     width: 100%;
     height: auto;
     transform: translate(-50%, 0vh);
+    /* margin-left: 0%; */
+    margin-top: -10%;
   }
 }
 
@@ -431,7 +434,7 @@
   display: flex;
   flex-grow: 1;
   flex-direction: column;
-  margin-top: 60px;
+  margin-top: 120px;
   width: 100%;
   max-width: 1020px;
   overflow: hidden;
