@@ -9,6 +9,7 @@ import moment from "moment";
 import { useLocation, useNavigate } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import logo from "../../Img/logo/newLogo.svg";
+import mainLogo from "../../Img/main_logo.svg";
 import deleteIcon from "../../Img/icon/deleteIcon.svg";
 import Footer from "../../component/footer/Footer";
 
@@ -389,6 +390,9 @@ function CreateEventPage(props) {
         {/* 로고를 가운데 중앙에 배치 - Link로 감싸기 */}
         <a href="/" aria-label="홈페이지로 이동">
           <img src={logo} alt="Logo" className={styles.LogoImage} />
+        </a>
+        <a href="/" aria-label="홈페이지로 이동">
+          <img src={mainLogo} alt="Logo" className={styles.LogoImage2} />
         </a>
 
         {/* 어떤 모임이야? 선택 부분 추가 */}
