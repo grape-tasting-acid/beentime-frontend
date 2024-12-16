@@ -24,8 +24,8 @@
 
 @media (max-width: 375px) {
   .Component {
-    width: 375px;
-    padding: 0 20px; /* 모바일에서 좌우 여백 추가 */
+    max-width: 375px;
+    width: 100%;
   }
 }
 
@@ -92,7 +92,7 @@
   .InputItem input {
     width: 100%;
     font-size: 14px;
-    padding: 8px 12px; /* 모바일에서 패딩 조정 */
+    height: 48px;
   }
 }
 
@@ -145,7 +145,7 @@
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  gap: clamp(20px, 5.5556vw, 8.3333vw);
+  gap: clamp(20px, 0, 10px);
 }
 
 .Times .texts {
@@ -161,7 +161,8 @@
   font-weight: 700;
   line-height: 26px; /* 118.182% */
   letter-spacing: -0.22px;
-  margin-right: 15px;
+  margin-right: 4.1667vw;
+  white-space: nowrap;
 }
 
 .Times span {
@@ -185,6 +186,8 @@
 
   .Times h4 {
     font-size: clamp(16px, 4.4444vw, 22px);
+    margin-right: 10px;
+    white-space: nowrap;
   }
 
   .Times span {
@@ -201,7 +204,7 @@
 
 @media (max-width: 375px) {
   .Btns {
-    gap: 20px;
+    gap: 10px;
   }
 }
 
@@ -255,6 +258,15 @@
 @media (max-width: 375px) {
   .ButtonContainer {
     width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+
+    > button {
+      border-radius: 0;
+    }
   }
 }
 

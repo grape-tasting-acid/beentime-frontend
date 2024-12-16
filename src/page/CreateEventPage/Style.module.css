@@ -12,6 +12,7 @@
 @media screen and (max-width: 375px) {
   .Layout {
     padding: 0 20px; /* 모바일에서 좌우 여백 추가 */
+    margin-bottom: 50px;
   }
 }
 
@@ -35,6 +36,10 @@
   align-items: center;
   width: 100%;
   max-width: 750px;
+}
+
+.LogoImage2 {
+  display: none;
 }
 
 @media screen and (max-width: 375px) {
@@ -201,6 +206,12 @@
 @media (max-width: 375px) {
   .BtnCreate {
     height: 60px;
+    position: fixed;
+    bottom: 0;
+    margin: 0;
+    left: 0;
+    right: 0px;
+    border-radius: 0;
   }
 }
 
@@ -241,6 +252,20 @@
 @media (max-width: 375px) {
   .BtnFalse {
     height: 60px;
+    position: fixed;
+    bottom: 0;
+    margin: 0;
+    left: 0;
+    right: 0px;
+    border-radius: 0;
+  }
+  .BtnTrue {
+    position: fixed;
+    bottom: 0;
+    margin: 0;
+    left: 0;
+    right: 0px;
+    border-radius: 0;
   }
 }
 
@@ -661,9 +686,17 @@
 }
 
 @media (max-width: 375px) {
+  .TimeBoxContainer {
+    width: 100% !important;
+    margin-top: 20px !important;
+  }
   .TimeBox {
     width: 100% !important;
     height: auto !important;
+  }
+
+  :global .SelectedDateBoxWrapper:nth-child(1) {
+    margin-top: 0px !important;
   }
 }
 
@@ -743,7 +776,8 @@
 
   @media (max-width: 609px) {
     justify-content: space-between;
-    margin-top: 10px;
+    /* margin-top: 10px; */
+    margin-bottom: 14px !important;
   }
 
   > div:last-child {
@@ -823,6 +857,7 @@
   display: flex;
   justify-content: start;
   align-items: center;
+  overflow-x: auto;
 }
 
 .SelectImagesContainer > div {
@@ -840,12 +875,24 @@
   .SelectImagesContainer {
     flex-wrap: nowrap; /* 항목들이 한 줄에 나타나도록 설정 */
     overflow-x: auto; /* 가로 스크롤 활성화 */
-    width: 100%; /* 부모 컨테이너 너비에 맞춤 */
     -webkit-overflow-scrolling: touch; /* iOS에서 부드러운 스크롤을 위해 추가 */
+    margin-right: -20px;
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none; /* 파이어폭스 */
+
+    &::-webkit-scrollbar {
+      display: none; /* Chrome , Safari , Opera */
+    }
   }
 
   .SelectImagesContainer > div {
     margin-right: 14px; /* 이미지 간의 간격 */
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .SelectImagesContainer {
+    margin-right: -20px;
   }
 }
 
