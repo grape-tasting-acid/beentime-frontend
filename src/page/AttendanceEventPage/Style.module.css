@@ -36,16 +36,11 @@
     width: 100%;
     padding: 0 20px; /* 모바일에서 좌우 여백 추가 */
     overflow-x: hidden;
+    margin-bottom: 170px;
   }
 }
 
 /* Header 스타일 */
-
-/* ImgBox 스타일 */
-.ImgBox {
-  width: 148px;
-  height: 21px;
-}
 
 @media (max-width: 430px) {
   .ImgBox {
@@ -77,13 +72,17 @@
 
 @media (max-width: 430px) {
   .HeaderBox {
-    margin-left: 20px;
-    margin-bottom: 20px;
+    /* margin-left: 20px;
+    margin-bottom: 20px; */
     width: 100%;
     margin-top: 30px;
     height: auto;
     > .ImgBox {
       margin-bottom: 30px;
+      img {
+        width: 118px;
+        height: 29px;
+      }
     }
   }
 
@@ -255,12 +254,13 @@
   &:after {
     content: "";
     position: absolute;
-    bottom: -10px; /* 말풍선 아래쪽 화살표 */
+    bottom: -7px; /* 말풍선 아래쪽 화살표 */
     left: 50%;
     transform: translateX(-50%);
-    border-width: 10px 10px 0;
-    border-style: solid;
-    border-color: black transparent transparent transparent;
+    width: 16px;
+    height: 8px;
+    background: url("../../Img/tooltip_tail.svg") 0 no-repeat;
+    display: flex;
   }
 
   @media (max-width: 430px) {
@@ -276,8 +276,9 @@
   position: relative;
   margin-top: 20px;
   top: 62px;
+  width: 100%;
   max-width: 720px; /* 테이블 수에 따라 너비 조정 */
-  width: clamp(320px, 100%, 720px);
+  /* width: clamp(280px, 100%, 720px); */
   /* height: auto;
   max-height: 450px; */
   display: flex;
@@ -308,7 +309,7 @@
 
 @media (max-width: 430px) {
   .TableAndCharactersWrapper {
-    max-width: 320px;
+    max-width: 3410px;
     width: 90%;
     height: 19em;
   }
@@ -556,7 +557,7 @@
 /* 테이블 박스 (참석자 상태) */
 .TableBox {
   text-align: center;
-  margin-bottom: 60px;
+  padding-bottom: 60px;
   width: 100%;
   overflow-x: scroll; /* 항상 스크롤 표시 */
 }
@@ -834,8 +835,8 @@
   margin-bottom: 100px;
 
   @media (max-width: 800px) {
-    height: 50px;
-    font-size: 16px;
+    height: 60px;
+    font-size: 18px;
     position: fixed;
     left: 0;
     right: 0;

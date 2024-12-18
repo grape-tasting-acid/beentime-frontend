@@ -259,6 +259,7 @@
     left: 0;
     right: 0px;
     border-radius: 0;
+    font-size: 18px;
   }
   .BtnTrue {
     position: fixed;
@@ -267,6 +268,7 @@
     left: 0;
     right: 0px;
     border-radius: 0;
+    font-size: 18px;
   }
 }
 

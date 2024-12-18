@@ -136,7 +136,7 @@ export const UrlBox = css`
     margin-bottom: 12px; /* 아래쪽 마진 조정 */
 
     input {
-      max-width: 336px;
+      // max-width: 336px;
       width: 100%;
       height: 48px;
       display: flex;
@@ -155,7 +155,7 @@ export const UrlBox = css`
     }
 
     button {
-      max-width: 336px;
+      // max-width: 336px;
       width: 100%;
       height: 48px;
       margin-left: 0; /* 왼쪽 마진 제거 */
