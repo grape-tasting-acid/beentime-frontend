@@ -10,7 +10,7 @@ export const Layout = css`
   position: relative;
   padding-top: 0 !important;
 
-  @media screen and (max-width: 375px) {
+  @media screen and (max-width: 430px) {
     padding: 0 20px; // 모바일에서 좌우 여백 추가
   }
 `;
@@ -26,7 +26,7 @@ export const H1 = css`
   text-align: left;
   width: 750px;
 
-  @media (max-width: 375px) {
+  @media (max-width: 430px) {
     width: 100%;
   }
 `;
@@ -39,21 +39,27 @@ export const LogoContainer = css`
   gap: 2px;
   align-self: stretch;
 
-  @media (max-width: 375px) {
+  @media (max-width: 430px) {
     width: 100%;
     display: none;
   }
 `;
 
 export const LogoContainer2 = css`
-  display: none;
+  display: block;
 
-  @media (max-width: 375px) {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 40px;
-    margin-bottom: 110px;
+  @media (max-width: 430px) {
+    > img {
+      max-width: 204px;
+      width: 100%;
+      height: 50px;
+      margin-top: 40px;
+      margin-bottom: 40px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+    }
   }
 `;
 
@@ -64,7 +70,7 @@ export const LogoImage = css`
 `;
 
 export const LogoImage2 = css`
-  @media (max-width: 375px) {
+  @media (max-width: 430px) {
     width: 204px;
     height: 50px;
     display: block;
@@ -121,7 +127,7 @@ export const UrlBox = css`
     letter-spacing: -0.18px;
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 430px) {
     width: 100%; /* 모바일에서 UrlBox의 너비를 100%로 설정 */
     height: auto; /* 높이를 자동으로 조절 */
     flex-direction: column; /* 모바일에서 요소들을 세로로 배치 */
@@ -183,7 +189,7 @@ export const Btn = css`
   align-items: center;
   justify-content: center;
 
-  @media (max-width: 375px) {
+  @media (max-width: 430px) {
     width: 100%;
     display: flex;
     height: 60px;

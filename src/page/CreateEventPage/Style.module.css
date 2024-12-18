@@ -9,7 +9,7 @@
   padding-right: 20px;
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 430px) {
   .Layout {
     padding: 0 20px; /* 모바일에서 좌우 여백 추가 */
     margin-bottom: 50px;
@@ -25,7 +25,7 @@
   margin-bottom: 20px;
   color: var(--G10, #000);
 
-  @media (max-width: 375px) {
+  @media (max-width: 430px) {
     font-size: 18px;
     margin-bottom: 12px;
   }
@@ -42,7 +42,7 @@
   display: none;
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 430px) {
   .LogoImage {
     display: none;
   }
@@ -71,7 +71,7 @@
   margin: 0 auto;
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 430px) {
   .Component {
     width: 100%;
   }
@@ -84,7 +84,7 @@
   color: #0f1720;
 }
 
-@media (max-width: 375px) {
+@media (max-width: 430px) {
   .Title {
     font-size: 26px;
   }
@@ -100,7 +100,7 @@
   color: var(--G10, #000);
 }
 
-@media (max-width: 375px) {
+@media (max-width: 430px) {
   .Top h5 {
     font-size: 18px;
     margin-bottom: 12px;
@@ -130,9 +130,10 @@
   color: var(--G6);
 }
 
-@media (max-width: 375px) {
+@media (max-width: 430px) {
   .Top input {
     font-size: 18px;
+    margin-bottom: 50px;
   }
 
   .Top input::placeholder {
@@ -203,7 +204,7 @@
   justify-content: center;
 }
 
-@media (max-width: 375px) {
+@media (max-width: 430px) {
   .BtnCreate {
     height: 60px;
     position: fixed;
@@ -249,7 +250,7 @@
   justify-content: center;
 }
 
-@media (max-width: 375px) {
+@media (max-width: 430px) {
   .BtnFalse {
     height: 60px;
     position: fixed;
@@ -296,7 +297,7 @@
   flex-direction: column;
 }
 
-@media (max-width: 375px) {
+@media (max-width: 430px) {
   .DateSelectionContainer {
     width: 100%;
     height: auto;
@@ -314,7 +315,7 @@
   flex-wrap: wrap;
 }
 
-@media (max-width: 375px) {
+@media (max-width: 430px) {
   .CalendarLayout {
     display: flex;
     flex-direction: column; /* 모바일에서 열 방향으로 변경 */
@@ -541,7 +542,7 @@
       align-items: center;
     }
 
-    @media (max-width: 375px) {
+    @media (max-width: 430px) {
       :global .react-calendar__month-view__days {
         grid-template-columns: repeat(7, 1fr);
         width: 100% !important;
@@ -567,14 +568,14 @@
   }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 430px) {
   .CalendarBox {
     width: 100%; /* 모바일에서 너비를 100%로 */
     height: auto; /* 높이 자동 조절 */
   }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 430px) {
   .calendarContainer {
     width: 100% !important; /* 모바일에서 너비를 100%로 변경 */
   }
@@ -685,7 +686,7 @@
   }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 430px) {
   .TimeBoxContainer {
     width: 100% !important;
     margin-top: 20px !important;
@@ -858,6 +859,7 @@
   justify-content: start;
   align-items: center;
   overflow-x: auto;
+  margin-bottom: 60px;
 }
 
 .SelectImagesContainer > div {
@@ -871,7 +873,7 @@
   margin-right: 0; /* 마지막 이미지 간격 제거 */
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 430px) {
   .SelectImagesContainer {
     flex-wrap: nowrap; /* 항목들이 한 줄에 나타나도록 설정 */
     overflow-x: auto; /* 가로 스크롤 활성화 */
@@ -879,6 +881,7 @@
     margin-right: -20px;
     -ms-overflow-style: none; /* 인터넷 익스플로러 */
     scrollbar-width: none; /* 파이어폭스 */
+    margin-bottom: 50px;
 
     &::-webkit-scrollbar {
       display: none; /* Chrome , Safari , Opera */
@@ -893,6 +896,9 @@
 @media screen and (max-width: 749px) {
   .SelectImagesContainer {
     margin-right: -20px;
+    margin-left: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 
@@ -922,7 +928,7 @@
   display: block; /* 이미지 하단의 여백 제거 */
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 430px) {
   .ImageContainer {
     width: 150px !important;
     height: 110px !important;
@@ -942,7 +948,7 @@
   border-radius: 50%;
   cursor: pointer;
 
-  @media screen and (max-width: 375px) {
+  @media screen and (max-width: 430px) {
     top: 8px;
     right: 8px;
     width: 18px;
@@ -961,10 +967,9 @@
   line-height: 22px; /* 122.222% */
   letter-spacing: -0.18px;
   margin-top: 18px;
-  margin-bottom: 60px;
   text-align: center;
 
-  @media screen and (max-width: 375px) {
+  @media screen and (max-width: 430px) {
     margin-top: 12px;
   }
 }

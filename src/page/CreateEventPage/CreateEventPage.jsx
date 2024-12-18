@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 /** @jsxImportSource @emotion/react */
-import * as S from "./Style";
+// import * as S from "./Style";
 import styles from "./Style.module.css";
 import classNames from "classnames";
 
@@ -472,7 +472,7 @@ function CreateEventPage(props) {
                   </div>
                 )}
               </div>
-              <div css={S.ImageLabel}>술모임</div>
+              <div className={styles.ImageLabel}>술모임</div>
             </div>
 
             {/* 일모임 이미지 */}

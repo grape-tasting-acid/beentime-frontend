@@ -7,7 +7,7 @@ export const Layout = css`
   width: 600px;
   margin-top: 60px;
 
-  @media (max-width: 375px) {
+  @media (max-width: 430px) {
     width: 100%;
   }
 `;
@@ -18,8 +18,8 @@ export const Component = css`
   justify-content: center;
   width: 600px;
 
-  @media (max-width: 375px) {
-    width: 375px;
+  @media (max-width: 430px) {
+    width: 430px;
     padding: 0 20px; // 모바일에서 좌우 여백 추가
   }
 `;
@@ -32,7 +32,7 @@ export const AttendBox = css`
   width: 100%; // 부모 컨테이너의 너비에 맞춤
   box-sizing: border-box; // 패딩과 보더를 포함하여 너비를 계산
 
-  @media (max-width: 375px) {
+  @media (max-width: 430px) {
     width: 100%;
   }
 `;
@@ -72,7 +72,7 @@ export const InputItem = css`
     }
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 430px) {
     width: 100%;
 
     & h3 {
@@ -103,7 +103,7 @@ export const TimeItem = css`
     margin-bottom: 20px;
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 430px) {
     width: 100%;
     & h3 {
       font-size: 18px;
@@ -120,7 +120,7 @@ export const TimeBox = css`
   width: 100%;
   gap: 14px;
 
-  @media (max-width: 375px) {
+  @media (max-width: 430px) {
     width: 100%;
   }
 `;
@@ -152,7 +152,7 @@ export const Times = css`
     letter-spacing: -0.22px;
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 430px) {
     width: 100%;
     & h4 {
       font-size: 16px;
@@ -170,7 +170,7 @@ export const Btns = css`
   gap: 10px;
   margin-left: auto; /* Btns 컨테이너를 오른쪽으로 밀기 */
 
-  @media (max-width: 375px) {
+  @media (max-width: 430px) {
     gap: 20px;
   }
 `;
@@ -201,7 +201,7 @@ export const Radio = css`
     color: #2e343f;
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 430px) {
     & input[type="radio"] {
       width: 42px;
       height: 42px;
@@ -223,7 +223,7 @@ export const ButtonContainer = css`
   margin-bottom: 100px;
   gap: 14px; /* 버튼 사이의 간격 설정 */
 
-  @media (max-width: 375px) {
+  @media (max-width: 430px) {
     width: 100%;
   }
 `;
@@ -243,7 +243,7 @@ export const BtnTrue = css`
   justify-content: center;
   box-sizing: border-box;
 
-  @media (max-width: 375px) {
+  @media (max-width: 430px) {
     width: 100%; // 모바일에서는 전체 너비 사용
     height: 50px;
     font-size: 16px;
@@ -265,7 +265,7 @@ export const CancelButton = css`
   justify-content: center;
   box-sizing: border-box;
 
-  @media (max-width: 375px) {
+  @media (max-width: 430px) {
     width: 100%; // 모바일에서는 전체 너비 사용
     height: 50px;
     font-size: 16px;
@@ -287,7 +287,7 @@ export const LargeAttendButton = css`
   justify-content: center;
   box-sizing: border-box;
 
-  @media (max-width: 375px) {
+  @media (max-width: 430px) {
     width: 100%;
   }
 `;
