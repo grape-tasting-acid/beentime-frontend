@@ -193,20 +193,21 @@
 .EventContainer {
   width: 100%;
   max-width: 1020px;
-  height: 100%;
-  max-height: 478px;
+  height: 504px;
+  /* max-height: 504px; */
   position: relative;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1;
+  /* flex: 1; */
 }
 
 @media (max-width: 430px) {
   .EventContainer {
     width: 100%;
     margin-top: 40px;
+    height: 301px;
   }
 }
 
@@ -293,6 +294,8 @@
     margin-top: 20px;
     /* width: 320px;
     height: 277px; */
+    max-width: 430px;
+    height: 195px;
   }
 }
 
@@ -300,7 +303,7 @@
   position: relative;
   width: 90%;
   max-width: 720px;
-  height: 29em;
+  height: 385px;
   max-height: 600px;
   margin-left: 0; /* 첫 번째 테이블을 제외하고 좌측 마진 적용 */
   flex: 1 0 auto;
@@ -309,9 +312,9 @@
 
 @media (max-width: 430px) {
   .TableAndCharactersWrapper {
-    max-width: 3410px;
+    max-width: 430px;
     width: 90%;
-    height: 19em;
+    height: 100%;
   }
 }
 
@@ -338,21 +341,20 @@
 
 /* 테이블 이미지 스타일 */
 .TableImage {
-  width: 100%;
+  width: 720px;
   position: absolute;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   z-index: 2;
-  top: 50%;
-  margin-top: 2vw;
+  margin-top: 165px;
 }
 
 @media (max-width: 430px) {
   .TableImage {
-    max-width: 320px;
-    width: 100%;
+    /* max-width: 320px; */
+    width: 320px;
     height: 75px;
-    margin-top: -2vh;
+    margin-top: 80px;
   }
 
   .HighlightedDate {
@@ -403,31 +405,44 @@
 /* 캐릭터 컨테이너 스타일 */
 .CharacterContainer {
   position: absolute;
-  /* left: 0px; */
-  top: 0; /* 기본값 */
-  /* transform: translateX(-50%); */
-  /* width: clamp(48px, 30vw, 100px); */
-  width: 30%;
-  max-width: 100px;
-  /* height: 232px; */
-  height: 0vh; /* 기본값 */
+  transform: translateX(-50%);
+  width: 100px;
+  height: 232px; /* 기본 높이 */
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 1; /* 기본값 */
+  z-index: 1; /* 기본 z-index */
 
   + .CharacterContainer {
-    /* margin-left: 30px; */
+    margin-left: 10px;
+    left: calc(var(--left-position) - 50px); /* left position 조정 */
   }
+}
+
+.CharacterContainer.top {
+  top: 0;
+  height: 244px; /* top일 때의 높이 */
+  z-index: 1; /* top일 때의 z-index */
+}
+
+.CharacterContainer.bottom {
+  bottom: 0;
+  height: 254px; /* bottom일 때의 높이 */
+  z-index: 3; /* bottom일 때의 z-index */
 }
 
 @media (max-width: 430px) {
   .CharacterContainer {
-    width: 100%;
+    width: auto;
     height: auto;
-    transform: translate(-50%, 0vh);
-    margin-left: 6%;
-    margin-top: -10%;
+    transform: translateX(-50%);
+    /* margin-top: -10%; */
+    left: 50%;
+
+    + .CharacterContainer {
+      margin-left: 6px;
+      left: calc(var(--left-position) - 0); /* left position 조정 */
+    }
   }
 
   .ParticipantName {
@@ -438,7 +453,7 @@
 /* 캐릭터 이미지 스타일 */
 .CharacterImage {
   max-width: 100px;
-  width: 20vw;
+  width: 100px;
 }
 
 @media (max-width: 430px) {
@@ -454,7 +469,7 @@
   -webkit-text-stroke-width: 1.5;
   -webkit-text-stroke-color: var(--G1, #fff);
   font-family: "Noto Sans";
-  font-size: clamp(13px, 2vw, 18px);
+  font-size: clamp(12px, 2vw, 18px);
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -516,7 +531,7 @@
 @media (max-width: 430px) {
   .AttendBox {
     width: 100%;
-    margin-top: 40px;
+    /* margin-top: 40px; */
   }
 }
 

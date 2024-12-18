@@ -42,6 +42,20 @@ const AttendanceEventListPage = () => {
   const isInitialMount = useRef(true);
   const elementRef = useRef(null);
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  // 윈도우 크기 변경 감지
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -323,6 +337,11 @@ const AttendanceEventListPage = () => {
     // 첫 번째 테이블의 시작 X 위치
     const startX = -(totalTableWidth / 2) + tableWidth / 2;
 
+    // 디바이스 너비에 따라 characterSpacing과 marginLeft 설정
+    const characterSpacing = window.innerWidth < 420 ? 10 : 30; // 420픽셀 미만: 10px, 이상: 30px
+    const marginLeft = window.innerWidth < 420 ? 10 : 30; // marginLeft 설정
+    const characterWidth = 100; // 캐릭터의 너비
+
     for (let t = 0; t < actualTables; t++) {
       // 각 테이블에 대한 처리
       const tableParticipants = participants.slice(
@@ -343,10 +362,6 @@ const AttendanceEventListPage = () => {
         }
       });
 
-      // 캐릭터 배치 설정
-      const characterWidth = 104; // 캐릭터의 너비
-      const characterSpacing = 16; // 캐릭터 간의 간격
-
       // 윗줄 캐릭터 배치
       const topRowCount = topParticipants.length;
       const totalTopRowWidth =
@@ -362,9 +377,11 @@ const AttendanceEventListPage = () => {
         placements.push({
           tableIndex: t,
           row: "top",
-          position: leftPosition, // 중앙 기준으로 조정 (퍼센트로 변환 필요)
+          position: leftPosition,
           character: characterImages[participant.character_index],
           name: participant.name,
+          marginTop: "0px", // 윗줄의 marginTop 설정
+          marginLeft: `${marginLeft}px`, // 윗줄의 marginLeft 설정
         });
       });
 
@@ -384,20 +401,24 @@ const AttendanceEventListPage = () => {
         placements.push({
           tableIndex: t,
           row: "bottom",
-          position: leftPosition, // 중앙 기준으로 조정 (퍼센트로 변환 필요)
+          position: leftPosition,
           character: characterImages[participant.character_index],
           name: participant.name,
+          marginTop: "-150px", // 아랫줄의 marginTop 설정
+          marginLeft: `${marginLeft}px`, // 아랫줄의 marginLeft 설정
         });
       });
     }
 
     // 전체 중앙 정렬을 위한 퍼센트 변환
     placements.forEach((placement) => {
-      placement.position = `${(placement.position / tableWidth) * 100}%`; // 위치를 퍼센트로 변환
+      placement.position = `${(placement.position / tableWidth) * 100 + 5}%`; // 위치를 퍼센트로 변환
     });
 
     return placements;
-  };
+};
+
+
 
   const characterPlacements = getFixedCharacterPlacements();
 
@@ -526,12 +547,15 @@ const AttendanceEventListPage = () => {
                           className={styles.CharacterContainer}
                           style={{
                             left: placement.position,
-                            top: placement.row === "top" ? "12%" : "45%", // 위치 조정
+                            top:
+                              placement.row === "top"
+                                ? window.innerWidth < 430
+                                  ? "0px"
+                                  : "0px" // 윗줄 top 설정
+                                : window.innerWidth > 430
+                                ? "150px"
+                                : "80px", // 아랫줄 top 설정 (430 미만: 200px, 이상: 300px)
                             zIndex: zIndex, // z-index 동적 설정
-                            marginTop:
-                              placement.marginTop === "margin-top"
-                                ? "10px"
-                                : "-40px",
                           }}
                         >
                           {placement.row === "top" ? (
