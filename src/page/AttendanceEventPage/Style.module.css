@@ -419,7 +419,7 @@
 /* 캐릭터 컨테이너 스타일 */
 .CharacterContainer {
   position: absolute;
-  /* transform: translateX(-50%); */
+  transform: translateX(-50%);
   width: 100px;
   height: 232px; /* 기본 높이 */
   display: flex;

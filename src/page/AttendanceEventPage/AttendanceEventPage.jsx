@@ -477,54 +477,6 @@ const AttendanceEventListPage = () => {
               <div className={styles.Tooltip}>{tooltipMessage}</div>
             </div>
 
-            {/* 캐릭터+캡션+테이블 이미지 컨테이너 */}
-            {/* <div css={S.CharacterAndTableContainer(actualTables)}>
-              {Array.from({ length: actualTables }).map((_, t) => (
-                <div key={t} css={S.TableAndCharactersWrapper(t)}>
-                  <img src={tableImage} alt="Table" css={S.TableImage} />
-                  {characterPlacements
-                    .filter((p) => p.tableIndex === t)
-                    .map((placement, index) => (
-                      <div
-                        key={index}
-                        css={S.CharacterContainer(
-                          placement.position,
-                          placement.row
-                        )}
-                      >
-                        {placement.row === "top" ? (
-                          <>
-                            <div css={S.CharacterName(placement.row)}>
-                              {placement.name.length > 6
-                                ? `${placement.name.slice(0, 6)}...`
-                                : placement.name}
-                            </div>
-                            <img
-                              src={placement.character}
-                              alt={`Character ${index + 1}`}
-                              css={S.CharacterImage}
-                            />
-                          </>
-                        ) : (
-                          <>
-                            <img
-                              src={placement.character}
-                              alt={`Character ${index + 1}`}
-                              css={S.CharacterImage}
-                            />
-                            <div css={S.CharacterName(placement.row)}>
-                              {placement.name.length > 6
-                                ? `${placement.name.slice(0, 6)}...`
-                                : placement.name}
-                            </div>
-                          </>
-                        )}
-                      </div>
-                    ))}
-                </div>
-              ))}
-            </div> */}
-
             <div className={styles.CharacterAndTableContainer} ref={elementRef}>
               {Array.from({ length: actualTables }).map((_, t) => (
                 <div key={t} className={styles.TableAndCharactersWrapper}>
