@@ -93,8 +93,12 @@
 
   .InputItem input {
     width: 100%;
-    font-size: 14px;
+    font-size: 16px;
     height: 48px;
+
+    &::placeholder {
+      font-size: 16px;
+    }
   }
 }
 
@@ -122,6 +126,7 @@
 
   .TimeItem h3 {
     font-size: 18px;
+    margin-bottom: 12px;
   }
 }
 
@@ -340,5 +345,6 @@
   .LargeAttendButton {
     width: 100%;
     font-size: 18px;
+    height: 58px;
   }
 }

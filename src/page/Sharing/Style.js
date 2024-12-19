@@ -28,6 +28,8 @@ export const H1 = css`
 
   @media (max-width: 430px) {
     width: 100%;
+    font-size: 22px;
+    margin-top: 70px;
   }
 `;
 
