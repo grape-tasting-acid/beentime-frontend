@@ -315,6 +315,7 @@
   max-height: 600px;
   margin-left: 0; /* 첫 번째 테이블을 제외하고 좌측 마진 적용 */
   flex: 1 0 auto;
+  overflow-x: hidden;
   overflow-y: hidden;
 }
 
@@ -323,6 +324,10 @@
     max-width: 430px;
     width: 90%;
     height: 100%;
+
+    + .TableAndCharactersWrapper {
+      margin-left: 15px;
+    }
   }
 }
 

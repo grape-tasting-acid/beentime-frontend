@@ -328,8 +328,8 @@ const AttendanceEventListPage = () => {
     const placements = [];
     const usedCharacters = new Set();
 
-    const characterWidth = window.innerWidth <= 430 ? 48 : 100; // 화면 너비에 따라 캐릭터 너비 설정
-    const tableWidth = window.innerWidth <= 430 ? 430 : 720; // 화면 너비에 따라 테이블 너비 설정
+    // 테이블 설정
+    const tableWidth = 720; // 각 테이블의 너비
     const tableGap = 50; // 테이블 간 간격
     const totalTableWidth =
       actualTables * tableWidth + (actualTables - 1) * tableGap;
@@ -337,9 +337,13 @@ const AttendanceEventListPage = () => {
     // 첫 번째 테이블의 시작 X 위치
     const startX = -(totalTableWidth / 2) + tableWidth / 2;
 
-    const characterSpacing = window.innerWidth < 420 ? 0 : 0; // 화면 너비에 따라 캐릭터 간 간격 조정
+    // 디바이스 너비에 따라 characterSpacing과 marginLeft 설정
+    const characterSpacing = window.innerWidth < 430 ? 0 : 0; // 420픽셀 미만: 10px, 이상: 30px
+    const marginLeft = window.innerWidth < 430 ? 0 : 0; // marginLeft 설정
+    const characterWidth = 100; // 캐릭터의 너비
 
     for (let t = 0; t < actualTables; t++) {
+      // 각 테이블에 대한 처리
       const tableParticipants = participants.slice(
         t * participantsPerTable,
         (t + 1) * participantsPerTable
@@ -363,7 +367,8 @@ const AttendanceEventListPage = () => {
       const totalTopRowWidth =
         topRowCount * characterWidth + (topRowCount - 1) * characterSpacing;
 
-      const startXTop = (tableWidth - totalTopRowWidth) / 2 + tablePositionX;
+      // 중앙 기준으로 윗줄 시작 X 위치 계산
+      const startXTop = (tableWidth - totalTopRowWidth) / 2;
 
       topParticipants.forEach((participant, i) => {
         const leftPosition =
@@ -372,10 +377,11 @@ const AttendanceEventListPage = () => {
         placements.push({
           tableIndex: t,
           row: "top",
-          position: leftPosition, // 픽셀 값으로 설정
+          position: leftPosition,
           character: characterImages[participant.character_index],
           name: participant.name,
-          marginTop: "0px",
+          marginTop: "0px", // 윗줄의 marginTop 설정
+          marginLeft: `${marginLeft}px`, // 윗줄의 marginLeft 설정
         });
       });
 
@@ -385,8 +391,8 @@ const AttendanceEventListPage = () => {
         bottomRowCount * characterWidth +
         (bottomRowCount - 1) * characterSpacing;
 
-      const startXBottom =
-        (tableWidth - totalBottomRowWidth) / 2 + tablePositionX;
+      // 중앙 기준으로 아랫줄 시작 X 위치 계산
+      const startXBottom = (tableWidth - totalBottomRowWidth) / 2;
 
       bottomParticipants.forEach((participant, i) => {
         const leftPosition =
@@ -395,13 +401,19 @@ const AttendanceEventListPage = () => {
         placements.push({
           tableIndex: t,
           row: "bottom",
-          position: leftPosition, // 픽셀 값으로 설정
+          position: leftPosition,
           character: characterImages[participant.character_index],
           name: participant.name,
-          marginTop: "-150px",
+          marginTop: "-150px", // 아랫줄의 marginTop 설정
+          marginLeft: `${marginLeft}px`, // 아랫줄의 marginLeft 설정
         });
       });
     }
+
+    // 전체 중앙 정렬을 위한 퍼센트 변환
+    placements.forEach((placement) => {
+      placement.position = `${(placement.position / tableWidth) * 100 + 5}%`; // 위치를 퍼센트로 변환
+    });
 
     return placements;
   };
@@ -464,6 +476,54 @@ const AttendanceEventListPage = () => {
             <div className={styles.TooltipContainer}>
               <div className={styles.Tooltip}>{tooltipMessage}</div>
             </div>
+
+            {/* 캐릭터+캡션+테이블 이미지 컨테이너 */}
+            {/* <div css={S.CharacterAndTableContainer(actualTables)}>
+              {Array.from({ length: actualTables }).map((_, t) => (
+                <div key={t} css={S.TableAndCharactersWrapper(t)}>
+                  <img src={tableImage} alt="Table" css={S.TableImage} />
+                  {characterPlacements
+                    .filter((p) => p.tableIndex === t)
+                    .map((placement, index) => (
+                      <div
+                        key={index}
+                        css={S.CharacterContainer(
+                          placement.position,
+                          placement.row
+                        )}
+                      >
+                        {placement.row === "top" ? (
+                          <>
+                            <div css={S.CharacterName(placement.row)}>
+                              {placement.name.length > 6
+                                ? `${placement.name.slice(0, 6)}...`
+                                : placement.name}
+                            </div>
+                            <img
+                              src={placement.character}
+                              alt={`Character ${index + 1}`}
+                              css={S.CharacterImage}
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <img
+                              src={placement.character}
+                              alt={`Character ${index + 1}`}
+                              css={S.CharacterImage}
+                            />
+                            <div css={S.CharacterName(placement.row)}>
+                              {placement.name.length > 6
+                                ? `${placement.name.slice(0, 6)}...`
+                                : placement.name}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    ))}
+                </div>
+              ))}
+            </div> */}
 
             <div className={styles.CharacterAndTableContainer} ref={elementRef}>
               {Array.from({ length: actualTables }).map((_, t) => (
