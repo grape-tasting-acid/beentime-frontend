@@ -337,7 +337,7 @@ const AttendanceEventListPage = () => {
     // 첫 번째 테이블의 시작 X 위치
     const startX = -(totalTableWidth / 2) + tableWidth / 2;
 
-    const characterSpacing = window.innerWidth < 420 ? 5 : 15; // 화면 너비에 따라 캐릭터 간 간격 조정
+    const characterSpacing = window.innerWidth < 420 ? 0 : 0; // 화면 너비에 따라 캐릭터 간 간격 조정
 
     for (let t = 0; t < actualTables; t++) {
       const tableParticipants = participants.slice(
