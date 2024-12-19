@@ -354,7 +354,8 @@
 
 /* 테이블 이미지 스타일 */
 .TableImage {
-  width: 720px;
+  max-width: 720px;
+  width: 100%;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
