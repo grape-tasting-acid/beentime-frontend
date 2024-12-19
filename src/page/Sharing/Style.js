@@ -51,6 +51,8 @@ export const LogoContainer2 = css`
   display: none;
 
   @media (max-width: 430px) {
+    display: block !important;
+
     > img {
       max-width: 204px;
       width: 100%;
@@ -60,7 +62,7 @@ export const LogoContainer2 = css`
       display: block;
       margin-left: auto;
       margin-right: auto;
-      display: block;
+      display: block !important;
     }
   }
 `;
