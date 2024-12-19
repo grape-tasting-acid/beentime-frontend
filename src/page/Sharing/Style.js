@@ -48,7 +48,7 @@ export const LogoContainer = css`
 `;
 
 export const LogoContainer2 = css`
-  display: block;
+  display: none;
 
   @media (max-width: 430px) {
     > img {

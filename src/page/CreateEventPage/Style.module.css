@@ -435,7 +435,7 @@
     :global .react-calendar__month-view__days {
       display: grid !important;
       grid-template-columns: repeat(7, 1fr);
-      grid-gap: 6px 8px;
+      grid-gap: 9px 0px;
       /* width: 386px; */
       justify-content: center;
       padding: 0 !important; /* 불필요한 패딩 제거 */
@@ -644,9 +644,9 @@
 
   .TimeBoxContainer {
     /* position: absolute; */
-    margin-top: 30px;
+    /* margin-top: 30px; */
     left: 30px;
-    width: calc(100% - 40px);
+    width: calc(100% - 60px);
     max-height: 368px;
     height: 100%;
     min-height: 100px;
@@ -864,6 +864,7 @@
   align-items: center;
   overflow-x: auto;
   margin-bottom: 60px;
+  overflow-y: hidden;
 }
 
 .SelectImagesContainer > div {

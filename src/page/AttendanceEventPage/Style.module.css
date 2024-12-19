@@ -413,7 +413,7 @@
 /* 캐릭터 컨테이너 스타일 */
 .CharacterContainer {
   position: absolute;
-  transform: translateX(-50%);
+  /* transform: translateX(-50%); */
   width: 100px;
   height: 232px; /* 기본 높이 */
   display: flex;
@@ -423,7 +423,7 @@
 
   + .CharacterContainer {
     margin-left: 10px;
-    left: calc(var(--left-position) - 50px); /* left position 조정 */
+    left: calc(var(--left-position) - 50px);
   }
 }
 
@@ -530,7 +530,7 @@
   display: flex;
   flex-grow: 1;
   flex-direction: column;
-  margin-top: clamp(120px, 1vh, 40px);
+  margin-top: 60px;
   width: 100%;
   max-width: 600px;
   overflow: hidden;
@@ -586,7 +586,7 @@
 }
 @media (max-width: 430px) {
   .TableBox {
-    padding-bottom: 0px;
+    padding-bottom: 20px;
 
     td {
       img {
