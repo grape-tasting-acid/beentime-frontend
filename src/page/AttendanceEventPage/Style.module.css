@@ -121,6 +121,10 @@
   display: flex;
   align-items: center;
   gap: 10px;
+
+  button {
+    color: var(--G10, #000);
+  }
 }
 
 .HeaderItem button {
