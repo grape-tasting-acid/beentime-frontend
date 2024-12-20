@@ -365,8 +365,8 @@
 
 @media (max-width: 430px) {
   .TableImage {
-    /* max-width: 320px; */
-    width: 320px;
+    max-width: 320px;
+    width: 100%;
     height: 75px;
     margin-top: 80px;
   }

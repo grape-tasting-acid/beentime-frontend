@@ -976,5 +976,6 @@
 
   @media screen and (max-width: 430px) {
     margin-top: 12px;
+    font-size: 16px;
   }
 }
