@@ -609,7 +609,7 @@
 }
 
 .Table {
-  width: 100%;
+  width: max-content;
   max-width: 1020px;
   border-radius: 8px;
   overflow: hidden;
@@ -617,6 +617,12 @@
   border-spacing: 0; /* Keep this to prevent gaps */
   border: 0.5px solid #dfe2e6; /* Add outer border */
   table-layout: fixed;
+  box-sizing: border-box;
+}
+@media (max-width: 430px) {
+  .Table {
+    max-width: 430px;
+  }
 }
 
 .Table th:first-of-type {
@@ -641,6 +647,7 @@
 
 /* 참석자 수에 따른 동적 스타일 적용 */
 .ThItem {
+  box-sizing: border-box;
   & > th {
     height: 64px;
     font-size: 18px;
@@ -685,6 +692,7 @@
 }
 
 .TdItem {
+  box-sizing: border-box;
   & > td {
     height: 50px;
     text-align: center;
