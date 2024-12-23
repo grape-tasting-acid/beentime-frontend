@@ -825,6 +825,7 @@
   border-radius: 4px;
   border: 0.718px solid var(--G4, #dfe2e6);
   background: var(--G1, #fff);
+  color: var(--G10, #000);
 
   /* 드롭다운 화살표 숨기기 */
   -webkit-appearance: none;
