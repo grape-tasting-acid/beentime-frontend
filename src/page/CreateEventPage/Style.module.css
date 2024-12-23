@@ -703,6 +703,8 @@
   .TimeBox {
     width: 100% !important;
     height: auto !important;
+    max-width: 100%;
+    flex: 1 0 100%;
   }
 
   :global .SelectedDateBoxWrapper:nth-child(1) {
