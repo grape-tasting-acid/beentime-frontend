@@ -58,6 +58,7 @@
   }
 
   .TimeBox {
+    height: 350px;
   }
 }
 
@@ -368,7 +369,6 @@
       letter-spacing: -0.2px;
       padding: 0;
       color: #000 !important;
-      font-family: Noto Sans;
     }
 
     :global .react-calendar__navigation__prev-button,
@@ -451,7 +451,6 @@
     :global .react-calendar__tile.past-day,
     :global .react-calendar__tile.past-day abbr {
       color: var(--G4, #dfe2e6);
-      font-family: "Noto Sans";
     }
 
     :global .react-calendar__tile.today {
@@ -543,16 +542,17 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      color: var(--G10, #000);
+    }
+
+    :global .react-calendar__month-view__days__day {
+      color: var(--G10, #000);
     }
 
     @media (max-width: 430px) {
       :global .react-calendar__month-view__days {
         grid-template-columns: repeat(7, 1fr);
         width: 100% !important;
-        grid-gap: 9px 9px;
-      }
-      :global .react-calendar__navigation__label {
-        font-size: 16px;
       }
 
       :global .react-calendar__tile {
@@ -633,7 +633,7 @@
 }
 
 .TimeBox {
-  /* max-width: 330px; */
+  max-width: 330px;
   flex: 1 0 330px;
   width: 100%;
   height: 100%;
@@ -703,9 +703,6 @@
   .TimeBox {
     width: 100% !important;
     height: auto !important;
-    height: 350px;
-    max-width: 100%;
-    flex: 1 0 100%;
   }
 
   :global .SelectedDateBoxWrapper:nth-child(1) {
