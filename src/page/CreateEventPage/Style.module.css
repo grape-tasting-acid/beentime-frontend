@@ -476,6 +476,7 @@
       letter-spacing: -0.4px;
       border: none;
       background-color: transparent;
+      font-family: Noto Sans !important;
     }
 
     :global .react-calendar__tile.today {
