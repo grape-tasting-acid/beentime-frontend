@@ -2,7 +2,8 @@
 /* 노토 산스 폰트 적용 */
 body {
   margin: 0;
-  font-family: "Noto Sans Korean", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Noto Sans Korean", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
 }
 
 .App {

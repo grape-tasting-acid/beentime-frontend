@@ -1,12 +1,13 @@
 @import "Font/css/noto-sans-korean.css";
 body {
   margin: 0;
-  font-family: "Noto Sans Korean", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Noto Sans Korean", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
