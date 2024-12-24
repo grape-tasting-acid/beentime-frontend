@@ -31,18 +31,26 @@ root.render(
       {/* Global 컴포넌트를 사용하여 전역 스타일 적용 */}
       <Global
         styles={css`
-          @import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
+          @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap");
 
-          * {
+          *,
+          span,
+          div,
+          button,
+          input,
+          select,
+          textarea {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: "Noto Sans", sans-serif;
+            // font-weight: bold;
           }
 
-          body {
-            font-family: "Noto Sans Korean", "Helvetica Neue", Helvetica, Arial,
-              sans-serif;
-          }
+          // body {
+          //   font-family: "Noto Sans", "Helvetica Neue", Helvetica, Arial,
+          //     sans-serif !important;
+          // }
 
           /* CSS 변수 정의 */
           :root {
