@@ -34,7 +34,7 @@
   flex-direction: column;
   gap: 60px;
   margin-top: 30px;
-  width: 100%; /* 부모 컨테이너의 너비에 맞춤 */
+  width: 600px;
   box-sizing: border-box; /* 패딩과 보더를 포함하여 너비를 계산 */
 }
 
@@ -256,14 +256,16 @@
 
 .ButtonContainer {
   display: flex;
-  justify-content: space-between; /* 버튼들을 양쪽에 배치 */
-  width: 100%; /* 전체 부모 컨테이너 너비에 맞춤 */
+  width: 600px;
+  height: 70px;
+  align-items: flex-start;
+  gap: 14px;
   margin-bottom: 100px;
-  gap: 14px; /* 버튼 사이의 간격 설정 */
 }
 
 @media (max-width: 430px) {
   .ButtonContainer {
+    justify-content: space-between;
     width: 100%;
     position: fixed;
     bottom: 0;
