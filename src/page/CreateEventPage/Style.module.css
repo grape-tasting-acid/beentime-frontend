@@ -464,19 +464,18 @@
 
     :global .react-calendar__tile {
       box-sizing: border-box;
-      /* width: 50px !important; */
-      /* height: 50px !important; */
       text-align: center;
       position: relative;
       font-feature-settings: "liga" off, "clig" off;
       font-size: 20px !important;
       font-style: normal;
       font-weight: 400 !important;
-      line-height: 25px; /* 125% */
+      line-height: 25px;
       letter-spacing: -0.4px;
       border: none;
       background-color: transparent;
       font-family: Noto Sans !important;
+      cursor: pointer;
     }
 
     :global .react-calendar__tile.today {

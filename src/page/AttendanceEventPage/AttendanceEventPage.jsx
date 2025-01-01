@@ -420,6 +420,15 @@ const AttendanceEventListPage = () => {
 
   const characterPlacements = getFixedCharacterPlacements();
 
+  // 참석자 추가하기 버튼 클릭 핸들러 추가
+  const handleAttendButtonClick = () => {
+    if (participants.length >= 20) {
+      alert("더 이상 참석자를 추가할 수 없습니다.");
+      return;
+    }
+    setShowAttendanceForm(true);
+  };
+
   return (
     <div className={styles.Layout}>
       <div className={"Header"}>
@@ -623,7 +632,7 @@ const AttendanceEventListPage = () => {
             {!showAttendanceForm && !editingParticipant && (
               <button
                 className={styles.AttendButton}
-                onClick={() => setShowAttendanceForm(true)}
+                onClick={handleAttendButtonClick}
               >
                 참석자 추가하기
               </button>
