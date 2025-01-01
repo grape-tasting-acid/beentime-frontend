@@ -213,6 +213,11 @@
     left: 0;
     right: 0px;
     border-radius: 0;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 22px; /* 122.222% */
+    letter-spacing: -0.18px;
   }
 }
 
@@ -260,6 +265,10 @@
     right: 0px;
     border-radius: 0;
     font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 22px; /* 122.222% */
+    letter-spacing: -0.18px;
   }
   .BtnTrue {
     position: fixed;
@@ -269,6 +278,10 @@
     right: 0px;
     border-radius: 0;
     font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 22px; /* 122.222% */
+    letter-spacing: -0.18px;
     width: 100%;
   }
 }
@@ -476,6 +489,7 @@
       background-color: transparent;
       font-family: Noto Sans !important;
       cursor: pointer;
+      -webkit-tap-highlight-color: transparent; /* 모바일에서 터치다운 이펙트 제거 */
     }
 
     :global .react-calendar__tile.today {
