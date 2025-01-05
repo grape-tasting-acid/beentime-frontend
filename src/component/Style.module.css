@@ -272,9 +272,27 @@
     left: 0;
     right: 0;
     margin: 0;
+    padding: 0;
+    height: auto;
+    background-color: #000;
+    gap: 0;
 
     > button {
+      margin: 0;
       border-radius: 0;
+      flex: 1;
+      border: none;
+      position: relative;
+    }
+
+    > button:last-child::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 25%;
+      height: 50%;
+      width: 1px;
+      background-color: #fff;
     }
   }
 }
@@ -299,7 +317,8 @@
   .BtnTrue {
     width: 100%; /* 모바일에서는 전체 너비 사용 */
     height: 50px;
-    font-size: 16px;
+    font-size: 18px;
+    color: var(--M3, #31edb5);
   }
 }
 
@@ -323,7 +342,10 @@
   .CancelButton {
     width: 100%; /* 모바일에서는 전체 너비 사용 */
     height: 50px;
-    font-size: 16px;
+    font-size: 18px;
+    border: none;
+    background-color: #000;
+    color: #fff;
   }
 }
 
