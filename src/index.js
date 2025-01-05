@@ -11,7 +11,6 @@ const resetStyles = css`
   /* Safari의 user agent stylesheet 재정의 */
   * {
     -webkit-appearance: none;
-    -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -20,14 +19,6 @@ const resetStyles = css`
   table {
     -webkit-border-horizontal-spacing: 0;
     -webkit-border-vertical-spacing: 0;
-  }
-
-  /* 모바일 최적화 스타일 추가 */
-  @media screen and (max-width: 430px) {
-    html {
-      -webkit-text-size-adjust: none;
-      text-size-adjust: none;
-    }
   }
 `;
 
