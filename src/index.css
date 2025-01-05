@@ -1,6 +1,11 @@
 @import "Font/css/noto-sans-korean.css";
+html {
+  background-color: #ffffff;
+}
+
 body {
   margin: 0;
+  background-color: #ffffff;
   font-family: "Noto Sans Korean", "Helvetica Neue", Helvetica, Arial,
     sans-serif;
   -webkit-font-smoothing: antialiased;
