@@ -199,6 +199,7 @@ export const Btn = css`
     width: 100%;
     display: flex;
     height: 60px;
+    padding: 20px 0px;
     font-size: 18px;
     padding: 20px 0px;
     justify-content: center;
