@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 /** @jsxImportSource @emotion/react */
 import * as S from "./Style";
 import logo from "../../Img/logo/sharingLogo.svg";
-import mainLogo from "../../Img/main_logo.svg";
+import mobileLogo from "../../Img/logo/sharingLogoMobile.svg";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../component/footer/Footer";
 
@@ -59,7 +59,7 @@ function Sharing(props) {
         <img src={logo} alt="Logo" css={S.LogoImage} />
       </a>
       <a href="/" aria-label="홈페이지로 이동" css={S.LogoContainer2}>
-        <img src={mainLogo} alt="Logo" className={S.LogoImage2} />
+        <img src={mobileLogo} alt="Logo" className={S.LogoImage2} />
       </a>
       <h1 css={S.H1}>이제 이 링크를 공유해보자!</h1>
       <div css={S.UrlBox}>

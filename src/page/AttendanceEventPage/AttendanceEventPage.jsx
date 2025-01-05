@@ -41,6 +41,24 @@ const AttendanceEventListPage = () => {
   const attendanceEventRef = useRef(null);
   const isInitialMount = useRef(true);
   const elementRef = useRef(null);
+  const tableRef = useRef(null);
+  const [tableWidth, setTableWidth] = useState(0);
+  const updateTableWidth = () => {
+    if (tableRef.current) {
+      setTableWidth(tableRef.current.scrollWidth);
+    }
+  };
+  useEffect(() => {
+    updateTableWidth();
+  }, [participants, timeList]);
+
+  // 창 크기 변경 시에도 재계산
+  useEffect(() => {
+    window.addEventListener("resize", updateTableWidth);
+    return () => {
+      window.removeEventListener("resize", updateTableWidth);
+    };
+  }, []);
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -559,7 +577,7 @@ const AttendanceEventListPage = () => {
               <span>일정을 수정하려면 참석자별 이름을 누르세요</span>
             </div>
             <div className={styles.TableBox}>
-              <table className={styles.Table}>
+              <table className={styles.Table} ref={tableRef}>
                 <thead>
                   <tr className={styles.ThItem}>
                     <th>일정</th>
@@ -634,6 +652,7 @@ const AttendanceEventListPage = () => {
             {!showAttendanceForm && !editingParticipant && (
               <button
                 className={styles.AttendButton}
+                style={{ width: tableWidth }}
                 onClick={handleAttendButtonClick}
               >
                 참석자 추가하기
