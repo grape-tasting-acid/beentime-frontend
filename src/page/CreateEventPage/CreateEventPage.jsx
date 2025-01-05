@@ -43,21 +43,6 @@ function CreateEventPage(props) {
     }
   }, [eventCode]);
 
-  useEffect(() => {
-    // 뷰포트 높이 문제 해결을 위한 코드
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-
-    // 리사이즈 이벤트 처리
-    const handleResize = () => {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   const fetchEventData = async (eventCode) => {
     try {
       const response = await getEvent(eventCode);
