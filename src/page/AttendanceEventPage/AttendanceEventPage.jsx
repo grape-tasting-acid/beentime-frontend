@@ -124,10 +124,12 @@ const AttendanceEventListPage = () => {
   useEffect(() => {
     // 초기 마운트(참가자가 0명일 때)가 아니고, showAttendanceForm이나 editingParticipant가 변경됐을 때만 스크롤
     if (!isInitialMount.current && (showAttendanceForm || editingParticipant)) {
-      attendanceEventRef.current?.scrollIntoView({ behavior: "smooth" });
+      if (participants.length > 0) { // 참가자가 있을 때만 스크롤
+        attendanceEventRef.current?.scrollIntoView({ behavior: "smooth" });
+      }
     }
     isInitialMount.current = false;
-  }, [showAttendanceForm, editingParticipant]);
+  }, [showAttendanceForm, editingParticipant, participants.length]);
 
   const onEditClick = () => {
     navigate(`/edit?eventCode=${encodeURIComponent(id)}`);
