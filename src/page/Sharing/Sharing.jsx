@@ -11,6 +11,8 @@ function Sharing(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    
     const updateButtonLabel = () => {
       setButtonLabel(window.innerWidth < 501 ? "링크 공유" : "링크 복사");
     };

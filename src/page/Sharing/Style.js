@@ -11,7 +11,9 @@ export const Layout = css`
   padding-top: 0 !important;
 
   @media screen and (max-width: 430px) {
-    padding: 0 20px; // 모바일에서 좌우 여백 추가
+    padding: 0 20px 80px; // 하단 패딩 추가 (fixed 버튼 높이만큼)
+    min-height: 100vh; // 최소 높이 설정
+    height: auto; // 높이를 자동으로 조정
   }
 `;
 
