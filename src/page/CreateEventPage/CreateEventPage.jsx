@@ -225,7 +225,7 @@ function CreateEventPage(props) {
           const eventCode = response[0].event_code;
           sessionStorage.setItem("eventCode", eventCode);
           alert("모임이 생성되었습니다.");
-          navigate("/sharing");
+          navigate(`/attend?eventCode=${eventCode}`);
         }
       } else {
         const response = await editEvent(
