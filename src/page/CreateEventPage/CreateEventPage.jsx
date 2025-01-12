@@ -114,19 +114,19 @@ function CreateEventPage(props) {
     );
     setSelectedDates(newSelectedDates);
 
-    // 모바일 환경에서만 스크롤 조정
+    // 모바일 스크롤 조정 코드 수정
     if (window.innerWidth <= 430) {
-      const h5Element = document.querySelector(`.${styles.H5}`);
-      if (h5Element) {
-        const headerOffset = 20; // 상단 여백 조정
-        const elementPosition = h5Element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.scrollY - headerOffset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth"
-        });
-      }
+      setTimeout(() => {
+        const dateSelectionContainer = document.querySelector(`.${styles.DateSelectionContainer}`);
+        if (dateSelectionContainer) {
+          const offset = 20;
+          const topPosition = dateSelectionContainer.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({
+            top: topPosition,
+            behavior: "smooth"
+          });
+        }
+      }, 100);
     }
   };
 
