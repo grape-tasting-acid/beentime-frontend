@@ -100,6 +100,14 @@ root.render(
           @media (max-width: 430px) {
             // ... 기존 스크롤바 스타일 ...
           }
+
+          /* 하단 고정 버튼용 세이프 에어리어 */
+          .btn {
+            padding-bottom: env(safe-area-inset-bottom);
+            padding-bottom: constant(safe-area-inset-bottom);
+            margin-bottom: env(safe-area-inset-bottom);
+            margin-bottom: constant(safe-area-inset-bottom);
+          }
         `}
       />
       <App />
