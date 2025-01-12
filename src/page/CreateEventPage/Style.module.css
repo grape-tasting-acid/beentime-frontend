@@ -535,6 +535,7 @@
     }
 
     :global .react-calendar__tile.today {
+      position: static !important;
       color: var(--T1, #2376e5) !important;
       font-weight: 400;
       flex-direction: column !important;

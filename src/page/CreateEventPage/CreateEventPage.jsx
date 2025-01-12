@@ -308,12 +308,6 @@ function CreateEventPage(props) {
   };
 
   const tileContent = ({ date, view }) => {
-    if (view === "month") {
-      const isToday = moment(date).isSame(moment(), "day");
-      // if (isToday) {
-      //     return <div css={S.TodayText}>오늘</div>;
-      // }
-    }
     return null;
   };
 
