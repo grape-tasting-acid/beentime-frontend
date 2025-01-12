@@ -29,6 +29,9 @@ const AttendanceListPage = () => {
         const participationList = await getParticipation(id);
         console.log("Participation List:", participationList);
 
+        // 데이터를 가져온 직후 스크롤을 최상단으로 설정
+        window.scrollTo(0, 0);
+
         if (participationList.length === 0) {
           console.warn("No participation data found.");
           return;
