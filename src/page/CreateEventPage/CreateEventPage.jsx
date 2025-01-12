@@ -116,9 +116,16 @@ function CreateEventPage(props) {
 
     // 모바일 환경에서만 스크롤 조정
     if (window.innerWidth <= 430) {
-      const timeBoxElement = document.querySelector(`.${styles.TimeBox}`);
-      if (timeBoxElement) {
-        timeBoxElement.scrollIntoView({ behavior: "smooth" });
+      const h5Element = document.querySelector(`.${styles.H5}`);
+      if (h5Element) {
+        const headerOffset = 20; // 상단 여백 조정
+        const elementPosition = h5Element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
       }
     }
   };
