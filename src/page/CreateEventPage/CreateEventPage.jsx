@@ -113,6 +113,14 @@ function CreateEventPage(props) {
       (a, b) => new Date(a.date) - new Date(b.date)
     );
     setSelectedDates(newSelectedDates);
+
+    // 모바일 환경에서만 스크롤 조정
+    if (window.innerWidth <= 430) {
+      const timeBoxElement = document.querySelector(`.${styles.TimeBox}`);
+      if (timeBoxElement) {
+        timeBoxElement.scrollIntoView({ behavior: "smooth" });
+      }
+    }
   };
 
   useEffect(() => {
