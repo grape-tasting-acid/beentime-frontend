@@ -7,6 +7,7 @@ import classNames from "classnames";
 import { FaCheck, FaQuestion, FaTimes } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 import supabase from "../api/instance";
+import { getParticipation } from "../services/supabaseService";
 
 import CheckSelectedIcon from "../Img/icon/checkSelected.svg";
 import CheckUnselectedIcon from "../Img/icon/checkUnselected.svg";
@@ -28,18 +29,30 @@ const AttendanceEvent = ({
   const id = new URLSearchParams(location.search).get("eventCode");
 
   useEffect(() => {
-    if (timeList && timeList.length > 0) {
-      if (existingParticipation) {
-        // 기존 참여 정보가 있는 경우 선택된 라디오 버튼을 설정
-        setSelectedRadios(existingParticipation.checked);
-        setAttendeeName(existingParticipation.name);
-      } else {
-        // 새로운 참여인 경우 기본으로 "no" 선택
-        const defaultRadios = timeList.map((_, index) => `no_${index}`);
-        setSelectedRadios(defaultRadios);
+    const initializeRadios = async () => {
+      if (timeList && timeList.length > 0) {
+        if (existingParticipation) {
+          // 기존 참여 정보가 있는 경우 선택된 라디오 버튼을 설정
+          setSelectedRadios(existingParticipation.checked);
+          setAttendeeName(existingParticipation.name);
+        } else {
+          // 새로운 참여인 경우
+          try {
+            const participationList = await getParticipation(id);
+            const isFirstParticipant = participationList.length === 0;
+            const defaultRadios = timeList.map((_, index) => 
+              isFirstParticipant ? `yes_${index}` : `no_${index}`
+            );
+            setSelectedRadios(defaultRadios);
+          } catch (error) {
+            console.error("Error fetching participation:", error);
+          }
+        }
       }
-    }
-  }, [timeList, existingParticipation]);
+    };
+
+    initializeRadios();
+  }, [timeList, existingParticipation, id]);
 
   const onChangeRadio = (e, index) => {
     const updatedRadios = [...selectedRadios];
