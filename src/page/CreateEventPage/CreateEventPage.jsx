@@ -182,6 +182,11 @@ function CreateEventPage(props) {
       return;
     }
 
+    if (selectedDates.length === 0) {
+      alert("최소 1개 이상의 날짜를 선택해주세요.");
+      return;
+    }
+
     const isValidTimeSlot = selectedDates.every(
       (dateObj) => dateObj.timeSlot !== ""
     );
@@ -721,8 +726,9 @@ function CreateEventPage(props) {
             <button
               onClick={handleEventCreate}
               className={classNames(
-                selectedDates.length ? styles.BtnTrue : styles.BtnFalse
+                selectedDates.length && eventData.title.trim() ? styles.BtnTrue : styles.BtnFalse
               )}
+              disabled={!selectedDates.length || !eventData.title.trim()}
             >
               수정 완료
             </button>
@@ -731,8 +737,9 @@ function CreateEventPage(props) {
           <button
             onClick={handleEventCreate}
             className={classNames(
-              selectedDates.length ? styles.BtnCreate : styles.BtnFalse
+              selectedDates.length && eventData.title.trim() ? styles.BtnCreate : styles.BtnFalse
             )}
+            disabled={!selectedDates.length || !eventData.title.trim()}
           >
             모임 만들기
           </button>
