@@ -553,17 +553,28 @@
       line-height: 25px;
       letter-spacing: -0.4px;
       border: none;
-      background-color: transparent;
+      background-color: transparent !important;
       font-family: Noto Sans !important;
       cursor: pointer;
-      -webkit-tap-highlight-color: transparent; /* 모바일에서 터치다운 이펙트 제거 */
+      -webkit-tap-highlight-color: transparent;
     }
 
-    :global .react-calendar__tile.today {
-      display: flex !important;
-      flex-direction: column !important; /* 필요 시 사용 */
-      justify-content: center !important;
-      align-items: center !important;
+    :global .react-calendar__tile:active,
+    :global .react-calendar__tile:focus {
+      background-color: transparent !important;
+      outline: none;
+    }
+
+    :global .selected-date {
+      border: 1.5px solid var(--G10, #000);
+      border-radius: 50%;
+      width: 50px !important;
+      height: 50px !important;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--G10, #000);
+      background-color: transparent !important;
     }
 
     :global .react-calendar__month-view__days .react-calendar__tile {
@@ -614,17 +625,6 @@
 
     :global .other-month abbr {
       color: #dbdbdb;
-    }
-
-    :global .selected-date {
-      border: 1.5px solid var(--G10, #000);
-      border-radius: 50%;
-      width: 50px !important;
-      height: 50px !important;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: var(--G10, #000);
     }
 
     :global .react-calendar__month-view__days__day {
