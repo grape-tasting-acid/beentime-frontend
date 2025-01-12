@@ -83,6 +83,23 @@ root.render(
             }
           }
           /* 필요에 따라 다른 전역 스타일 추가 */
+
+          /* 세이프 에어리어 적용 */
+          body {
+            padding-bottom: env(safe-area-inset-bottom);
+            padding-bottom: constant(safe-area-inset-bottom); /* iOS 11.0 이하 */
+          }
+
+          /* 모바일 웹뷰에서 하단 여백 확보 */
+          #root {
+            min-height: calc(100vh + env(safe-area-inset-bottom));
+            padding-bottom: env(safe-area-inset-bottom);
+          }
+
+          /* 기존 스크롤바 스타일 유지 */
+          @media (max-width: 430px) {
+            // ... 기존 스크롤바 스타일 ...
+          }
         `}
       />
       <App />
