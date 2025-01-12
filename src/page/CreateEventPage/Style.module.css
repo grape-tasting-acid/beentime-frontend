@@ -213,7 +213,7 @@
       top: 25%;
       height: 50%;
       width: 1px;
-      background-color: #fff;
+      background-color: var(--G7, #91979e);
     }
   }
 }
