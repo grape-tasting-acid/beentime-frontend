@@ -60,6 +60,7 @@ root.render(
             --G4: #dfe2e6;
             --G5: #c2c8cf;
             --G6: #a9afb6;
+            --G7: #71777E;
             --G10: #000000;
             --M1: #e5fff7;
             --M2: #9bfbd9;
