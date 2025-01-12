@@ -32,11 +32,9 @@ const AttendanceEvent = ({
     const initializeRadios = async () => {
       if (timeList && timeList.length > 0) {
         if (existingParticipation) {
-          // 기존 참여 정보가 있는 경우 선택된 라디오 버튼을 설정
           setSelectedRadios(existingParticipation.checked);
           setAttendeeName(existingParticipation.name);
         } else {
-          // 새로운 참여인 경우
           try {
             const participationList = await getParticipation(id);
             const isFirstParticipant = participationList.length === 0;
@@ -53,6 +51,21 @@ const AttendanceEvent = ({
 
     initializeRadios();
   }, [timeList, existingParticipation, id]);
+
+  useEffect(() => {
+    const checkFirstParticipant = async () => {
+      try {
+        const participationList = await getParticipation(id);
+        if (participationList.length === 0) {
+          window.scrollTo(0, 0);
+        }
+      } catch (error) {
+        console.error("Error checking first participant:", error);
+      }
+    };
+
+    checkFirstParticipant();
+  }, []);
 
   const onChangeRadio = (e, index) => {
     const updatedRadios = [...selectedRadios];
