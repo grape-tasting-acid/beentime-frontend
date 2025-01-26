@@ -25,7 +25,6 @@ const BottomSheet = ({ isOpen, onClose, eventCode }) => {
     <>
       <div className={styles.overlay} onClick={onClose} />
       <div className={styles.bottomSheet}>
-        <div className={styles.handle} />
         <h2>모임이 생성되었어요!</h2>
         <p>친구들에게 공유하고 일정을 조율해보세요</p>
         <button className={styles.copyButton} onClick={handleCopyLink}>
