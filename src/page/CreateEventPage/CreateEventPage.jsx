@@ -25,6 +25,7 @@ import {
   updateParticipation,
 } from "../../services/supabaseService";
 import queryString from "query-string";
+import BottomSheet from '../../component/BottomSheet/BottomSheet';
 
 function CreateEventPage(props) {
   const [selectedDates, setSelectedDates] = useState([]); // 날짜 객체 배열로 변경
@@ -36,6 +37,8 @@ function CreateEventPage(props) {
   const queryData = queryString.parse(location.search);
   const eventCode = queryData.eventCode ? queryData.eventCode : null;
   const [activeStartDate, setActiveStartDate] = useState(new Date());
+  const [showBottomSheet, setShowBottomSheet] = useState(false);
+  const [createdEventCode, setCreatedEventCode] = useState(null);
 
   useEffect(() => {
     if (eventCode) {
@@ -244,8 +247,15 @@ function CreateEventPage(props) {
         if (response) {
           const eventCode = response[0].event_code;
           sessionStorage.setItem("eventCode", eventCode);
-          alert("모임이 생성되었습니다.");
-          navigate(`/attend?eventCode=${eventCode}`);
+          
+          // 모바일 환경에서만 바텀시트 표시
+          if (window.innerWidth <= 430) {
+            setCreatedEventCode(eventCode);
+            setShowBottomSheet(true);
+          } else {
+            alert("모임이 생성되었습니다.");
+            navigate(`/attend?eventCode=${eventCode}`);
+          }
         }
       } else {
         const response = await editEvent(
@@ -746,6 +756,11 @@ function CreateEventPage(props) {
         )}
       </div>
       <Footer />
+      <BottomSheet 
+        isOpen={showBottomSheet}
+        onClose={() => setShowBottomSheet(false)}
+        eventCode={createdEventCode}
+      />
     </div>
   );
 }
