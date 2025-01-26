@@ -7,18 +7,28 @@ const BottomSheet = ({ isOpen, onClose, eventCode }) => {
   
   if (!isOpen) return null;
 
-  const handleCopyLink = () => {
+  const handleShare = async () => {
     const eventUrl = `${window.location.origin}/attend?eventCode=${eventCode}`;
-    navigator.clipboard.writeText(eventUrl)
-      .then(() => {
+    const shareData = {
+      title: '모임 일정 조율하기',
+      text: '모임 일정을 조율해보세요!',
+      url: eventUrl
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+        onClose();
+      } else {
+        // 공유 API를 지원하지 않는 브라우저의 경우 기존 복사 기능 사용
+        await navigator.clipboard.writeText(eventUrl);
         alert('링크가 복사되었습니다.');
         onClose();
-        navigate(`/attend?eventCode=${eventCode}`);
-      })
-      .catch(err => {
-        console.error('링크 복사 실패:', err);
-        alert('링크 복사에 실패했습니다.');
-      });
+      }
+    } catch (err) {
+      console.error('공유 실패:', err);
+      alert('공유하기에 실패했습니다.');
+    }
   };
 
   return (
@@ -27,8 +37,8 @@ const BottomSheet = ({ isOpen, onClose, eventCode }) => {
       <div className={styles.bottomSheet}>
         <h2>모임이 생성되었어요!</h2>
         <p>친구들에게 공유하고 일정을 조율해보세요</p>
-        <button className={styles.copyButton} onClick={handleCopyLink}>
-          링크 복사하기
+        <button className={styles.copyButton} onClick={handleShare}>
+          공유하기
         </button>
         <button 
           className={styles.moveButton} 
