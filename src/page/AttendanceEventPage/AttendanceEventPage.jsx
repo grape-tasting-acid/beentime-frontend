@@ -22,6 +22,7 @@ import {
   getParticipationName,
 } from "../../services/supabaseService";
 import { FaCheck, FaQuestion, FaTimes } from "react-icons/fa";
+import BottomSheet from '../../component/BottomSheet/BottomSheet';
 
 const characterImages = Array.from({ length: 20 }, (_, i) =>
   require(`../../Img/characters/character${i}.svg`)
@@ -449,6 +450,20 @@ const AttendanceEventListPage = () => {
     setShowAttendanceForm(true);
   };
 
+  const [showBottomSheet, setShowBottomSheet] = useState(false);
+  const [eventCode, setEventCode] = useState(null);
+
+  useEffect(() => {
+    if (participants.length === 1) {  // 첫 번째 참가자가 등록되었을 때
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('eventCode');
+      if (code && window.innerWidth <= 430) {  // 모바일 환경에서만
+        setEventCode(code);
+        setShowBottomSheet(true);
+      }
+    }
+  }, [participants.length]);
+
   return (
     <div className={styles.Layout}>
       <div className={"Header"}>
@@ -681,6 +696,11 @@ const AttendanceEventListPage = () => {
         </>
       )}
       <Footer />
+      <BottomSheet 
+        isOpen={showBottomSheet}
+        onClose={() => setShowBottomSheet(false)}
+        eventCode={eventCode}
+      />
     </div>
   );
 };
