@@ -34,25 +34,28 @@
   text-align: center;
 }
 
-.copyButton, .moveButton {
+.shareButton, .laterButton {
   width: 100%;
-  padding: 16px;
-  border: none;
-  border-radius: 12px;
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 12px;
   cursor: pointer;
 }
 
-.copyButton {
-  background-color: #F5F5F5;
-  color: #000;
-}
-
-.moveButton {
+.shareButton {
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
   background-color: #000;
   color: #FFF;
+}
+
+.laterButton {
+  background: none;
+  border: none;
+  color: #666;
+  text-decoration: underline;
+  padding: 8px;
 }
 
 @keyframes slideUp {

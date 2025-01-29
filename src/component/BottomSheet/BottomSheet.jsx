@@ -37,14 +37,14 @@ const BottomSheet = ({ isOpen, onClose, eventCode }) => {
       <div className={styles.bottomSheet}>
         <h2>모임이 생성되었어요!</h2>
         <p>친구들에게 공유하고 일정을 조율해보세요</p>
-        <button className={styles.copyButton} onClick={handleShare}>
-          공유하기
+        <button className={styles.shareButton} onClick={handleShare}>
+          모임 링크 공유하기
         </button>
         <button 
-          className={styles.moveButton} 
+          className={styles.laterButton} 
           onClick={() => navigate(`/attend?eventCode=${eventCode}`)}
         >
-          모임 페이지로 이동하기
+          나중에 공유하기
         </button>
       </div>
     </>

@@ -67,6 +67,10 @@ root.render(
             --M3: #31edb5;
             --B1: #2376e5;
             --B2: #ff2d05;
+            --sat: env(safe-area-inset-top);
+            --sar: env(safe-area-inset-right);
+            --sab: env(safe-area-inset-bottom);
+            --sal: env(safe-area-inset-left);
           }
           img {
             -webkit-user-drag: none;
@@ -87,8 +91,9 @@ root.render(
 
           /* 세이프 에어리어 적용 */
           body {
-            padding-bottom: env(safe-area-inset-bottom);
-            padding-bottom: constant(safe-area-inset-bottom); /* iOS 11.0 이하 */
+            padding: var(--sat) var(--sar) var(--sab) var(--sal);
+            padding: constant(safe-area-inset-top) constant(safe-area-inset-right) constant(safe-area-inset-bottom) constant(safe-area-inset-left);
+            background-color: #ffffff;
           }
 
           /* 모바일 웹뷰에서 하단 여백 확보 */
@@ -108,6 +113,20 @@ root.render(
             padding-bottom: constant(safe-area-inset-bottom);
             margin-bottom: env(safe-area-inset-bottom);
             margin-bottom: constant(safe-area-inset-bottom);
+          }
+
+          /* 하단 고정 요소를 위한 설정 */
+          .fixed-bottom {
+            padding-bottom: var(--sab);
+            padding-bottom: constant(safe-area-inset-bottom);
+            margin-bottom: var(--sab);
+            margin-bottom: constant(safe-area-inset-bottom);
+          }
+
+          /* 스크롤 가능한 컨텐츠 영역 */
+          .scroll-content {
+            padding-bottom: calc(var(--sab) + 16px);
+            padding-bottom: calc(constant(safe-area-inset-bottom) + 16px);
           }
         `}
       />
