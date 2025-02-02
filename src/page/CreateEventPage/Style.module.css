@@ -1006,14 +1006,13 @@
   position: relative;
   display: inline-block;
   border-radius: 8px;
-  border: 1.5px solid;
   background: #fff;
   overflow: hidden;
   cursor: pointer;
 }
 
 .ImageContainer.selected {
-  border: 1.5px solid black;
+  border: 2px solid black;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
 }
 
