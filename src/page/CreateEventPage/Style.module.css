@@ -240,22 +240,18 @@
 @media (max-width: 430px) {
   .BtnCreate {
     position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
     height: 60px;
     padding: 20px 0px;
-    bottom: 0;
-    margin: 0;
-    left: 0;
-    right: 0px;
     border-radius: 0;
     font-size: 18px;
-    font-style: normal;
     font-weight: 700;
     line-height: 22px;
     letter-spacing: -0.18px;
-    position: fixed !important;
-    bottom: 0 !important;
-    transform: translateY(0) !important;
-    -webkit-transform: translateY(0) !important;
+    background-color: #000;
   }
 }
 
@@ -312,23 +308,19 @@
 
 @media (max-width: 430px) {
   .BtnFalse {
-    height: 60px;
-    padding: 20px 0px;
     position: fixed;
     bottom: 0;
-    margin: 0;
     left: 0;
-    right: 0px;
+    right: 0;
+    margin: 0;
+    height: 60px;
+    padding: 20px 0px;
     border-radius: 0;
     font-size: 18px;
-    font-style: normal;
     font-weight: 700;
     line-height: 22px;
     letter-spacing: -0.18px;
-    position: fixed !important;
-    bottom: 0 !important;
-    transform: translateY(0) !important;
-    -webkit-transform: translateY(0) !important;
+    background-color: var(--G4, #dfe2e6);
   }
   .BtnTrue {
     position: fixed;
