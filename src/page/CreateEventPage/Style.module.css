@@ -252,8 +252,10 @@
     font-weight: 700;
     line-height: 22px;
     letter-spacing: -0.18px;
-    z-index: 1;
-    position: sticky;
+    position: fixed !important;
+    bottom: 0 !important;
+    transform: translateY(0) !important;
+    -webkit-transform: translateY(0) !important;
   }
 }
 
@@ -312,7 +314,7 @@
   .BtnFalse {
     height: 60px;
     padding: 20px 0px;
-    position: sticky;
+    position: fixed;
     bottom: 0;
     margin: 0;
     left: 0;
@@ -323,7 +325,10 @@
     font-weight: 700;
     line-height: 22px;
     letter-spacing: -0.18px;
-    z-index: 1;
+    position: fixed !important;
+    bottom: 0 !important;
+    transform: translateY(0) !important;
+    -webkit-transform: translateY(0) !important;
   }
   .BtnTrue {
     position: fixed;
@@ -1009,7 +1014,7 @@
   position: relative;
   display: inline-block;
   border-radius: 8px;
-  border: none;
+  border: 1.5px solid;
   background: #fff;
   overflow: hidden;
   cursor: pointer;
