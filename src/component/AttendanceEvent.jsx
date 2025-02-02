@@ -182,7 +182,12 @@ const AttendanceEvent = ({
 
           if (responseData) {
             sessionStorage.setItem("name", JSON.stringify(attendeeName));
-            alert("참여 완료 하였습니다.");
+            // 첫 번째 참여자인 경우와 그 외의 경우 구분
+            if (participationList.length === 0) {
+              alert("모임 페이지가 완성되었습니다!\n채팅방에 모임 링크를 공유해보세요");
+            } else {
+              alert("참여 완료 하였습니다.");
+            }
             window.location.reload();
           }
         }
