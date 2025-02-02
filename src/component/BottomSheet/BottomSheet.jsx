@@ -34,8 +34,7 @@ const BottomSheet = ({ isOpen, onClose, eventCode }) => {
     <>
       <div className={styles.overlay} onClick={onClose} />
       <div className={styles.bottomSheet}>
-        <h2>모임이 생성되었어요!</h2>
-        <p>친구들에게 공유하고 일정을 조율해보세요</p>
+        <h2>모임 페이지가 완성되었습니다!<br />채팅방에 모임 링크를 공유해보세요!</h2>
         <button className={styles.shareButton} onClick={handleShare}>
           모임 링크 공유하기
         </button>
