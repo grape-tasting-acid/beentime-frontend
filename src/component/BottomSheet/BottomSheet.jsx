@@ -27,7 +27,6 @@ const BottomSheet = ({ isOpen, onClose, eventCode }) => {
       }
     } catch (err) {
       console.error('공유 실패:', err);
-      alert('공유하기에 실패했습니다.');
     }
   };
 
