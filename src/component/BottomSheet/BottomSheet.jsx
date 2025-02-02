@@ -42,7 +42,10 @@ const BottomSheet = ({ isOpen, onClose, eventCode }) => {
         </button>
         <button 
           className={styles.laterButton} 
-          onClick={() => navigate(`/attend?eventCode=${eventCode}`)}
+          onClick={() => {
+            navigate(`/attend?eventCode=${eventCode}`);
+            onClose();
+          }}
         >
           나중에 공유하기
         </button>
