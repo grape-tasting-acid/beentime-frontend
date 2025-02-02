@@ -454,15 +454,15 @@ const AttendanceEventListPage = () => {
   const [eventCode, setEventCode] = useState(null);
 
   useEffect(() => {
-    if (participants.length === 1) {  // 첫 번째 참가자가 등록되었을 때
+    if (participants.length === 1 && location.state?.isNewEvent) {  // location.state로 새 이벤트 여부 확인
       const urlParams = new URLSearchParams(window.location.search);
       const code = urlParams.get('eventCode');
-      if (code && window.innerWidth <= 430) {  // 모바일 환경에서만
+      if (code && window.innerWidth <= 430) {
         setEventCode(code);
         setShowBottomSheet(true);
       }
     }
-  }, [participants.length]);
+  }, [participants.length, location.state?.isNewEvent]);
 
   return (
     <div className={styles.Layout}>

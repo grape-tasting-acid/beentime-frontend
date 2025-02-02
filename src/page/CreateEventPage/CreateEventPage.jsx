@@ -247,7 +247,7 @@ function CreateEventPage(props) {
         if (response) {
           const eventCode = response[0].event_code;
           sessionStorage.setItem("eventCode", eventCode);
-          navigate(`/attend?eventCode=${eventCode}`);
+          navigate(`/attend?eventCode=${eventCode}`, { state: { isNewEvent: true } });
         }
       } else {
         const response = await editEvent(
