@@ -16,6 +16,10 @@ import QuestionUnselectedIcon from "../Img/icon/questionUnselected.svg";
 import CrossSelectedIcon from "../Img/icon/crossSelected.svg";
 import CrossUnselectedIcon from "../Img/icon/crossUnselected.svg";
 
+const isMobileDevice = () => {
+  return /Mobi|Android|iPhone/i.test(navigator.userAgent) || window.innerWidth <= 768;
+};
+
 const AttendanceEvent = ({
   timeList,
   eventData,
@@ -182,10 +186,13 @@ const AttendanceEvent = ({
 
           if (responseData) {
             sessionStorage.setItem("name", JSON.stringify(attendeeName));
-            // 첫 번째 참여자인 경우와 그 외의 경우 구분
             if (participationList.length === 0) {
-              alert("모임 페이지가 완성되었습니다!\n채팅방에 모임 링크를 공유해보세요");
+              // 첫 번째 참여자인 경우 PC에서만 알림 표시
+              if (!isMobileDevice()) {
+                alert("모임 페이지가 완성되었습니다!\n채팅방에 모임 링크를 공유해보세요");
+              }
             } else {
+              // 일반 참여자인 경우 모든 환경에서 알림 표시
               alert("참여 완료 하였습니다.");
             }
             window.location.reload();

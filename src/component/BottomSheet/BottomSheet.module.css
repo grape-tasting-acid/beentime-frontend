@@ -15,7 +15,7 @@
   right: 0;
   background-color: white;
   border-radius: 20px 20px 0 0;
-  padding: 24px;
+  padding: 30px 20px;
   z-index: 1001;
   animation: slideUp 0.3s ease-out;
 }
@@ -30,7 +30,7 @@
 .bottomSheet p {
   font-size: 16px;
   color: #666;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   text-align: center;
 }
 
