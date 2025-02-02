@@ -1006,7 +1006,7 @@
   position: relative;
   display: inline-block;
   border-radius: 8px;
-  border: 1.5px solid #ccc;
+  border: none;
   background: #fff;
   overflow: hidden;
   cursor: pointer;
