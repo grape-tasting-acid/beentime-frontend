@@ -212,7 +212,7 @@ const AttendanceEvent = ({
             <h3>이름을 알려줘!</h3>
             <input
               type="text"
-              placeholder="차은우"
+              placeholder="빈지노"
               value={attendeeName}
               onChange={onNameChange}
             />
