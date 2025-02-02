@@ -464,6 +464,18 @@ const AttendanceEventListPage = () => {
     }
   }, [participants.length, location.state?.isNewEvent]);
 
+  useEffect(() => {
+    // 배경색 관련 스타일 추가
+    document.body.style.backgroundColor = '#ffffff';
+    document.documentElement.style.backgroundColor = '#ffffff';
+    
+    // 컴포넌트 언마운트 시 원래대로 복구
+    return () => {
+      document.body.style.backgroundColor = '';
+      document.documentElement.style.backgroundColor = '';
+    };
+  }, []);
+
   return (
     <div className={styles.Layout}>
       <div className={"Header"}>
