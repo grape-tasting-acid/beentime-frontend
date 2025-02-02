@@ -53,9 +53,10 @@
 .laterButton {
   background: none;
   border: none;
-  color: #666;
+  color: var(--G7);
   text-decoration: underline;
   padding: 8px;
+  font-weight: 400;
 }
 
 @keyframes slideUp {
