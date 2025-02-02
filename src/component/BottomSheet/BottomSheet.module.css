@@ -33,9 +33,7 @@
 
 .shareButton, .laterButton {
   width: 100%;
-  font-size: 16px;
   font-weight: bold;
-  margin-bottom: 12px;
   cursor: pointer;
 }
 
@@ -55,6 +53,7 @@
     font-weight: 700;
     line-height: 22px; /* 137.5% */
     letter-spacing: -0.16px;
+    margin-bottom: 16px;
 }
 
 .laterButton {
@@ -74,7 +73,6 @@
     text-underline-position: from-font;
     background: none;
     border: none;
-    padding: 8px;
 }
 
 @keyframes slideUp {
