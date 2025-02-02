@@ -551,7 +551,7 @@
   flex-grow: 1;
   flex-direction: column;
   margin-top: 60px;
-  width: 100%;
+  width: fix-content;
   max-width: 1020px;
   overflow: hidden;
 }
