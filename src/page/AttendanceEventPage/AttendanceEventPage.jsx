@@ -489,37 +489,41 @@ const AttendanceEventListPage = () => {
               />
             </Link>
           </div>
-          <div className={styles.HeaderItem}>
-            <h1
-              onClick={() => window.location.reload()}
-              style={{ cursor: "pointer" }}
-            >
-              {eventData?.title}
-            </h1>
-            <div className={styles.header_buttons}>
-              <button onClick={onEditClick}>
-                <img className="button-icon" src={editLogo} alt="수정하기" />
-                수정하기
-              </button>
-              <button
-                onClick={() => {
-                  navigator.clipboard
-                    .writeText(window.location.href)
-                    .then(() => {
-                      alert("링크가 클립보드에 복사되었습니다.");
-                    })
-                    .catch((err) => {
-                      console.error("링크 복사 중 오류 발생:", err);
-                      alert("링크 복사에 실패했습니다.");
-                    });
-                }}
-              >
-                <img className="button-icon" src={shareLogo} alt="공유하기" />
-                공유하기
-              </button>
-            </div>
-          </div>
-          <h3>{eventData?.detail}</h3>
+          {participants.length > 0 && (
+            <>
+              <div className={styles.HeaderItem}>
+                <h1
+                  onClick={() => window.location.reload()}
+                  style={{ cursor: "pointer" }}
+                >
+                  {eventData?.title}
+                </h1>
+                <div className={styles.header_buttons}>
+                  <button onClick={onEditClick}>
+                    <img className="button-icon" src={editLogo} alt="수정하기" />
+                    수정하기
+                  </button>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard
+                        .writeText(window.location.href)
+                        .then(() => {
+                          alert("링크가 클립보드에 복사되었습니다.");
+                        })
+                        .catch((err) => {
+                          console.error("링크 복사 중 오류 발생:", err);
+                          alert("링크 복사에 실패했습니다.");
+                        });
+                    }}
+                  >
+                    <img className="button-icon" src={shareLogo} alt="공유하기" />
+                    공유하기
+                  </button>
+                </div>
+              </div>
+              <h3>{eventData?.detail}</h3>
+            </>
+          )}
         </div>
       </div>
 
