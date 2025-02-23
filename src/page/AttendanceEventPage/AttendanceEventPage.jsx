@@ -481,8 +481,16 @@ const AttendanceEventListPage = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('eventCode');
     if (code) {
-      setEventCode(code);
-      setShowBottomSheet(true);
+      if (window.innerWidth <= 430) {
+        // 모바일에서는 바텀시트 표시
+        setEventCode(code);
+        setShowBottomSheet(true);
+      } else {
+        // PC에서는 기존 공유 기능 사용
+        const eventUrl = `${window.location.origin}/attend?eventCode=${code}`;
+        navigator.clipboard.writeText(eventUrl);
+        alert('링크가 복사되었습니다.');
+      }
     }
   };
 
