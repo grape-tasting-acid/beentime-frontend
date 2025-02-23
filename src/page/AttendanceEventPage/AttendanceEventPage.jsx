@@ -476,6 +476,16 @@ const AttendanceEventListPage = () => {
     };
   }, []);
 
+  // 공유하기 버튼 클릭 핸들러 수정
+  const handleShareClick = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('eventCode');
+    if (code) {
+      setEventCode(code);
+      setShowBottomSheet(true);
+    }
+  };
+
   return (
     <div className={styles.Layout}>
       <div className={"Header"}>
@@ -503,19 +513,7 @@ const AttendanceEventListPage = () => {
                     <img className="button-icon" src={editLogo} alt="수정하기" />
                     수정하기
                   </button>
-                  <button
-                    onClick={() => {
-                      navigator.clipboard
-                        .writeText(window.location.href)
-                        .then(() => {
-                          alert("링크가 클립보드에 복사되었습니다.");
-                        })
-                        .catch((err) => {
-                          console.error("링크 복사 중 오류 발생:", err);
-                          alert("링크 복사에 실패했습니다.");
-                        });
-                    }}
-                  >
+                  <button onClick={handleShareClick}>
                     <img className="button-icon" src={shareLogo} alt="공유하기" />
                     공유하기
                   </button>

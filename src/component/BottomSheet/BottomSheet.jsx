@@ -12,7 +12,7 @@ const BottomSheet = ({ isOpen, onClose, eventCode }) => {
       // 바텀시트를 1초 후에 표시
       timer = setTimeout(() => {
         setShowSheet(true);
-      }, 1000);
+      }, 500);
     } else {
       setShowSheet(false);
     }
