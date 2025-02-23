@@ -375,3 +375,8 @@
     height: 58px;
   }
 }
+
+.DisabledButton {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

@@ -299,9 +299,12 @@ const AttendanceEvent = ({
             {/* hideBackButton이 true이면 버튼 크기 조절 */}
             <button
               className={classNames(
-                hideBackButton ? styles.LargeAttendButton : styles.BtnTrue
+                hideBackButton ? styles.LargeAttendButton : styles.BtnTrue,
+                // 이름이 비어있을 때 비활성화 스타일 추가
+                { [styles.DisabledButton]: !attendeeName.trim() }
               )}
               onClick={onAttendClick}
+              disabled={!attendeeName.trim()} // 이름이 비어있으면 버튼 비활성화
             >
               {existingParticipation ? "수정 완료" : "모임 참석하기"}
             </button>
