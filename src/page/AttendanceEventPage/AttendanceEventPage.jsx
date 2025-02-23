@@ -227,29 +227,29 @@ const AttendanceEventListPage = () => {
     // Color mapping object
     const colorMapping = {};
 
-    // Green days
-    const greenDays = sortedCounts.filter(
-      (row) => row.rank === 1 && row.noCount === 0
+    // 1. Green days: 모든 사람이 "예"라고 한 시간대
+    const greenDays = sortedCounts.filter(row => 
+      row.yesCount === totalParticipants
     );
-    greenDays.forEach((row) => {
-      colorMapping[row.time] = "GreenBackground"; // 문자열로 클래스 이름 설정
+    greenDays.forEach(row => {
+      colorMapping[row.time] = "GreenBackground";
     });
 
-    // Blue days
-    const blueDays = sortedCounts.filter(
-      (row) => row.rank === 2 && row.noCount <= totalParticipants / 2
+    // 2. Blue days: 선호도가 가장 높지만 모든 사람이 "예"는 아닌 시간대
+    const blueDays = sortedCounts.filter(row => 
+      row.rank === 1 && !greenDays.includes(row)
     );
-    blueDays.forEach((row) => {
-      colorMapping[row.time] = "BlueBackground"; // 문자열로 클래스 이름 설정
+    blueDays.forEach(row => {
+      colorMapping[row.time] = "BlueBackground";
     });
 
     // Set topDates based on the rules
     if (greenDays.length > 0) {
-      topDates = greenDays.map((row) => row.time);
+      topDates = greenDays.map(row => row.time);
     } else if (blueDays.length > 0) {
-      topDates = blueDays.map((row) => row.time);
+      topDates = blueDays.map(row => row.time);
     } else {
-      topDates = []; // No matching times
+      topDates = [];
     }
 
     // Assign colors to each row
