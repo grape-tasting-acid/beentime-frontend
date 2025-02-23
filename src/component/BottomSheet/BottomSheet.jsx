@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './BottomSheet.module.css';
 import { useNavigate } from 'react-router-dom';
 
 const BottomSheet = ({ isOpen, onClose, eventCode }) => {
   const navigate = useNavigate();
+  const [showSheet, setShowSheet] = useState(false);
   
+  useEffect(() => {
+    let timer;
+    if (isOpen) {
+      // 바텀시트를 1초 후에 표시
+      timer = setTimeout(() => {
+        setShowSheet(true);
+      }, 1000);
+    } else {
+      setShowSheet(false);
+    }
+    
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleShare = async () => {
@@ -32,8 +49,11 @@ const BottomSheet = ({ isOpen, onClose, eventCode }) => {
 
   return (
     <>
-      <div className={styles.overlay} onClick={onClose} />
-      <div className={styles.bottomSheet}>
+      <div 
+        className={`${styles.overlay} ${showSheet ? styles.showOverlay : ''}`} 
+        onClick={onClose} 
+      />
+      <div className={`${styles.bottomSheet} ${showSheet ? styles.showSheet : ''}`}>
         <h2>모임 페이지가 완성되었습니다!<br />채팅방에 모임 링크를 공유해보세요!</h2>
         <button className={styles.shareButton} onClick={handleShare}>
           모임 링크 공유하기
