@@ -377,6 +377,8 @@
 }
 
 .DisabledButton {
-  opacity: 0.5;
+  background: var(--G4, #dfe2e6) !important;
+  color: #ffff !important;
+  opacity: 1 !important;
   cursor: not-allowed;
 }
